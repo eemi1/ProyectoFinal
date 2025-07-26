@@ -12,7 +12,7 @@ Antes de comenzar asegúrate de tener instalado:
 ## Instalación
 
 1. **Clona este repositorio:**
-git clone https://github.com/tu-usuario/tu-repo.git
+git clone https://github.com/eemi1/proyectoFinal.git
 cd tu-repo
 
 2. **Dependencias necesarias:**
