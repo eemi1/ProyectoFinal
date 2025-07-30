@@ -1,0 +1,96 @@
+
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+body, html{height: 100%;}
+
+
+/* Estilos para ocultar la barra de desplazamiento */
+.scrollbar-hide {
+    /* Para navegadores webkit (Chrome, Safari, Edge) */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    overflow: auto;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari y Chrome */
+    width: 0;
+    background: transparent;
+}
+.scrollbar-show {
+    -ms-overflow-style: auto;   /* IE y Edge */
+    scrollbar-width: auto;      /* Firefox */
+    overflow: auto;
+}
+.scrollbar-show::-webkit-scrollbar {
+    display: block;             /* Chrome, Safari y Opera */
+    width: initial;
+    background: initial;
+}
+.main-pages{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.page1-content{
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 91px);
+    background-color: black;
+}
+.page1-image{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.7; 
+}
+.page1-overlay{
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    color: white;
+    padding-top: 13rem;
+}
+.page1-title{
+    font-family:'Rasa', sans-serif;
+    font-size:96px;
+    line-height:1;
+    font-weight: 600;
+}
+.page1-description{
+    font-family:'Raleway', sans-serif;
+    font-size: 24px;
+    width: 50%;
+    text-align: center;
+    padding-top:15px
+}
+.page1-buttons{
+    display:flex;
+    gap:40px;
+    font-family:'Raleway', sans-serif;
+    align-items: center;
+    justify-content: center;
+    padding-top: 60px;
+}
+#page1-btn-menu, #page1-btn-reservar{padding: 10px 30px;}
+
+.page2-content{
+    position: relative;
+    display: flex;
+    background-color: black;
+    width: 100%;
+    height: 50%;
+}
+.page2-image{
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+}

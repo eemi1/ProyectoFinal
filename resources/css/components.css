@@ -1,0 +1,32 @@
+/* COLORES */
+.primary-color{color: #17821B;}
+.primary-color-hover{color: #004613;}
+
+/* BOTONES */
+.boton-primario {
+background-color: #17821B;
+color: white;
+border-radius: 20px;
+border: 1px solid #17821B;
+font-family: 'Raleway', sans-serif;
+}
+.boton-primario:hover {
+background-color: #004613;
+border: 1px solid #004613;
+}
+.boton-secundario {
+background-color: transparent;
+color: white;
+border-width: 2px;
+border-style: solid;
+border-color: white;
+border-radius: 20px;
+font-family: 'Raleway', sans-serif;
+}
+.boton-secundario:hover {
+background-color: #17821B; /* Tailwind color "primary" */
+color: white;
+border-color: #17821B;     /* Tailwind color "primary" */
+border-radius: 20px;
+font-family: 'Raleway', sans-serif;
+}
