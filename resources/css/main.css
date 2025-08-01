@@ -132,8 +132,8 @@ body, html{height: 100%;}
     height: 100%;
 }
 .page2-title{
-    font-family:'Monserrat', sans-serif;
-    font-size:80px;
+    font-family:'Rasa', sans-serif;
+    font-size:100px;
     line-height:1;
     font-weight: 600;
     padding-top:40px;
@@ -199,6 +199,8 @@ body, html{height: 100%;}
     color: #17821B;
     border-radius: 20px;
     padding:5px 20px;
+    cursor: pointer;
+
 }
 .page2-product1-button:hover, .page2-product2-button:hover, .page2-product3-button:hover, .page2-product4-button:hover {
     background-color: #17821B;
@@ -228,9 +230,10 @@ body, html{height: 100%;}
     height: 100%;
 }
 .page3-title{
-    font-family:'Monserrat', sans-serif;
+    font-family:'Rasa', sans-serif;
+    font-style: bold;
     color: white;
-    font-size:80px;
+    font-size:100px;
     line-height:1;
     font-weight: 600;
     padding-top:40px;
@@ -253,8 +256,8 @@ body, html{height: 100%;}
 
 .page3-map{
     display: flex;
+    padding-top:60px;
     width: 40%;
     height: 80%;
-    padding-top:60px;
 
 }

@@ -1,89 +1,35 @@
-
-@media screen and (max-width: 1676px) {
-.page1-title{
-    font-size:70px;
-}
-.page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {
-    font-size:25px;
+/* Desktop grande */
+@media (max-width: 1920px) {
 
 }
-.page2-product1-description, .page2-product2-description, .page2-product3-description, .page2-product4-description {
-    font-family: 'Raleway', sans-serif;
-    font-size: 16px;
-    padding-left:10px;
-    padding-right:10px;
-    padding-top:3px;
-}
-}
-@media screen and (max-width:1200px){
-.page2-product1 , .page2-product2, .page2-product3, .page2-product4{
-    height: 70%;
-}
-.page2-product1-description, .page2-product2-description, .page2-product3-description, .page2-product4-description {
-    font-size: 14px;
-}
-.page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {
-    font-size:22px;
+/* Desktop mediano */
+@media (max-width: 1200px) {}
 
-}
-}
-
-@media screen and (max-width:1053px){
-
-.page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {
-    font-size:20px;
+/*Laptop*/
+@media (max-width: 1366px) {
+.page1-description{font-size:30px ;}
+#page1-btn-menu, #page1-btn-reservar{padding: 10px 30px;font-size: 20px;cursor: pointer;}
+.page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {font-size: 25px;}
+.page2-product1-button, .page2-product2-button, .page2-product3-button, .page2-product4-button {padding:10px 20px;}
+.page2-container-button{padding-bottom: 20px;}
+.page3-map{height: 70%; width: 60%; padding: 0px; margin-top: 20px;} 
+.page3-location-title{font-size: 20px;}
+.footer-divisor{margin-top: 30  px;}
 
 }
 
-}
-@media screen and (max-width: 959px) {
-.page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {
-    font-size:18px;
-
+/* Tablet horizontal */
+@media (max-width: 992px) {
+.page1-title{font-size:70px;}
 }
 
+/* Tablet vertical */
+@media (max-width: 768px) {
+.page1-title{font-size:55px;}
+.page1-description{width: 734px;}
+.page2-title{font-size: 70px;}
+.page2-products{flex: wrap;}
 }
-@media screen and (max-width: 802px) {
-.page1-title{
-    font-family:'Rasa', sans-serif;
-    font-size:55px;
-    line-height:1;
-    font-weight: 600;
-}
-.page1-description{
-    font-family:'Raleway', sans-serif;
-    font-size: 24px;
-    width: 50%;
-    text-align: center;
-    padding-top:15px
-}
-}
-@media screen and (max-width: 763px) {
-.page1-title{
-    font-family:'Rasa', sans-serif;
-    font-size:50px;
-    line-height:1;
-    font-weight: 600;
-}
-.page1-description{
-    font-family:'Raleway', sans-serif;
-    font-size: 24px;
-    width: 50%;
-    text-align: center;
-    padding-top:15px
-}
-}
-@media screen and (max-width: 500px) {
-.page1-title {
-    font-size: 35px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
 
-}
-.page1-description {
-    font-size: 20px;
-    width: 90%;
-    padding: 40px;
-}
-}
+/* Móvil */
+@media (max-width: 480px) {}
