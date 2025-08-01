@@ -1,5 +1,6 @@
+<!-- -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scrollbar-hide">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,11 @@
 
     <link rel="icon" href="images/logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="resources/css/main.css " type="text/css">
+    <link rel="stylesheet" href="resources/css/main-responsive.css" type="text/css">
     <link rel="stylesheet" href="resources/css/components.css " type="text/css">
     <link rel="stylesheet" href="resources/css/parts/nav.css" type="text/css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="resources/css/parts/footer.css" type="text/css">
+    <script src="https://kit.fontawesome.com/29724e3467.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Rasa:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -29,8 +32,14 @@
                 <li><a href="#">Sobre Nosotros</a></li>
             </ul>
 
+            <!-- Menú desplegable para móviles -->
+            <div class="navbar-dropdown">
+                <i class="fa-solid fa-bars fa-2xl" id="icon-menu"></i>
+
+            </div>
+
             <div class="navbar-buttons">
-                <button id="navbar-btn-logIn">Iniciar Sesión</button>
+                <button id="navbar-btn-login">Iniciar Sesión</button>
                 <button class="boton-primario" id="navbar-btn-register">Crear Cuenta</button>
             </div>
         </nav>
@@ -38,8 +47,9 @@
     <hr class="navbar-divisor">
 
     <section class="main-pages">
+
         <div class="page1-content">
-            <img class="page1-image" src="public/images/bg/page1.jpg" alt="Imagen página 1">
+            <img class="page1-image" src="images/bg/page1.jpg" alt="Imagen página 1">
             <div class="page1-overlay">
                 <h2 class="page1-title">Descubre el sabor de la excelencia</h2>
                 <p class="page1-description">
@@ -49,16 +59,122 @@
                     <button class="boton-primario" id="page1-btn-menu">Ver menú</button>
                     <button class="boton-secundario" id="page1-btn-reservar">Reservar mesa</button>
                 </div>
+                <svg fill="#000000" viewBox="0 0 39 50" class="page1-animated-arrow" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="19 14 12 21 5 14" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;" />
+                    <polyline points="5 3 12 10 19 3" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;" />
+                </svg>
             </div>
         </div>
 
         <div class="page2-content">
-           <!--<img src="public/images/bg/page2.jpg" alt="Imagen página 2" class="page2-image">--> 
+            <img src="images/bg/page2.jpg" alt="Imagen página 2" class="page2-image">
+            <div class="page2-overlay">
+                <h2 class="page2-title">Productos Destacados</h2>
+                <div class="page2-products">
+
+                    <div class="page2-product1">
+                        <img src="images/productos-main/producto-1.webp" alt="Producto 1" class="page2-product1-image">
+                        <h3 class="page2-product1-title">Holy Vegan</h3>
+                        <p class="page2-product1-description">
+                            Doble smash burger, cheddar y cebolla morada, con salsa barbacoa y kétchup, acompañado en un pan artesanal a elección, incluye papas.
+                        </p>
+                            <div class="page2-container-button">
+                                <button class="page2-product1-button">MAS INFORMACIÓN</button>
+                            </div>
+                    </div>
+
+                    <div class="page2-product2">
+                        <img src="images/productos-main/producto-2.webp" alt="Producto 2" class="page2-product2-image">
+                        <h3 class="page2-product2-title">Hamburguesa Originals</h3>
+                        <p class="page2-product2-description">
+                            Doble smash burger, cheddar y cebolla morada, con salsa barbacoa y kétchup, acompañado en un pan artesanal a elección, incluye papas.
+                        </p>
+                            <div class="page2-container-button">
+                                <button class="page2-product2-button">MAS INFORMACIÓN</button>
+                            </div>
+                    </div>
+
+                    <div class="page2-product3">
+                        <img src="images/productos-main/producto-3.webp" alt="Producto 3" class="page2-product3-image">
+                        <h3 class="page2-product3-title">Hamburguesa Deli</h3>
+                        <p class="page2-product3-description">
+                            Doble smash burger, cheddar y cebolla morada, con salsa barbacoa y kétchup, acompañado en un pan artesanal a elección, incluye papas.
+                        </p>
+                            <div class="page2-container-button">
+                                <button class="page2-product3-button">MAS INFORMACIÓN</button>
+                            </div>                        
+                    </div>
+
+                    <div class="page2-product4">
+                        <img src="images/productos-main/producto-4.webp" alt="Producto 4" class="page2-product4-image">
+                        <h3 class="page2-product4-title">Hamburguesa Minion</h3>
+                        <p class="page2-product4-description">
+                            Doble smash burger, cheddar y cebolla morada, con salsa barbacoa y kétchup, acompañado en un pan artesanal a elección, incluye papas.
+                        </p>
+                            <div class="page2-container-button">
+                                <button class="page2-product4-button">MAS INFORMACIÓN</button>
+                            </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page3-content">
+            <img src="images/bg/page3.jpg" alt="Imagen página 3" class="page3-image">
+            <div class="page3-overlay">
+                <h2 class="page3-title">Mapa y dirección</h2>
+
+                <div class="page3-mapAndlocation">
+                    <h3 class="page3-location-title">Av. Río Negro 1711, 15800 Ciudad de la Costa, Departamento de Canelones</h3>
+                <iframe src="https://www.google.com/maps/d/embed?mid=1fG3krE_TuuiNkJNSXR06Kaszl87x2SM&ehbc=2E312F&noprof=1"
+                    class="page3-map"
+                    allowfullscreen="" loading="lazy">
+                </iframe>
+
+                </div>
 
 
+            </div>
         </div>
 
     </section>
+    <footer class="footer">
+        <div class="footer-main-content">
+
+            <div class="footer-container1">
+                <div class="footer-content-1">
+                    <h4 class="footer-content1-h4">Fory Factory</h4>
+                    <p id="footer-content1-description">Especialistas en fabricación de productos de alta calidad. Comprometidos con la excelencia y la innovación en cada proyecto.</p>
+                </div>
+            </div>
+
+            <div class="footer-container2">
+                <div class="footer-content-2">
+                    <h4 class="footer-content2-h4">Atajos</h4>
+                    <a class="footer-content2-a" href="/">Inicio</a>
+                    <a class="footer-content2-a" href="/productos">Productos</a>
+                    <a class="footer-content2-a" href="/sobre-nosotros">Sobre nosotros</a>
+                </div>
+            </div>
+            
+            <div class="footer-container3">
+                <div class="footer-content-3">
+                    <h4 class="footer-content3-h4">Contacto</h4>
+                    <p class="footer-content3-a">contacto@foryfactory.com</p>
+                    <p class="footer-content3-a">+598 99 999 999</p>
+                    <p class="footer-content3-a">Av. Río Negro 1711, Ciudad de la costa</p>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-divisor">
+
+        <div class="footer-content4">
+            <p id="footer-derechos" class="">© 2025 Fory Factory. Todos los derechos reservados.</p>
+            <p id="footer-developedBy" class="">Desarrollado por TEN</p>
+        </div>
+
+    </footer>
+    <script src="resources/js/main.js"></script>
     
 </body>
 </html>

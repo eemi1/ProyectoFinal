@@ -1,12 +1,16 @@
 /* NAV */ 
 .navbar{
     display: flex;
+    position: relative;
     justify-content: space-between;
     align-items: center;
     font-family: 'Raleway', sans-serif;
     padding: 15px; /*Le agrega padding de 15 a todos los componentes*/
     width: 100%;
     height: 90px;
+    position:fixed;
+    background-color: white;
+    z-index:1;
 
 }
 .navbar-content{
@@ -27,10 +31,8 @@
     padding-left:10px;
     text-align: end;
     text-decoration: underline solid #17821B 3px ;
-    text-underline-offset: 7px; /*Espacio entre la underline y el título*/ 
-
-
 }
+
 .navbar-divisor{
     color: gray;
 }
@@ -40,6 +42,7 @@
     align-items: center;
     gap: 25px;
     font-family: 'Raleway', sans-serif;
+    list-style-type: none; /*Sacar puntos de la lista ordenada*/
 }
 .navbar-menu a {
     color: black;
@@ -50,15 +53,55 @@
 
 .navbar-buttons{
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
     right: 0px;
+    cursor: pointer;
+    padding-right: 20px;
 }
 #navbar-btn-register{
-    padding: 6px 12px;
+    padding: 10px 15px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    
 }
-#navbar-btn-logIn{
+#navbar-btn-login{
     padding: 4px 10px;
-    border: 1px solid black;
+    color: #17821B;
+    border: none;
+    background: transparent;
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    border:1px solid #17821B;
+    border-radius: 20px;
+}
 
+
+.navbar-dropdown, .dropdown-icon{display: none;}
+
+
+@media screen and (max-width: 950px) {
+  /* Estilos para móviles */
+.navbar-menu{display: none;}
+.navbar-dropdown{
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    align-items: center;
+    padding: 5px 10px;
+    padding-right: 40px;
+}
+.navbar-botom-arrow{
+    display: flex;
+    margin-right: 1px;
+    height: 20px;
+    width: 20px;
+    color:white;
+}
+.navbar-title{display: none;}
+.navbar-buttons{display: none;}
+.dropdown-icon{display: flex;}
+.page1-image{width: 100%;}
 }

@@ -13,6 +13,7 @@ font-family: 'Raleway', sans-serif;
 .boton-primario:hover {
 background-color: #004613;
 border: 1px solid #004613;
+transition: background-color 0.3s ease;
 }
 .boton-secundario {
 background-color: transparent;
@@ -29,4 +30,5 @@ color: white;
 border-color: #17821B;     /* Tailwind color "primary" */
 border-radius: 20px;
 font-family: 'Raleway', sans-serif;
+transition: background-color 0.3s ease;
 }

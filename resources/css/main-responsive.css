@@ -1,0 +1,89 @@
+
+@media screen and (max-width: 1676px) {
+.page1-title{
+    font-size:70px;
+}
+.page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {
+    font-size:25px;
+
+}
+.page2-product1-description, .page2-product2-description, .page2-product3-description, .page2-product4-description {
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:3px;
+}
+}
+@media screen and (max-width:1200px){
+.page2-product1 , .page2-product2, .page2-product3, .page2-product4{
+    height: 70%;
+}
+.page2-product1-description, .page2-product2-description, .page2-product3-description, .page2-product4-description {
+    font-size: 14px;
+}
+.page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {
+    font-size:22px;
+
+}
+}
+
+@media screen and (max-width:1053px){
+
+.page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {
+    font-size:20px;
+
+}
+
+}
+@media screen and (max-width: 959px) {
+.page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {
+    font-size:18px;
+
+}
+
+}
+@media screen and (max-width: 802px) {
+.page1-title{
+    font-family:'Rasa', sans-serif;
+    font-size:55px;
+    line-height:1;
+    font-weight: 600;
+}
+.page1-description{
+    font-family:'Raleway', sans-serif;
+    font-size: 24px;
+    width: 50%;
+    text-align: center;
+    padding-top:15px
+}
+}
+@media screen and (max-width: 763px) {
+.page1-title{
+    font-family:'Rasa', sans-serif;
+    font-size:50px;
+    line-height:1;
+    font-weight: 600;
+}
+.page1-description{
+    font-family:'Raleway', sans-serif;
+    font-size: 24px;
+    width: 50%;
+    text-align: center;
+    padding-top:15px
+}
+}
+@media screen and (max-width: 500px) {
+.page1-title {
+    font-size: 35px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+}
+.page1-description {
+    font-size: 20px;
+    width: 90%;
+    padding: 40px;
+}
+}
