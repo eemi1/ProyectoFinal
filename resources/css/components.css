@@ -32,3 +32,27 @@ border-radius: 20px;
 font-family: 'Raleway', sans-serif;
 transition: background-color 0.3s ease;
 }
+/* Estilos para ocultar la barra de desplazamiento */
+.scrollbar-hide {
+    /* Para navegadores webkit (Chrome, Safari, Edge) */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari y Chrome */
+    width: 0;
+    background: transparent;
+    scroll-behavior: smooth;
+}
+.scrollbar-show {
+    -ms-overflow-style: auto;   /* IE y Edge */
+    scrollbar-width: auto;      /* Firefox */
+    overflow: auto;
+}
+.scrollbar-show::-webkit-scrollbar {
+    display: block;             /* Chrome, Safari y Opera */
+    width: initial;
+    background: initial;
+}

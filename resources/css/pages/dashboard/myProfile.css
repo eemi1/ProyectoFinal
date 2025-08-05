@@ -1,0 +1,17 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Raleway', sans-serif;
+    background-color: rgb(218, 218, 218);
+}
+
+.main{
+    width: 100%;
+    height: 100vh;
+    background-color: antiquewhite;
+}

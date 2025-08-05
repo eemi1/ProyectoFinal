@@ -6,11 +6,12 @@
     align-items: center;
     font-family: 'Raleway', sans-serif;
     padding: 15px; /*Le agrega padding de 15 a todos los componentes*/
-    width: 100%;
-    height: 90px;
+    width: 100vw;
+    height: 80px;
     position:fixed;
     background-color: white;
     z-index:1;
+    box-sizing:content-box;
 }
 .navbar-content{
     display: flex;
@@ -57,12 +58,14 @@
     right: 0px;
     cursor: pointer;
     padding-right: 20px;
+
 }
 #navbar-btn-register{
     padding: 10px 15px;
     font-family: 'Raleway', sans-serif;
     font-size: 15px;
     cursor: pointer;
+    text-decoration:none;
     
 }
 #navbar-btn-login{
@@ -75,12 +78,142 @@
     cursor: pointer;
     border:1px solid #17821B;
     border-radius: 20px;
+    text-decoration:none;
 }
 #navbar-btn-login:hover{
     background-color:#17821B;
     color:white;
 }
+.navbar-buttons-logged{
+    display: none;
+    gap:50px;
+    align-items: center;
+    right: 0px;
+    cursor: pointer;
+    padding-right: 20px;
+    cursor:auto;
+    text-decoration: none;
+}
 
+.profile-logged{
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    margin-right: 20px;
+}
+.icon-nav-logged{
+    color: black;
+}
+#icon-profile-nav{
+    cursor: pointer;
+}
+
+#photo-profile-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#dropdownMenu{
+    display:none;
+    width: 250px;
+    height: 400px;
+    background-color: rgb(206, 206, 206);
+    position: absolute;
+    right: 50px;
+    border-radius: 20px;
+}
+#dropdownMenu-list{
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    gap: 20px;
+    padding-top: 20px;
+
+}
+#dropdownMenu-list a{
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    text-decoration: none;
+
+}
+#li-profile {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    gap: 10px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ccc;
+    background-color: #eaeaea;
+}
+#li-profile hr{
+    border: 0px;
+}
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+    background-color: #c2c2c2;
+    border-radius: 8px;
+}
+
+.dropdown-item i {
+    font-size: 16px;
+    color: black;
+}
+.dropdown-item a{
+    color: black;
+}
+.dropdown-item a:hover{
+    color: #17821B;
+}
+.options-profile {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    text-decoration: none;
+}
+#photo-profile-img-li {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    text-align: left;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.email {
+    font-size: 12px;
+    color: #666;
+}
+
+.options-profile-logout{
+    color: red !important; 
+}
 
 .navbar-dropdown, .dropdown-icon{display: none;}
 @media (max-width: 1366px) {
@@ -117,7 +250,8 @@
     color:white;
 }
 .navbar-title{display: none;}
-.navbar-buttons{display: none;}
+.navbar-buttons{display: flex;}
 .dropdown-icon{display: flex;}
 .page1-image{width: 100%;}
 }
+

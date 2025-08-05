@@ -1,6 +1,5 @@
 .footer{
-    background-color:#17821B;
-    background: linear-gradient(10deg, #00611d, #126601);
+    background-color:oklch(39.3% 0.095 152.535);
     color:white;
     display: flex;
     flex-direction: column;
@@ -26,9 +25,10 @@
 .footer-content1-h4, .footer-content2-h4, .footer-content3-h4 {
     font-weight: bold;
     font-size: 20px;
+    font-family: 'Raleway';
 }
 #footer-content1-description, .footer-content2-a, .footer-content3-a {
-   font-family: 'Monserrat', sans-serif;
+   font-family: 'Raleway', sans-serif;
    font-size: 18px;
 
 }
@@ -45,7 +45,9 @@
     display: flex;
     flex-direction:column;
     gap:20px;
-    padding-top:20px
+    padding-top:20px;
+    text-decoration:none;
+    color: white;
 }
 .footer-container3{
     justify-content: end;

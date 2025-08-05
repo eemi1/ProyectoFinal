@@ -1,17 +1,14 @@
-/* Desktop grande */
-@media (max-width: 1920px) {
 
-}
-/* Desktop mediano */
-@media (max-width: 1200px) {}
-
-/*Laptop*/
-@media (max-width: 1366px) {
+/*PC*/
+@media screen and (min-width: 1200px) and (max-width: 1920px) {
+.page1-title{font-size: 85px;}
+.page1-description{width: 800px;}
 .page1-description{font-size:30px ;}
 #page1-btn-menu, #page1-btn-reservar{padding: 10px 30px;font-size: 20px;cursor: pointer;}
+.page1-animated-arrow{width: 50px; height: 50px;}
 .page2-product1-title, .page2-product2-title, .page2-product3-title, .page2-product4-title {font-size: 25px;}
-.page2-product1-button, .page2-product2-button, .page2-product3-button, .page2-product4-button {padding:10px 20px;}
-.page2-container-button{padding-bottom: 20px;}
+.page2-product1-button, .page2-product2-button, .page2-product3-button{margin-bottom: 60px;}
+.page2-container-button{margin-bottom: 10px;}
 .page3-map{height: 70%; width: 60%; padding: 0px; margin-top: 20px;} 
 .page3-location-title{font-size: 20px;}
 .footer-divisor{margin-top: 30  px;}

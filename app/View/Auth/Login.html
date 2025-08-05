@@ -1,246 +1,131 @@
 <!DOCTYPE html>
 <html lang="es" class="scrollbar-hide">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Fory Factory | Inicio</title>
-        <link rel="icon" href="../../../public/images/logo.jpg" type="image/x-icon">
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Rasa:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fory Factory | Iniciar Sesión</title>
+    <meta charset="UTF-8" />
+        <link rel="icon" href="../../../images/logo.jpg" type="image/x-icon">
+        <link rel="stylesheet" href="../../../resources/css/pages/auth.css" type="text/css">
+        <link rel="stylesheet" href="../../../resources/css/components.css" type="text/css">
+        <link rel="stylesheet" href="../../../resources/css/parts/nav.css" type="text/css">
+        <link rel="stylesheet" href="../../../resources/css/parts/footer.css" type="text/css">
         <script src="https://kit.fontawesome.com/29724e3467.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="resources/css/app.css">
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-      
-      <style>
-        .scrollbar-hide {
-          /* Para navegadores webkit (Chrome, Safari, Edge) */
-          -ms-overflow-style: none;  /* Internet Explorer 10+ */
-          scrollbar-width: none;  /* Firefox */
-          overflow: auto;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;  /* Safari y Chrome */
-          width: 0;
-          background: transparent;
-        }
-        
-        .scrollbar-show {
-          -ms-overflow-style: auto;   /* IE y Edge */
-          scrollbar-width: auto;      /* Firefox */
-          overflow: auto;
-        }
-        .scrollbar-show::-webkit-scrollbar {
-          display: block;             /* Chrome, Safari y Opera */
-          width: initial;
-          background: initial;
-        }
-        
-        .boton-primario {
-        background-color: #17821B;
-        color: white;
-        border-radius: 20px;
-        border: 1px solid #17821B;
-        font-family: 'Raleway', sans-serif;
-      }
-      
-      .boton-primario:hover {
-        background-color: #004613;
-        border: 1px solid #004613;
-      }
-        
-          
-      .boton-secundario {
-        background-color: transparent;
-        color: white;
-        border-width: 2px;
-        border-style: solid;
-        border-color: white;
-        border-radius: 20px;
-        font-family: 'Raleway', sans-serif;
-      }
-      
-      .boton-secundario:hover {
-        background-color: #17821B; /* Tailwind color "primary" */
-        color: white;
-        border-color: #17821B;     /* Tailwind color "primary" */
-        border-radius: 20px;
-        font-family: 'Raleway', sans-serif;
-      }
-      .input-forms{
-        border: 1px solid #E0E0E0;
-        background-color: #F9F9F9;
-        border-radius: 10px;
-        padding: 10px;
-        margin-top: 10px;
-        width: 100%;
-        box-sizing: border-box;
-      }
-      </style>
-            <script src="https://cdn.tailwindcss.com"></script>
-      
-            <!-- Configuración extendida via CDN -->
-            <script>
-              tailwind.config = {
-                theme: {
-                  extend: {
-                    colors: {
-                      primary: '#17821B',
-                      primaryhover: '#004613',
-                    },
-                    fontFamily: {
-                      raleway: ['Raleway', 'sans-serif'],
-                      monserrat: ['Montserrat', 'sans-serif'],
-                      rasa: ['Rasa', 'serif'],
-                    },
-                  }
-                }
-              }
-            </script>
-          
-            <!-- Google Fonts -->
-            <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Rasa:wght@400;700&display=swap" rel="stylesheet">
-          
-            <style type="text/tailwindcss">
-              @layer utilities {
-                /* Altura personalizada como media queries */
-                @media (max-height: 470px) {
-                  .h470\:text-xs { font-size: 0.75rem; }
-                }
-                @media (max-height: 600px) {
-                  .h600\:text-sm { font-size: 0.875rem; }
-                }
-                @media (max-height: 800px) {
-                  .h800\:py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-                }
-                /* Agregá más utilidades según lo necesites */
-              }
-            </style>
-      
-      </head>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Rasa:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    </head>
 
 <body>
-    <nav class="flex bg-white p-4 w-full justify-center shadow">
+    <header class="header">
+        <nav class="navbar">
+            <a href="../../../index.html">
+                <div class="navbar-content">
+                    <img src="../../../images/logo.jpg" alt="Logo" class="navbar-logo">
+                    <h1 class="navbar-title">Fory Factory</h1>
+                </div>
+            </a>
+
+            <ul class="navbar-menu">
+                <li><a href="../../../index.html">Inicio</a></li>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Contacto</a></li>
+                <li><a href="#">Sobre Nosotros</a></li>
+            </ul>
+
+            <!-- Menú desplegable para móviles -->
+            <div class="navbar-dropdown">
+                <i class="fa-solid fa-bars fa-2xl" id="icon-menu"></i>
+
+            </div>
+
+            <div class="navbar-buttons">
+                <a href="Login.html" id="navbar-btn-login">Iniciar Sesión</a>
+                <a href="Register.html" class="boton-primario" id="navbar-btn-register">Crear Cuenta</a>
+            </div>
+        </nav>
+    </header>
     
 
+    <!---------------MAIN CONTENT-->
+    <main>
+        <div class="container-register">
 
-        <a href="../../../public/index.html" class="flex justify-start w-full">
-            <img src="../../../public/images/logo.jpg" id="logo" alt="logo" class="2xl:w-[60px] 2xl:h-[60px] sm:w-[50px] sm:h-[50px] object-contain">
-            <h1 class="text-primary font-raleway font-bold 2xl:text-3xl 2xl:pt-2 2xl:pl-2 sm:text-lg sm:pt-3 sm:pl-1 underline underline-offset-8 decoration-2 underline-primary whitespace-nowrap xl:text-xl">Fory Factory</h1>
-        </a>
-      
-        <!-- MENU MAIN -->
-          <div id="menu" class="text-black md:flex flex-row 2xl:gap-10 items-center justify-center w-full font-raleway sm:hidden md:text-sm md:gap-4 md:pr-10 xl:text-base xl:gap-6 ">
-            <a href="/" class="hover:text-primary">Inicio</a>
-            <a href="/productos" class="hover:text-primary">Productos</a>
-            <a href="#" class="hover:text-primary">Contacto</a>
-            <a href="#" class="hover:text-primary">Sobre nosotros</a>
-          </div>
-      
-          <!-- MENU DESPLEGABLE -->
-      <div class="sm:block md:hidden relative w-48">
-        <!-- Botón -->
-        <button id="menu-button" class="flex items-center justify-between w-full text-sm bg-white text-gray-800 px-4 py-2 mt-2 rounded-md border border-bg-gray-200 shadow-md shadow-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary">
-          Categorías
-          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="-mr-1 size-5 text-gray-400">
-            <path d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
-          </svg>
-        </button>
-      
-        <!-- Opciones del menú -->
-        <div id="dropdown-menu" class="hidden absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg">
-          <a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Inicio</a>
-          <a href="/productos" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Productos</a>
-          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Contacto</a>
-          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sobre Nosotros</a>
-        </div>
-      </div>
-      
-          <!-- BOTONES NAVBAR -->
-          <div id="buttons-nav" class="inline-flex items-center justify-end w-full lg:gap-3 lg:text-base sm:text-sm sm:gap-3 ">
-            <a href="/login">
-              <button class="btn text-black hover:font-medium font-raleway">Iniciar sesión</button>
-            </a>
-            <a href="../App/View/Auth/register">
-              <button class="boton-primario px-4 py-2">Crear Cuenta</button>
-            </a>
-      
+        <section class="register-background">
+        <img src="../../../images/bg/bg-register.jpg" alt="Fondo página registro." class="">
+        </section>
+
+        <form class="form-login" id="form-login" action="../../Functions/LoginController.php" method="POST">
+            <div class="form-container-title">
+                <h1 class="form-title">¡Bienvenido de nuevo!</h1>
+                <p class="form-description">Inicia sesión en tu cuenta</p>
+                <hr class="form-divisor">
+<!-- 
+                <div id="alert">
+                    <h3>¡Éxito!</h3>
+                    <p>Te has registrado correctamente. Porfavor inicia sesión abajo.</p>
+                </div> -->
+
+                <div class="form-container-login">
+                    <label for="email">Dirección de correo electrónico</label>
+                    <input type="email" id="email" name="email" class="input-forms-login" placeholder="example@gmail.com" autocomplete="email" required>
+
+                    <label id="label_password" for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" autocomplete="password" class="input-forms-login" required>
+
+                    <button type="submit" class="form-btn-submit-login">
+                    Iniciar sesión
+                    </button>
+
+                    <a href="" class="password-loss">¿Haz olvidado tu contraseña?</a>
+                    <hr class="form-login-divisor">
+
+
+                    <label class="no-register-login">
+                    No tienes una cuenta?
+                        <a href="Register.html" class="no-register-a-login">Regístrate aquí</a>
+                    </label>
+                </div>
+            </div>
             
-      
-          </div>
-          
-      
-        </nav>
-        <hr class="border-1 border-neutral-200 w-full">
-
-    <div class="flex h-screen">
-
-      <div class="flex flex-row w-3/5  object-cover">
-        <img src="../../../public/images/bg/bg-register.jpg" alt="Fondo página registro." class="shadow-lg shadow-gray-400 rounded-xl m-4 mb-28 ">
-
-      </div>
-
-      <div class="flex flex-col w-2/5 shadow-lg shadow-gray-400 rounded-xl m-4 mb-28  ">
-        <h1 class="flex flex-col font-rasa font-medium lg:text-8xl text-primary text-center w-full pt-7">Bienvenido de nuevo!</h1>
-        <p class="flex flex-col font-monserrat font-light lg:text-2xl text-center w-full pt-1">Inicia sesión en tu cuenta</p>
-        <hr class="flex flex-col mt-6 mx-10">
-
-        <form action="../../Functions/LoginController.php" method="POST" class="flex flex-col w-full">
-          <div class="flex flex-col">
-            <label class="font-raleway font-medium lg:text-lg pt-10 text-center">Dirección de correo electrónico</label>
-            <input type="email" name="email" class=" border border-gray-400 bg-gray-50 rounded-lg mt-1.5 px-20 py-1.5 self-center hover:border-primary focus:outline-primary" placeholder="juan@gmail.com" required>
-            
-            <label class="font-raleway font-medium lg:text-lg pt-5 text-center">Contraseña</label>
-            <input type="password" name="password" class=" border border-gray-400 bg-gray-50 rounded-lg mt-1.5 px-20 py-1.5 self-center hover:border-primary focus:outline-primary" placeholder="" required>
-
-
-            <button type="submit" class="boton-primario px-6 py-2 mt-10 self-center">Iniciar sesión</button>
-            <a href="/" class="text-center mt-6 font-semibold hover:text-gray-700">¿Haz olvidado tu contraseña?</a>
-            <hr class="mt-6">
-            <label class="text-center mt-6">¿No tienes cuenta? <a href="/login" class="text-blue-800 font-semibold hover:text-blue-400">Regístrate aquí</a></label>
-          </div>
-
-          
-
         </form>
+        </div>
+    </main>
 
-      </div>
+    <footer class="footer">
+        <div class="footer-main-content">
 
+            <div class="footer-container1">
+                <div class="footer-content-1">
+                    <h4 class="footer-content1-h4">Fory Factory</h4>
+                    <p id="footer-content1-description">Especialistas en fabricación de productos de alta calidad. Comprometidos con la excelencia y la innovación en cada proyecto.</p>
+                </div>
+            </div>
 
-    </div>
+            <div class="footer-container2">
+                <div class="footer-content-2">
+                    <h4 class="footer-content2-h4">Atajos</h4>
+                    <a class="footer-content2-a" href="/">Inicio</a>
+                    <a class="footer-content2-a" href="/productos">Productos</a>
+                    <a class="footer-content2-a" href="/sobre-nosotros">Sobre nosotros</a>
+                </div>
+            </div>
+            
+            <div class="footer-container3">
+                <div class="footer-content-3">
+                    <h4 class="footer-content3-h4">Contacto</h4>
+                    <p class="footer-content3-a">contacto@foryfactory.com</p>
+                    <p class="footer-content3-a">+598 99 999 999</p>
+                    <p class="footer-content3-a">Av. Río Negro 1711, Ciudad de la costa</p>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-divisor">
+
+        <div class="footer-content4">
+            <p id="footer-derechos" class="">© 2025 Fory Factory. Todos los derechos reservados.</p>
+            <p id="footer-developedBy" class="">Desarrollado por TEN</p>
+        </div>
+
+    </footer>
+    <script src="../../../resources/js/Auth/Login.js"></script>
 </body>
-<footer class="flex flex-col bg-green-900 text-white">
-
-    <div class="flex flex-row w-full h-full pt-10 px-10">  
-      <div class="flex flex-col font-raleway text-base w-1/3 ">
-        <p class="font-semibold">Fory Factory</p>
-        <p class="font-normal pt-4 items-left">Especialistas en fabricación de productos de alta calidad. Comprometidos con la excelencia y la innovación en cada proyecto.</p>
-      </div>
-  
-      <div class="flex flex-col font-raleway text-base w-2/3">
-        <h5 class="font-semibold self-center">Atajos</h5>
-        <a class="pt-4 self-center hover:text-black" href="/">Inicio</a>
-        <a class="pt-2 self-center hover:text-black" href="/productos">Productos</a>
-        <a class="pt-2 self-center hover:text-black" href="/sobre-nosotros">Sobre nosotros</a>
-      </div>
-  
-      <div class="flex flex-col font-raleway text-base w-1/3">
-        <h5 class="self-end font-semibold">Contacto</h5>
-        <p class="pt-4 self-end">contacto@foryfactory.com</p>
-        <p class="pt-2 self-end">+598 99 999 999</p>
-        <p class="pt-2 self-end">Calle pepito 123, Ciudad de la costa</p>
-      </div>
-    </div>
-  
-    <hr class="border border-gray-300 w-4/5 self-center mt-8 ">
-  
-    <div class="flex py-4 w-full justify-center">
-      <p id="derechos" class="flex font-raleway text-sm ">© 2025 Fory Factory. Todos los derechos reservados.</p>
-      <p id="developed-by" class="flex font-raleway text-sm pl-20 ">Desarrollado por inc inc  </p>
-    </div>
-  
-  </footer>
-
 </html>

@@ -1,34 +1,83 @@
 <?php
 session_start();
+header("Content-Type: application/json"); // Indica que la respuesta que va a devolver el servidor será en formato JSON.
 require "../../db.php";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
+$email = $_POST["email"] ?? ''; // ??: sirve para asignar una cadena vacía si el campo no existe
+$password = $_POST["password"] ?? '';
 
-    // Validación básica
-    if (empty($email) || empty($password)) {
-        echo "<script>alert('Todos los campos son obligatorios');window.location.href='login.html';</script>";
-        exit();
-    }
-
-    // Buscar usuario por email
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->execute([$email]);
-    $user = $stmt->fetch();
-
-    if ($user && password_verify($password, $user['password'])) {
-        // Éxito: guardar sesión
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_name'] = $user['name'];
-        header("Location: ../../public/index.html");
-        exit();
-    } else {
-        echo "<script>alert('Correo o contraseña incorrectos');window.location.href='../../public/login.html';</script>";
-        exit();
-    }
-} else {
-    // Acceso por GET (no debería pasar)
-    header("Location: ../../public/index.html");
-    exit();
+if (empty($email) || empty($password)){
+    echo json_encode([
+        "success" => false,
+        "message" => "Todos los campos son obligatorios"
+    ]);
+    exit;
 }
+
+try {
+    $stmt = $pdo->prepare("SELECT * FROM usuario WHERE mail = ?");
+    $stmt->execute([$email]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if(!$usuario){
+            echo json_encode([
+            "success" => false,
+            "message" => "El correo eléctronico no esta asociado a ninguna cuenta."
+        ]);
+        exit;
+    }
+        $password_hasheada = $usuario['contraseña'];
+
+        if (password_verify($password,$password_hasheada )){
+            $rol_usuario = $usuario['id_rol'];
+            switch ($rol_usuario) {
+                case 1:
+                        $rol = "Rol cliente";
+                    break;
+                case 2:
+                        $rol = "Rol administrador";
+                    break;
+                case 3:
+                        $rol = "Rol mozo";
+                    break;
+                case 4:
+                        $rol = "Rol cocinero";
+                    break;
+                case 5:
+                        $rol = "Rol cajero";
+                    break;
+                case 6:
+                        $rol = "Rol delivery";
+                    break;
+                default:
+                    $rol = "ERROR";           
+            }
+            $_SESSION['usuario'] = $usuario['nombreCompleto'];
+            $_SESSION['mail'] = $usuario['mail'];
+            echo json_encode([
+                "success" => true,
+                "message" => "Haz iniciado sesión correctamente.",
+                "rol" => $rol
+
+            ]);
+                exit;
+            
+
+        }else{
+            echo json_encode([
+            "success" => false,
+            "message" => "La contraseña no es correcta. Verificala y intenta nuevamente."
+            ]);
+            exit;   
+        }
+
+    
+    
+
+    
+
+} catch (PDOException $e) {
+    echo json_encode(["success" => false, "message" => "Error al registrar: " . $e->getMessage()]);
+}
+
+    

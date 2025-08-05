@@ -1,4 +1,8 @@
-<!-- -->
+
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es" class="scrollbar-hide">
 <head>
@@ -7,18 +11,19 @@
     <title>Fory Factory | Inicio</title>
 
     <link rel="icon" href="images/logo.jpg" type="image/x-icon">
-    <link rel="stylesheet" href="resources/css/main.css " type="text/css">
+    <link rel="stylesheet" href="resources/css/main.css" type="text/css">
     <link rel="stylesheet" href="resources/css/main-responsive.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/components.css " type="text/css">
+    <link rel="stylesheet" href="resources/css/components.css" type="text/css">
     <link rel="stylesheet" href="resources/css/parts/nav.css" type="text/css">
     <link rel="stylesheet" href="resources/css/parts/footer.css" type="text/css">
     <script src="https://kit.fontawesome.com/29724e3467.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Rasa:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <nav class="navbar">
-            <a href="index.html">
+            <a href="index.php">
                 <div class="navbar-content">
                     <img src="images/logo.jpg" alt="Logo" class="navbar-logo">
                     <h1 class="navbar-title">Fory Factory</h1>
@@ -26,7 +31,7 @@
             </a>
 
             <ul class="navbar-menu">
-                <li><a href="/">Inicio</a></li>
+                <li><a href="index.php">Inicio</a></li>
                 <li><a href="#">Productos</a></li>
                 <li><a href="#">Contacto</a></li>
                 <li><a href="#">Sobre Nosotros</a></li>
@@ -39,8 +44,51 @@
             </div>
 
             <div class="navbar-buttons">
-                <a href="app/View/Auth/Login.html"></a><button id="navbar-btn-login">Iniciar Sesión</button></a>
-                <a href="app/View/Auth/Register.html"><button class="boton-primario" id="navbar-btn-register">Crear Cuenta</button></a>
+                <a href="app/View/Auth/Login.html" id="navbar-btn-login">Iniciar Sesión</a>
+                <a href="app/View/Auth/Register.html" class="boton-primario" id="navbar-btn-register">Crear Cuenta</a>
+            </div>
+
+            <div class="navbar-buttons-logged">
+                <a href="#favoritos" class="icon-nav-logged"><i class="fa-regular fa-heart fa-2xl" ></i></a>
+                <a href="#cartera" class="icon-nav-logged"><i class="fa-solid fa-cart-shopping fa-2xl"></i></a>
+                <div class="profile-logged">
+                    <a id="icon-profile-nav"><img src="images/default-photo.webp" alt="" id="photo-profile-img"></a>
+
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <ul id="dropdownMenu-list">
+                            <li id="li-profile">
+                                <img src="images/default-photo.webp" id="photo-profile-img-li">
+                                <div class="profile-info">
+                                    
+                                    <span class="username"><?php echo $_SESSION["usuario"]; ?></span>
+                                    <span class="email"><?php echo $_SESSION["mail"]; ?></span>
+                                </div>
+                            </li>
+                            <li class="dropdown-item">
+                                <i class="fa-regular fa-user"></i>
+                                <a href="app/View/Dashboard/myProfile.html" class="options-profile">Mi perfil</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <i class="fa-solid fa-gear"></i>
+                                <a href="#" class="options-profile">Configuración</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <i class="fa-regular fa-bell"></i>
+                                <a href="#" class="options-profile">Notificaciones</a>
+                            </li>
+                            <hr>
+                            <li class="dropdown-item">
+                                <i class="fa-regular fa-moon"></i>
+                                <a href="#" class="options-profile">Modo oscuro</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <i class="fa-solid fa-right-from-bracket options-profile-logout"></i>
+                                <a href="#" class="options-profile-logout" id="logout">Cerrar sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
             </div>
         </nav>
     </header>
@@ -51,7 +99,7 @@
         <div class="page1-content">
             <img class="page1-image" src="images/bg/page1.jpg" alt="Imagen página 1">
             <div class="page1-overlay">
-                <h2 class="page1-title">Descubre el sabor de la excelencia</h2>
+                <h2 class="page1-title">Descubre el sabor de la <i>excelencia</i></h2>
                 <p class="page1-description">
                     No podemos cambiar el mundo, ni las injusticias, pero sí podemos hacer que tu día tenga un final feliz con nuestras hamburguesas. ¡Este es nuestro propósito!
                 </p>
@@ -59,10 +107,10 @@
                     <button class="boton-primario" id="page1-btn-menu">Ver menú</button>
                     <button class="boton-secundario" id="page1-btn-reservar">Reservar mesa</button>
                 </div>
-                <svg fill="#000000" viewBox="0 0 39 50" class="page1-animated-arrow" xmlns="http://www.w3.org/2000/svg">
-                    <polyline points="19 14 12 21 5 14" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;" />
-                    <polyline points="5 3 12 10 19 3" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;" />
-                </svg>
+                    <svg fill="#000000" viewBox="0 0 39 50" class="page1-animated-arrow" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="19 14 12 21 5 14" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;" />
+                        <polyline points="5 3 12 10 19 3" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;" />
+                    </svg>
             </div>
         </div>
 

@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'proyectoegreso';
+$dbname = 'fory_factory_db';
 $username = 'root'; // o el usuario que tengas
 $password = '';     // tu contraseña
 
