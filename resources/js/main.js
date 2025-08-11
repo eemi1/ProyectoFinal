@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function navLoggeado(){
     try{
-    fetch("app/Functions/check.php?action=verificar")
+    fetch("/proyectoFinal/app/Functions/check.php?action=verificar")
         .then(res => res.json())
         .then(data => {
             if (data.success) {
@@ -42,43 +42,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 }
 
-function cerrarSesion(){
-        const btn_cerrarSesion = document.getElementById("logout")
+function cerrarSesion() {
+    const btn_cerrarSesion = document.getElementById("logout");
 
-        btn_cerrarSesion.addEventListener("click", (e) =>{
-            fetch("app/Functions/check.php?action=cerrar", {
-                        method: 'POST',
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success){
-                            Swal.fire({
-                                title: '¿Estás seguro?',
-                                text: 'Estás seguro que deseas cerrar sesión?',
-                                icon: 'question',
-                                showCancelButton: true,
-                                confirmButtonText: 'Cerrar sesión',
-                                cancelButtonText: 'Cancelar',
-                                cancelButtonColor: "#d33",
-                                
-                            }).then((result)=>{
-                                if (result.isConfirmed){
-                                    Swal.fire({
-                                        title: 'Nos vemos!',
-                                        text: `Cerraste sesión correctamente.`,
-                                        icon: 'success',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    }).then(()=>{
-                                        window.location.replace("index.php");
-                                    })
-
-                                }
-                            })                           
-                        }else{
-                            return;
-                        }
-                    })
-        })
-    }
+    btn_cerrarSesion.addEventListener("click", () => {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¿Deseas cerrar sesión?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Cerrar sesión',
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: "#d33",
+            customClass: {
+                popup: 'swal-custom-font'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch("/proyectoFinal/app/Functions/check.php?action=cerrar", {
+                    method: 'POST',
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: '¡Nos vemos!',
+                            text: 'Cerraste sesión correctamente.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            customClass: {
+                                popup: 'swal-custom-font'
+                            }
+                        }).then(() => {
+                            window.location.replace("/proyectoFinal/index.php");
+                        });
+                    }
+                });
+            }
+        });
+    });
+}
 

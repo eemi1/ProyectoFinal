@@ -53,7 +53,11 @@ try {
                     $rol = "ERROR";           
             }
             $_SESSION['usuario'] = $usuario['nombreCompleto'];
-            $_SESSION['mail'] = $usuario['mail'];
+            $_SESSION['email'] = $usuario['mail'];
+            $_SESSION['tel'] = $usuario['telefono'];
+            $_SESSION['fechaNacimiento'] = $usuario['fechaNacimiento'];
+
+
             echo json_encode([
                 "success" => true,
                 "message" => "Haz iniciado sesión correctamente.",

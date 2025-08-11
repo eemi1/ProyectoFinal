@@ -60,30 +60,38 @@ session_start();
                                 <img src="images/default-photo.webp" id="photo-profile-img-li">
                                 <div class="profile-info">
                                     
-                                    <span class="username"><?php echo $_SESSION["usuario"]; ?></span>
-                                    <span class="email"><?php echo $_SESSION["mail"]; ?></span>
+                                    <span class="username"><?php echo $_SESSION["usuario"] ?? ''; ?></span>
+                                    <span class="email"><?php echo $_SESSION["email"] ?? ''; ?></span>
                                 </div>
                             </li>
                             <li class="dropdown-item">
-                                <i class="fa-regular fa-user"></i>
-                                <a href="app/View/Dashboard/myProfile.html" class="options-profile">Mi perfil</a>
+                                <a href="app/View/Dashboard/myProfile.php" class="options-profile">
+                                    <i class="fa-regular fa-user"></i>
+                                    Mi perfil</a>
                             </li>
                             <li class="dropdown-item">
-                                <i class="fa-solid fa-gear"></i>
-                                <a href="#" class="options-profile">Configuración</a>
+                                <a href="#" class="options-profile">
+                                    <i class="fa-solid fa-gear"></i>
+                                    Configuración</a>
                             </li>
                             <li class="dropdown-item">
-                                <i class="fa-regular fa-bell"></i>
-                                <a href="#" class="options-profile">Notificaciones</a>
+                                <a href="#" class="options-profile">
+                                    <i class="fa-regular fa-bell"></i>
+                                    Notificaciones
+                                </a>
                             </li>
                             <hr>
                             <li class="dropdown-item">
-                                <i class="fa-regular fa-moon"></i>
-                                <a href="#" class="options-profile">Modo oscuro</a>
+                                <a href="#" class="options-profile">
+                                    <i class="fa-regular fa-moon"></i>
+                                    Modo oscuro
+                                </a>
                             </li>
                             <li class="dropdown-item">
-                                <i class="fa-solid fa-right-from-bracket options-profile-logout"></i>
-                                <a href="#" class="options-profile-logout" id="logout">Cerrar sesión</a>
+                                <a href="#" class="options-profile-logout" id="logout">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    Cerrar sesión
+                                </a>
                             </li>
                         </ul>
                     </div>

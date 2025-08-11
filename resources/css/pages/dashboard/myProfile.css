@@ -7,11 +7,464 @@
 html, body {
     height: 100%;
     font-family: 'Raleway', sans-serif;
-    background-color: rgb(218, 218, 218);
+}
+.accountDetails-photo-Title,
+.content1,
+.content2,
+.afr-top-content,
+.statistics{
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 5px;
+    background-color:white;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.075);
+
+    
 }
 
 .main{
+background-color: hsl(142, 69%, 98%);
+    /* background: linear-gradient(to right, #1fc42723, #17821b41); */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin-top: 110px;
+}
+.mainTitle{
+    display: flex;
+    font-family: 'Raleway' sans-serif;
+    font-size: 2rem;
+    padding-left: 30px;
+    padding-top: 20px;
+    font-weight: bold;
+    align-content: center;
+    justify-content: center;
+}
+.mainSubtitle{
+    padding-left: 30px;
+    padding-top: 10px;
+    font-size:0.9rem ;
+    display: flex;
+    align-content: center;  
+    justify-content: center;
+}
+.tabOptions{
+    display: flex;
+    flex-direction: row;
+    width: 62.5em;
+    height: 60px;
+    list-style-type: none;
+    gap: 20px;
+    padding: 10px 0px;
+    margin:20px 24%;
+    align-content: center;
+    justify-content: center;
+    border: 1px solid #b8b8b8;
+    border-radius: 5px;
+    background-color: white;
+
+}
+
+.tabOptions a{
+    display: flex;
+    color:rgb(59, 59, 59);
+    text-decoration: none;
+    /* font-weight: bold; */
+    padding: 8px 8px;
+}
+
+.tabOptions i {
+    width: 10px;
+    height: 10px;
+    padding-right: 20px;
+}
+
+.tabOptions a:hover, .tabOptions a:active, .tabOptions a:focus{
+    background: linear-gradient(90deg,rgba(80, 128, 98, 1) 0%, rgba(0, 184, 21, 1) 100%);
+    color: white;
+    border-radius: 5px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+#datosPersonales{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 20px;
+    
+}
+
+#pedidos, #favoritos, #reservas, #recompensas, #reseñas{
+    display: flex;
     width: 100%;
     height: 100vh;
-    background-color: antiquewhite;
+}
+
+.accountDetails-photo-Title{
+    width: 62.5em;
+    height: 12rem;
+    margin: 20px;
+    margin-left: 24%;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.075);
+    
+}
+.mainTitle-photo{
+    display: flex;
+    padding-top: 10px;  
+    color: #17821B;  
+}
+.mainTitle-photo i{
+    padding-top: 23px;
+    padding-left: 20px;
+    padding-right: 10px;
+    color: #17821B;
+
+}
+.mainSubtitle-photo{
+    padding-left: 20px;
+    padding-top: 5px;
+    color: grey;    
+}
+
+.accountDetails-photo{
+    display: flex;
+    width: 62.5em;
+    height: 110px;
+}
+
+.accountDetails-photo img{
+    padding: 15px 15px;
+}
+#avatar{display: none;}
+
+.uploadImage-content{
+    display: flex;
+    flex-direction: column;
+
+}
+.avatar-lbl{
+    border: 1px solid rgb(189, 189, 189);
+    border-radius:5px ;
+    width: 100%;
+    height: 40px;
+    margin-top: 20px;
+    padding: 10px 10px;
+    cursor:pointer;
+    background: white;
+}
+.avatar-lbl:hover{
+    background: linear-gradient(90deg,rgba(80, 128, 98, 1) 0%, rgba(0, 184, 21, 1) 100%);
+    color: white;
+    border: 1px solid white;
+    transition: background 0.3s ease, color 0.3s ease;
+
+}
+.avatar-lbl i{padding-right: 10px;}
+.avatar-p{
+    font-size: 12px;
+    color: grey;
+    padding-top: 10px;
+
+}
+
+.main-personalInformation{
+    width: 100%;
+    height: 80px;
+    padding: 20px 20px;
+}
+.mainSubtitle-personalInformation{
+    padding-top: 5px;
+    color: grey;   
+}
+.personalInformationAndLocation{
+    display: flex;
+    flex-direction: row;
+    width: 62.5em;
+    height: 35em;
+    margin-left: 24%;
+    gap: 10px;
+    justify-content: space-between;
+    
+}
+.content1, .content2{
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+    height: 100%;
+}
+.container-btn-edit{
+    display: flex;
+    width: 30%;
+    align-items: start;
+    justify-content: end;
+}
+.btns-SaveAndCancel{
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: end;
+}
+
+.btn-edit{
+    display: flex;
+    text-align:end;
+    width: 80px;
+    justify-content:space-between;
+    background-color: #32804D;
+    border-radius: 5px;
+    border: 1px solid #17821B;
+    color: white;
+    font-size: 15px;
+    padding: 5px;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+    margin-bottom: 0px;
+    font-style: bold;
+}
+.btn-save{
+    display: none;
+    text-align:end;
+    width: 90px;
+    justify-content:space-between;
+    background-color: #32804D;
+    border-radius: 5px;
+    border: 1px solid #17821B;
+    color: white;
+    font-size: 15px;
+    padding: 5px;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+    font-style: bold;
+    height: 40px;
+}
+.btn-cancel{
+    display: none;
+    text-align:end;
+    width: 90px;
+    justify-content:space-between;
+    background-color: #ff1e00;
+    border-radius: 5px;
+    border: 1px solid #ff1e00;
+    color: white;
+    font-size: 15px;
+    padding: 5px;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+    font-style: bold;
+    height: 40px;
+}
+
+.mainTitle-content2, .mainTitle-content1, .mainTitle-afr, .mainTitle-statistics{
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    color: #17821B;
+
+
+}
+
+.mainTitle-content1{justify-content: space-between;}
+.mainTitle-content2 i, .mainTitle-content1 i, .mainTitle-afr i, .mainTitle-statistics i{
+    padding-top: 23px;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+
+.Title-h2{
+    display: flex;
+    width: 70%;
+}
+.content2-title, .content1-title, .afr-title, .statistics-title{
+    padding-top: 10px;
+    
+}
+.afr-selected-title{
+    padding-left: 20px;
+    padding-top: 20px;
+    color:#17821B ;
+}
+
+.content1-subtitle, .content2-subtitle , .afr-subtitle, .statistics-subtitle{
+    padding-left: 20px;
+    padding-top: 5px;
+    color: grey;   
+
+}
+
+.afr-subtitle{
+    color: red;
+}
+.content1-form, .content2-form{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px;
+}
+.content1-form label, .content2-form label{
+    padding-bottom: 10px;
+    padding-top: 20px;
+/*     font-weight: bold;*/
+}
+.content1-form input, .content2-form input{
+    padding: 10px 5px;
+    border-radius: 5px;
+    border: 1px solid #b8b8b8;
+}
+
+
+#input-email, .content1-form input{
+    outline: none;
+    background-color: #ececec;
+}
+.content2-form-input2{
+    height: 100px;
+}
+
+.allergiesAndfoodRestrictions{
+    width: 62.5em;
+    height: 30em;
+    margin-left: 24%;
+    margin-top: 20px;
+}
+
+.afr-content-checkbox{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 25em;
+    border-radius: 5px;
+    padding:20px 20px;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.075);
+}
+.afr-container-checkbox{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #b8b8b8;
+    border-radius: 5px;
+    width:250px ;
+    height: 30px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.afr-content-checkbox label{
+    font-size: 16px;
+    margin-top: 2%;
+}
+.afr-content-checkbox input{
+    width: 20px;
+    height: 100%;
+    flex-wrap: wrap;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.afr-selected{
+    width:100%;
+    height: 10em;
+    background-color: rgba(206, 206, 206, 0.349);
+    margin-top: 10px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.afr-selected-content-title{
+    display: flex;
+}
+.afr-selected-content-title h5, .afr-selected-content-title i{
+    padding-left: 20px;
+    padding-top: 20px;
+}
+.statistics{
+    width: 62.5em;
+    margin-left: 24%;
+    margin-top: 20px;
+    height: 30em;
+}
+
+.mainContainer{
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+
+}
+
+.totalReservations, .totalFavorites, .totalExpense, .lastReservation{
+    width: 22%;
+    height: 10em;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.5em;
+    border-radius: 10px;
+    align-items: start;
+    justify-content: center;
+    text-align: center;
+}
+.totalReservations{background-color:#CFECD9;}
+.totalFavorites{background-color: #FDC2C5;}
+.totalExpense{background-color: #FEE8BE ;}
+.lastReservation{background-color:#C5CFFA ;}
+
+#divisor-statistics{
+    width: 95%;
+    height: 1px;
+    display: flex;
+    margin-left: 2%;
+    margin-top: 5em;
+    border: 1px solid #b8b8b859;
+}
+.member{
+    display: flex;
+    margin-top: 30px;
+    margin-left: 20px;
+    color: #b8b8b8;
+    font-size: 15px;
+}
+
+.member i{
+    margin-right: 10px;
+}
+#totalReservations-h5, #totalFavorites-h5, #totalExpense-h5, #lastReservation-h5{
+    font-size: 40px;
+    width: 100%;
+}
+#totalReservations-h5, #totalReservations-h4, #totalReservations-p{color:#32804D;}
+#totalFavorites-h5, #totalFavorites-h4, #totalFavorites-p{color:#B90710;}
+#totalExpense-h5,#totalExpense-h4,#totalExpense-p{color:#B77802;}
+#lastReservation-h5, #lastReservation-h4, #lastReservation-p{color:#102EB0;}
+
+#totalReservations-h4, #totalFavorites-h4, #totalExpense-h4, #lastReservation-h4{
+    width: 100%;}
+#totalReservations-p, #totalFavorites-p, #totalExpense-p, #lastReservation-p{
+    width: 100%;}
+
+.active{
+    background: linear-gradient(90deg,rgba(80, 128, 98, 1) 0%, rgba(0, 184, 21, 1) 100%);
+    color: white;
+    border-radius: 5px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+.pedidos-default, .favoritos-default,
+.reservas-default,
+.recompensas-default,
+.reseñas-default{width: 100%;}
+#container-default-text{
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: start;
+    padding-top: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+#default-title, #default-subtitle{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
 }

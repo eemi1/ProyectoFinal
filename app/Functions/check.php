@@ -4,17 +4,17 @@ header("Content-Type: application/json");
 
 function verificarSesion() {
     if (isset($_SESSION['usuario'])){
-        echo json_encode(["success" => true]);
+        echo json_encode(["success" => true, "message" => "Usuario loggeado."]);
             exit;
     }else{
-        echo json_encode(["success" => false]);
+        echo json_encode(["success" => false, "message" => "Usuario no loggeado." ]);
             exit;
     }
 }
 
 function cerrarSesion(){
     session_destroy();
-    echo json_encode(["success" => "logueo exitoso"]);
+    echo json_encode(["success" => "true" , "message" => "Sesión cerrada correctamente"]);
 }
 
 // RUTEO
