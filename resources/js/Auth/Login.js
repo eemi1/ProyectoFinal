@@ -17,12 +17,16 @@ try{
             if (data.success){
                     Swal.fire({
                         title: 'Bienvenido de nuevo!',
-                        text: `${data.message} con el ${data.rol}`,
+                        text: `${data.message} con el ${data.nameRol}`,
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 1500
                     }).then(()=>{
-                        window.location.replace("../../../index.php");
+                        if (data.id_rol == "2"){
+                            window.location.replace("/proyectoFinal/app/View/DashboardAdmin/adminPanel.php");
+                        }else{
+                            window.location.replace("/proyectoFinal/index.php");
+                        }
                     })
             }else{
                 console.log("error de autenticación")

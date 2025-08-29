@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Inicializar botones
     initButtons();
+    FechaMiembro();
+    abrirModalDireccion()
+
 });
 
 function openTab(event, tabOption){
@@ -87,7 +90,7 @@ function initButtons() {
             if(result.isConfirmed){
                 const formData = new FormData(form);
 
-                fetch("/proyectoFinal/app/Functions/myProfile/saveController.php", {
+                fetch("/proyectoFinal/app/Functions/myProfile/myProfile.php?action=saveController", {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin'
@@ -163,4 +166,38 @@ function initButtons() {
         btnCancel.style.display = 'none';
         containerSaveAndCancel.style.display = 'none';
     });
+}
+
+function FechaMiembro(){
+    fetch("/proyectoFinal/app/Functions/myProfile/myProfile.php?action=fechaMiembro", {
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.querySelector('.member-since').textContent = 'Miembro desde: ' + data.fechaFormateada;
+        }
+    });
+}
+
+function abrirModalDireccion() {
+const modal = document.getElementById("modalDireccion");
+const btn = document.getElementById("btnAgregarDireccion");
+const close = document.querySelector(".close");
+
+// Mostrar modal
+btn.onclick = () => {
+    modal.style.display = "block";
+};
+
+// Cerrar modal al hacer clic en la X
+close.onclick = () => {
+    modal.style.display = "none";
+};
+
+// Cerrar modal si se hace clic fuera del contenido
+window.onclick = (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+};
 }

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -188,7 +189,7 @@ session_start();
                 </div>
                 <p class="content1-subtitle">Actualiza tus datos personales</p>
 
-                <form action="saveController.php" method="POST" class="content1-form" id="formPerfil" >
+                <form action="myProfile.php?action=saveController" method="POST" class="content1-form" id="formPerfil" >
                     <label for="">Nombre completo:</label>
                     <input type="text" name="nombreCompleto" class="content1-form-input" required readonly data-original-value="<?php echo $_SESSION["usuario"] ?? ''; ?>" value="<?php echo $_SESSION["usuario"] ?? ''; ?>">
                     <label for="">Email:</label>
@@ -215,16 +216,33 @@ session_start();
                     <i class="fa-solid fa-house fa-lg"></i>
                     <h2 class="content2-title">Preferencias y Ubicación</h2>
                 </div>
-                <p class="content2-subtitle">Información sobre tu dirección</p>
+                <p class="content2-subtitle">Administra preferencias sobre tus direcciones</p>
 
-                <form action="" class="content2-form">
-                    <label for="">Dirección:</label>
-                    <input type="text">
-                    <label for="">Piso/Apartamento:</label>
-                    <input type="text">
-                    <label for="">Indicaciones para la entrega:</label>
-                    <input type="text" class="content2-form-input2">
-                </form> 
+                <!-- BOTÓN MODAL -->
+                <div class="container-direccion">
+                    <p>0 Guardada(s)</p>
+
+                    <button class="btn-direccion" id="btnAgregarDireccion">
+                        <i class="fa-solid fa-plus"></i>
+                        Agregar dirección
+                    </button>
+                </div>
+                <!-- MODAL -->
+                <div id="modalDireccion" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span> <!--simbolo "x" -->
+                        <h2>Agregar dirección</h2>
+                        <form>
+                            <label>Dirección:</label>
+                            <input type="text" required>
+                            <label>Piso/Apartamento:</label>
+                            <input type="text">
+                            <label>Indicaciones para la entrega:</label>
+                            <input type="text">
+                            <button type="submit">Guardar</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -271,6 +289,7 @@ session_start();
                         <input type="checkbox" id="afr-pescadoMariscos" name="afr-pescadoMariscos">
                         <label for="afr-pescadoMariscos">Pescado y mariscos</label>
                     </div>
+                    
 
                     <div class="afr-container-checkbox">
                         <input type="checkbox" id="afr-vegetarianos" name="afr-vegetarianos">
@@ -343,7 +362,7 @@ session_start();
 
             <div class="member">
                 <i class="fa-solid fa-calendar-days"></i>
-                <p class="member-since">Miembro desde: Marzo 2025</p>
+                <p class="member-since">Miembro desde: </p>
             </div>
 
             

@@ -61,7 +61,8 @@ try {
             echo json_encode([
                 "success" => true,
                 "message" => "Haz iniciado sesión correctamente.",
-                "rol" => $rol
+                "nameRol" => $rol,
+                "id_rol" => $rol_usuario
 
             ]);
                 exit;

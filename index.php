@@ -65,7 +65,7 @@ session_start();
                                 </div>
                             </li>
                             <li class="dropdown-item">
-                                <a href="app/View/Dashboard/myProfile.php" class="options-profile">
+                                <a href="/proyectoFinal/app/View/Dashboard/ClientProfile.php" class="options-profile">
                                     <i class="fa-regular fa-user"></i>
                                     Mi perfil</a>
                             </li>

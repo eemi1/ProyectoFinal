@@ -198,6 +198,7 @@ background-color: hsl(142, 69%, 98%);
     align-items: start;
     justify-content: end;
 }
+
 .btns-SaveAndCancel{
     display: none;
     width: 100%;
@@ -221,6 +222,9 @@ background-color: hsl(142, 69%, 98%);
     margin: 10px;
     margin-bottom: 0px;
     font-style: bold;
+}
+.btn-edit:hover{
+    background-color: #146b17; /* Un poco más oscuro al pasar el mouse */
 }
 .btn-save{
     display: none;
@@ -321,7 +325,64 @@ background-color: hsl(142, 69%, 98%);
 .content2-form-input2{
     height: 100px;
 }
+.container-direccion{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.btn-direccion {
+    border: none;              
+    border-radius: 5px;         
+    background-color: #32804D;;  
+    cursor: pointer;
+    color: white;           
+    justify-content: center;
+    padding: 10px 5px;
+    margin-right: 15px;
+    font-size: 14px;
+    
+}
+.btn-direccion i{
+    margin-right: 10px;
+}
+.container-direccion p{
+    margin-left: 15px;
+    color: #616161;
+    font-family: 'Montserrat', sans-serif;
+}
 
+.btn-direccion:hover {
+    background-color: #146b17; /* Un poco más oscuro al pasar el mouse */
+}
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.close {
+    float: right;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
 .allergiesAndfoodRestrictions{
     width: 62.5em;
     height: 30em;

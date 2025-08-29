@@ -1,0 +1,235 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    background-color: hsl(var(--background));
+    display:flex;
+    flex-direction: column;
+}
+/*------------NAV------------*/
+
+.navbar {
+    width: 100%;
+    height: 60px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #17821B;
+}
+
+.navbar .img {
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.navbar span{
+    background-color: rgb(190, 190, 190);
+    padding: 4px 10px;
+    border-radius: 20px;
+    color: black;
+    font-weight: bold;
+}
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/*------------CONTENEDORES------------*/
+.layout {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+.container-sidebar{
+    flex: 0 0 250px;   /* sidebar fijo de 250px */
+    min-width: 200px;  /* no se achica más de 200px */
+    max-width: 300px;  /* no crece más de 300px */
+    height: 100vh;
+    display: flex; 
+    border-right: 1px solid #e2e8f0;
+    flex-direction: column;
+}
+
+.container-main{
+    width: 100%;
+    height: 100vh;
+    display: flex; 
+    border-top: 1px solid #e2e8f0;
+}
+/*------------SIDEBAR------------*/
+.container-sidebar h1{
+    padding-left: 20px;
+    padding-bottom: 20px;
+    margin: 20px 0;
+    font-size: 1.4rem;
+    color: #000000;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+
+.sidebar{
+    height: 100%;
+    display: flex;
+}
+.sidebar-list{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+
+}
+.sidebar-list li a{
+    text-decoration: none;
+    color: black;
+    font-size: 1.1rem;
+    width: 100%;
+    padding: 10px 20%;
+    display: flex;
+    gap: 10px;
+}
+
+.sidebar-list li a:hover{
+    background-color: #17821B;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.sidebar-options.active {
+    background-color: rgb(204, 204, 204) ;
+    font-weight: bold;
+    border-left: 4px solid #17821B;
+}
+
+
+#logout{
+    color:red;
+}
+#logout:hover{
+    background-color: #B22222;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/*-------MAIN CONTENT-------*/
+.optContent {
+    display: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.optContent h2{
+    padding: 25px 0 10px 30px;
+    font-size: 2rem;
+}
+
+#mainSubtitle{
+    padding: 0 0 0 30px;
+    font-weight: normal;
+    font-size: 1rem;
+    color: #969696;
+}
+
+/*-----------------dashboardMain----------------------*/
+.dashboardMain {
+    width: 100%;
+}
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1, auto);
+    gap: 20px;
+    margin: 20px 20px 0 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.card-header h3 {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    color: #64748b;
+    font-weight: bold;
+}
+
+.card-header i{
+    border-radius: 9px;
+    padding: 7px 10px 7px 10px;
+}
+#i-ventasHoy{
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+#i-pedidosActivos{
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+#i-reservasHoy{
+    background-color:#f3e8ff;
+    color: #9333ea;
+}
+#i-stockBajo{
+    background-color:#fee2e2 ;
+    color:#dc2626;
+}
+.card .pValue {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #000000;
+}
+.card-footer{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    gap: 20px;
+}
+.card-footer-text{
+    font-size: 1rem;
+    color: #64748b;
+    border-radius: 200px;
+        background-color: #dcfce7;
+    color: #16a34a;
+    padding: 8px 7px 8px 7px;
+    text-align: center;
+
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+}

@@ -17,6 +17,10 @@ function cerrarSesion(){
     echo json_encode(["success" => "true" , "message" => "Sesión cerrada correctamente"]);
 }
 
+function VerificarRutas() {
+    
+}
+
 // RUTEO
 $accion = $_GET['action'] ?? null;
 
