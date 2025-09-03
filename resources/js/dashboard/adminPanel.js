@@ -2,6 +2,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById("defaultTab").click();
     chartVentas();
     loadUsers();
+    submitAddUserForm(event);
 });
 
 function options(event, tabOption){
@@ -126,6 +127,11 @@ function loadUsers() {
                     </td>
                     <td>0</td>
                     <td><i class="fa-solid fa-calendar" style="color: #969696;"></i> ${user.fechaRegistro}</td>
+                    <td>
+                        <button id="btnOptions">
+                            <i class="fa-solid fa-ellipsis fa-lg"></i>
+                        </button>
+                    </td>
                 `;
                 userTableBody.appendChild(row);
             });
@@ -140,10 +146,33 @@ function openAddUserWindow() {
 
     btn.addEventListener("click", function() {
         windowAddUser.style.display = "block";
+
+        fetch("/proyectoFinal/app/Functions/dashboardAdmin/addUser.php", {
+        method: 'GET',
+        credentials: 'same-origin'
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            console.log(data.message)
+            location.href = "/proyectoFinal/app/View/DashboardAdmin/adminPanel.php";
+
+        }else{
+            console.error("Error al cargar roles:", data.message);
+        }
     });
+    });
+
 }
 
 function closeAddUserWindow() {
     const windowAddUser = document.querySelector(".windowAddUser");
     windowAddUser.style.display = "none";
 }
+
+function btnActionsUser(event){
+    event.preventDefault();
+    const btnOptions = document.getElementById("btnOptions");
+    console.log("Botón de opciones clickeado");
+}
+

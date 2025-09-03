@@ -44,7 +44,7 @@
                 <!--=== | DASHBOARD PRODUCTOS | === -->
                 <section class="optContent" id="dashboardMain">
                     <header>
-                        <h2>Bienvenido al Panel de Control</h2>
+                        <h2 class="optContent-title">Bienvenido al Panel de Control</h2>
                         <h3 id="mainSubtitle">Gestiona tu restaurante desde aquí. Aquí tienes un resumen de la actividad de hoy.</h3>
                     </header>
 
@@ -122,7 +122,7 @@
                 <section class="optContent" id="dashboardUsuarios">
                     <header class="userHeader">
                         <div>
-                            <h2>Gestión de Usuarios</h2>
+                            <h2 class="optContent-title">Gestión de Usuarios</h2>
                             <h3 id="mainSubtitle">Administra usuarios, roles y permisos del sistema.</h3>
                         </div>
                         <button id="btnAddUser" onclick="openAddUserWindow()">
@@ -136,7 +136,7 @@
                         <div class="windowAddUser-content">
                             <span class="closeBtn" onclick="closeAddUserWindow()" style="width: 50px; height: 50px;">&times;</span>
                             <h2>Agregar Nuevo Usuario</h2>
-                            <form id="addUserForm">
+                            <form id="addUserForm" action="../../Functions/dashboardAdmin/addUser.php" method="POST">
                                 <label for="username">Nombre de Usuario:</label>
                                 <input type="text" id="username" name="username" required>
 
@@ -146,18 +146,21 @@
                                 <label for="role">Rol:</label>
                                 <select id="role" name="role" required>
                                     <option value="">Selecciona un rol</option>
-                                    <option value="cliente">Cliente</option>
-                                    <option value="admin">Administrador</option>
-                                    <option value="gerente">Gerente</option>
-                                    <option value="mozo">Mozo</option>
-                                    <option value="cocinero">Cocinero</option>
-                                    <option value="delivery">Delivery</option>
+                                    <option value="1">Cliente</option>
+                                    <option value="2">Administrador</option>
+                                    <option value="3">Mozo</option>
+                                    <option value="4">Cocinero</option>
+                                    <option value="5">Gerente</option>
+                                    <option value="6">Delivery</option>
                                 </select>
 
                                 <label for="password">Contraseña:</label>
                                 <input type="password" id="password" name="password" required>
 
-                                <button type="submit">Crear Usuario</button>
+                                <label for="tel">Teléfono:</label>
+                                <input type="tel" id="tel" name="tel" required>
+
+                                <button type="submit" id="btnSubmit">Crear Usuario</button>
                             </form>
                         </div>
 
@@ -181,7 +184,7 @@
                         <div class="container-table-users">
                             <div id="table-users-header">
                                 <i class="fa-solid fa-user-group"></i>
-                                <h5>Lista de Usuarios</h5>
+                                <h5>Lista de Usuarios </h5>
                             </div>
 
                             <div class="table-users-container-table">
@@ -201,6 +204,16 @@
                                     
                                 </table>
 
+                                <div class="optionsTableUsers" style="display: none;">
+                                    <div class="optionsTableUsers-content">
+                                        <p>Borrar</p>
+                                        <p>Eliminar</p>
+                                        <p>Borrar</p>
+                                        
+
+                                    </div>
+                                </div>
+
                             </div>
 
 
@@ -211,7 +224,7 @@
                 <!--=== | DASHBOARD PRODUCTOS | === -->
                 <section class="optContent" id="dashboardProductos">
                     <header>
-                        <h2>Productos</h2>
+                        <h2 class="optContent-title">Productos</h2>
                     </header>
                 </section>
             </main>

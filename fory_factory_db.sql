@@ -38,10 +38,10 @@ CREATE TABLE `administrador` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cajero`
+-- Estructura de tabla para la tabla `gerente`
 --
 
-CREATE TABLE `cajero` (
+CREATE TABLE `gerente` (
   `id_usuario` int(11) NOT NULL,
   `sueldo` decimal(10,2) DEFAULT NULL,
   `turno` varchar(50) DEFAULT NULL
@@ -242,7 +242,7 @@ INSERT INTO `rol` (`nombre`) VALUES
 ('administrador'),
 ('mozo'),
 ('cocinero'),
-('cajero'),
+('gerente'),
 ('delivery');
 
 -- Crear tabla usuario con FK correcta
@@ -270,9 +270,9 @@ ALTER TABLE `administrador`
   ADD PRIMARY KEY (`id_usuario`);
 
 --
--- Indices de la tabla `cajero`
+-- Indices de la tabla `gerente`
 --
-ALTER TABLE `cajero`
+ALTER TABLE `gerente`
   ADD PRIMARY KEY (`id_usuario`);
 
 --
@@ -433,10 +433,10 @@ ALTER TABLE `administrador`
   ADD CONSTRAINT `administrador_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `cajero`
+-- Filtros para la tabla `gerente`
 --
-ALTER TABLE `cajero`
-  ADD CONSTRAINT `cajero_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
+ALTER TABLE `gerente`
+  ADD CONSTRAINT `gerente_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `cliente`

@@ -147,7 +147,7 @@ html, body {
     flex-direction: column;
     width: 100%;
 }
-.optContent h2{
+.optContent-title{
     padding: 25px 0 10px 30px;
     font-size: 2rem;
 }
@@ -293,7 +293,7 @@ html, body {
 
 /*------------AGREGAR USUARIO VENTANA ----------------*/
 .windowAddUser{
-    display: flex;
+    display: none;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 9999;
     position: fixed;
@@ -312,12 +312,14 @@ html, body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 25%;
     background-color: white;
+    margin: 10px auto;
 }
-.windowAddUser-content h2{
+.windowAddUser-content > h2{
     display: flex;
-    justify-content:flex-start;
-    margin-bottom: 50px;
-    font-size: 2rem;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    align-items: flex-start;
+    padding: 15px 0px;
 }
 #addUserForm{
     display: flex;
@@ -343,6 +345,20 @@ html, body {
     border-color: #16a34a;
 }
 
+#role{
+    padding:5px 5px;
+}
+#btnSubmit{
+    margin-top: 10px;
+    background-color: #17821B;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    align-items: center;
+}
 
 /*-----------------dashboardMain BUSCADOR----------------------*/
 .userHeader button{
@@ -512,6 +528,14 @@ html, body {
 .container-user-role{
     display: flex;
     align-items: center;
+}
+
+#btnOptions{
+    border: 1px solid #e2e8f0;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
 /*ROLES*/
