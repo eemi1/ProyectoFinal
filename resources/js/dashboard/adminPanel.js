@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
     document.getElementById("defaultTab").click();
     chartVentas();
+    loadUsers();
 });
 
 function options(event, tabOption){
@@ -56,4 +57,93 @@ function chartVentas(){
 });
 chart.render();
 
+}
+
+function loadUsers() {
+    fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php", {
+        method: 'POST',
+        credentials: 'same-origin'
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Respuesta JSON:", data);
+        if (data.success) {
+            const userTableBody = document.querySelector("#table-users tbody");
+            userTableBody.innerHTML = ""; // Limpiar tabla existente
+
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#16a34a" viewBox="0 0 24 24"><circle cx="12" cy="7" r="5"/><path d="M12 14c-5 0-9 2.5-9 6v1h18v-1c0-3.5-4-6-9-6z"/></svg>`;
+            const defaultImg = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+            
+            data.data.usuarios.forEach(user => {
+
+                let rolClass = "";
+                let icon = "";
+                switch (user.id_rol) {
+                    case 1:
+                        icon = `<i class="fa-solid fa-user"></i>`;
+                        rolClass = "rol-cliente"; 
+                        break;
+                    case 2:
+                        icon = `<i class="fa-solid fa-crown"></i>`;
+                        rolClass = "rol-admin"; 
+                        break;
+                    case 3:
+                        icon = `<i class="fa-solid fa-bell-concierge"></i>`;
+                        rolClass = "rol-mozo"; 
+                        break;
+                    case 4:
+                        icon = `<i class="fa-solid fa-kitchen-set"></i>`;
+                        rolClass = "rol-cocinero"; 
+                        break;
+                    case 5:
+                        icon = `<i class="fa-solid fa-user-shield"></i>`;
+                        rolClass = "rol-gerente"; 
+                        break;
+                    case 6:
+                        icon = `<i class="fa-solid fa-truck"></i>`;
+                        rolClass = "rol-delivery"; 
+                        break;
+                };
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>
+                        <div class="container-user">
+                            <div class="container-user-image">
+                                <img src="${user.image || defaultImg}" alt="User Image">
+                            </div>
+                            <div class="container-user-info">
+                                <p class="user-name">${user.nombreCompleto}</p>
+                                <div class="user-email-container">
+                                    <i class="fa-regular fa-envelope"></i><p class="user-email">${user.mail}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="${rolClass}">
+                            ${icon} ${user.rol}
+                        </div>
+                    </td>
+                    <td>0</td>
+                    <td><i class="fa-solid fa-calendar" style="color: #969696;"></i> ${user.fechaRegistro}</td>
+                `;
+                userTableBody.appendChild(row);
+            });
+        }
+    });
+}
+
+function openAddUserWindow() {
+    const windowAddUser = document.querySelector(".windowAddUser");
+
+    btn = document.getElementById("btnAddUser");
+
+    btn.addEventListener("click", function() {
+        windowAddUser.style.display = "block";
+    });
+}
+
+function closeAddUserWindow() {
+    const windowAddUser = document.querySelector(".windowAddUser");
+    windowAddUser.style.display = "none";
 }

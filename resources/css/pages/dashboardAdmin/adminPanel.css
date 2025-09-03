@@ -21,7 +21,7 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 20px;
 }
 .navbar-logo {
     display: flex;
@@ -53,7 +53,8 @@ html, body {
 /*------------CONTENEDORES------------*/
 .layout {
     display: flex;
-    height: calc(100vh - 60px);
+    height: auto;
+    width: auto;
 }
 .container-sidebar{
     flex: 0 0 250px;   /* sidebar fijo de 250px */
@@ -95,26 +96,36 @@ html, body {
     margin-top: 30px;
 
 }
+.sidebar-list li{
+    margin: 0px 20px;
+        border-radius: 10px;
+
+}
 .sidebar-list li a{
     text-decoration: none;
     color: black;
-    font-size: 1.1rem;
+    font-size: 14px;
     width: 100%;
     padding: 10px 20%;
     display: flex;
     gap: 10px;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar-list li a:hover{
-    background-color: #17821B;
-    color: white;
+    background-color: #21c45d1a;
+    color: #21c45d;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
+
 }
 .sidebar-options.active {
-    background-color: rgb(204, 204, 204) ;
+    background: #17821B;
     font-weight: bold;
     border-left: 4px solid #17821B;
+    color: white;
+    border-radius: 10px;
 }
 
 
@@ -242,6 +253,9 @@ html, body {
     padding: 8px 7px;
     text-align: center;
 }
+.i-card-footer{
+    color: #16a34a;
+}
 
 /* === SECCIÓN: Gráficas === */
 .dashboard-charts {
@@ -270,12 +284,67 @@ html, body {
     height: 90%;
     margin:20px;
 }
-
+/*-----------------dashboardUser----------------------*/
 .userHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
+/*------------AGREGAR USUARIO VENTANA ----------------*/
+.windowAddUser{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.windowAddUser-content{
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 25%;
+    background-color: white;
+}
+.windowAddUser-content h2{
+    display: flex;
+    justify-content:flex-start;
+    margin-bottom: 50px;
+    font-size: 2rem;
+}
+#addUserForm{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: flex-start;
+}
+#addUserForm input{
+    height: 30px;
+}
+#addUserForm label{
+    top: 2px;
+    padding: 0px 5px;
+    font-size: 12px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+#addUserForm input:focus + #addUserForm label{
+    transform: translateY(-20px);
+    color:#16a34a;
+}
+#addUserForm input:focus{
+    border-color: #16a34a;
+}
+
+
+/*-----------------dashboardMain BUSCADOR----------------------*/
 .userHeader button{
     margin: 20px 20px 0 0;
     /*background-color: #36c96c;*/
@@ -285,32 +354,208 @@ html, body {
     padding: 10px 15px;
     border-radius: 5px;
     font-size: 0.9rem;
+    cursor: pointer;
 }
 .userHeader i{
     margin-right: 8px;
 }
 .dashboard-Users{
     display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
 }
-.search-card{
-    border: 1px solid black;
-    width: 100%;
+.search-container{
     height: 70px;
     margin: 20px;
     display: flex;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
     align-items: center;
-    padding: 5px 10px;
-    border-radius: 5px; 
-
+}
+.search-card{
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    width: 40%;
+    height: 50%;
+    border: 1px solid #e2e8f0;
+    margin: 25px 0px 25px 25px;
 }
 
 .search-card input{
-    border: 1px solid black;
-    width: 40%;
-    height: 40px;
+    width: 100%;
+    height: 100%;
     font-size: 1rem;
+    border: none;
+    border-radius: 20px;
+}
+.search-card input:focus{
+    outline: none;
+}
+.search-card i{
+    margin: 10px;
+    color:#64748b ;
+}
+
+.searchBTN-card{
+    display: flex;
+    align-items: center;
+    border-radius: 5px; 
     padding-left: 10px;
+    height: 20px;
+}
+
+#searchButton-roles{
+    height: 50%;
+    background-color: #17821B;
+    color: white;
+    border: none;
+    padding: 18px 15px;
     border-radius: 5px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+/*-----------------dashboardMain CONTENEDOR TABLA----------------------*/
+
+/*Contenedor header de la tabla de usuarios (Titulo)*/
+.container-table-users{
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    margin: 20px;
+    height: auto;
+}
+#table-users-header{
+    display: flex;
+    gap: 20px;
+    margin: 20px;
+    font-size: 24px;
+}
+#table-users-header i{
+    color: #21c45d;
+}
+
+
+/*Contenedor padre de la tabla de usuarios*/
+.table-users-container-table{
+    border: 1px solid #e2e8f0;
+    height: auto;
+    margin: 25px 40px;
+    border-radius: 20px;
+}
+.table-users-container-table th{
+    border-bottom: 1px solid #e2e8f0;
+    color: #64748b;
+    text-align: start;
+    padding: 0.8rem 0.8rem;
+    font-weight: bold;
+    font-size: 14px;
+            max-width: 350px;
+
+}
+#table-users{
+    border-collapse: collapse; /* Asegura que haya espacio entre celdas */
+    border-radius: 20px;
+    text-align: start;
+}
+
+#table-users td{
+    text-align: start;
+    vertical-align: middle; /* Alinea verticalmente el contenido */    
+    padding: 0.8rem 0.8rem;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 14px;
+
+}
+
+
+/*TABLA USUARIOS NOMBRE, EMAIL e IMG*/
+.container-user{
+    display: flex;
+    flex-direction: row;
+}
+.container-user-image .container-user-info{
+    background-color: red;
+}
+.container-user-info{
+    margin: 10px;
+    text-align: start;
+}
+.user-email-container{
+    display: flex;
+    gap: 5px;
+    color: #969696;
+}
+.user-email-container i {
+    font-size: 0.9rem;   /* igual que el texto */
+    line-height: 1;      /* evita que quede desplazado */
+    display: flex;
+    align-items: end;
+}
+.user-name{
+    font-size: 0.9rem;
+    color: #000000;
+    font-weight: bold;
+}
+.user-email{
+    font-size: 0.9rem;
+} 
+.container-user-image img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(58, 145, 66, 0.1);
+    margin: 10px;
+    padding: 5px;
+}
+.container-user-role{
+    display: flex;
+    align-items: center;
+}
+
+/*ROLES*/
+/*[class^="rol-"] → Selecciona cualquier elemento cuya clase comience con rol-.
+[class*=" rol-"] → Selecciona cualquier elemento que tenga rol- en medio de sus clases (por si hay más de una clase).*/
+[class^="rol-"], [class*=" rol-"]{
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+    width:max-content;
+}
+/*ROL 1 - CLIENTE*/ 
+.rol-cliente {
+    color: #166534;
+    background-color: #dcfce7;
+}
+
+/*ROL 2 - ADMINISTRADOR*/ 
+.rol-admin {
+    color: #991b1b;
+    background-color: #fee2e2;
+}
+
+/*ROL 3 - MOZO*/ 
+.rol-mozo {
+    color: #1e3a8a;
+    background-color: #dbeafe;
+}
+
+/*ROL 4 - COCINERO*/ 
+.rol-cocinero {
+    color: #c2410c;
+    background-color: #ffedd5;
+}
+
+/*ROL 5 - GERENTE*/ 
+.rol-gerente {
+    color: #7c3aed;
+    background-color: #ede9fe; 
+}
+
+/*ROL 6 - DELIVERY*/ 
+.rol-delivery {
+    color: #b45309;
+    background-color: #fef3c7; 
 }
