@@ -190,11 +190,28 @@ CREATE TABLE `plato_ingrediente` (
 -- Estructura de tabla para la tabla `producto`
 --
 
-CREATE TABLE `producto` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `precio` decimal(10,2) NOT NULL
+CREATE TABLE `categoria_productos` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `nombre` VARCHAR(100) UNIQUE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Insertar categorías iniciales
+INSERT INTO `categoria_productos` (`nombre`) VALUES
+('Bebidas'),
+('Entradas'),
+('Platos Principales'),
+('Postres'),
+('Snacks');
+
+CREATE TABLE `producto` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `id_categoria` INT NOT NULL,
+  `nombre` VARCHAR(255) NOT NULL,
+  `precio` DECIMAL(10,2) NOT NULL,
+  CONSTRAINT `fk_producto_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria_productos`(`id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- --------------------------------------------------------
 

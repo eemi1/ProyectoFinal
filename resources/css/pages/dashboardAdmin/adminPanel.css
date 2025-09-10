@@ -1,3 +1,6 @@
+/*======================================*/
+/*             ESTILOS BASE             */
+/*======================================*/
 * {
     padding: 0;
     margin: 0;
@@ -5,52 +8,16 @@
 }
 
 html, body {
-    height: 100%;
     width: 100%;
     font-family: 'Raleway', sans-serif;
     background-color: hsl(var(--background));
     display:flex;
     flex-direction: column;
+    overflow: hidden;
 }
-/*------------NAV------------*/
-
-.navbar {
-    width: 100%;
-    height: 60px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-}
-.navbar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.9rem;
-    color: #17821B;
-}
-
-.navbar .img {
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-.navbar span{
-    background-color: rgb(190, 190, 190);
-    padding: 4px 10px;
-    border-radius: 20px;
-    color: black;
-    font-weight: bold;
-}
-.navbar-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-
-/*------------CONTENEDORES------------*/
+/*======================================*/
+/*           ESTRUCTURA LAYOUT          */
+/*======================================*/
 .layout {
     display: flex;
     height: auto;
@@ -60,10 +27,11 @@ html, body {
     flex: 0 0 250px;   /* sidebar fijo de 250px */
     min-width: 200px;  /* no se achica más de 200px */
     max-width: 300px;  /* no crece más de 300px */
-    height: 100vh;
+    height: auto;
     display: flex; 
     border-right: 1px solid #e2e8f0;
     flex-direction: column;
+    background-color: hsl(154 65% 25%);
 }
 
 .container-main{
@@ -71,40 +39,43 @@ html, body {
     height: 100vh;
     display: flex; 
     border-top: 1px solid #e2e8f0;
+    overflow: auto;
 }
-/*------------SIDEBAR------------*/
-.container-sidebar h1{
+/*======================================*/
+/*               SIDE BAR               */
+/*======================================*/
+.container-sidebar h1 {
     padding-left: 20px;
     padding-bottom: 20px;
     margin: 20px 0;
     font-size: 1.4rem;
-    color: #000000;
+    color: white;
     border-bottom: 1px solid #e2e8f0;
 }
 
-
-.sidebar{
+.sidebar {
     height: 100%;
     display: flex;
+    font-size: var(--font-medium);
 }
-.sidebar-list{
+
+.sidebar-list {
     width: 100%;
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 15px;
     margin-top: 30px;
-
+    justify-content: space-between;
 }
-.sidebar-list li{
+
+.sidebar-list li {
     margin: 0px 20px;
-        border-radius: 10px;
-
+    border-radius: 10px;
 }
-.sidebar-list li a{
+
+.sidebar-list li a {
     text-decoration: none;
-    color: black;
-    font-size: 14px;
+    color: white;
     width: 100%;
     padding: 10px 20%;
     display: flex;
@@ -113,33 +84,57 @@ html, body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.sidebar-list li a:hover{
+.sidebar-list li a:hover {
     background-color: #21c45d1a;
-    color: #21c45d;
+    color: white;
     cursor: pointer;
     border-radius: 10px;
-
 }
+
+.li-list-main {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.side-options {
+    transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease;
+}
+
+.sidebar-list li a,
+.sidebar-options,
 .sidebar-options.active {
-    background: #17821B;
-    font-weight: bold;
-    border-left: 4px solid #17821B;
-    color: white;
     border-radius: 10px;
 }
 
-
-#logout{
-    color:red;
+.sidebar-options.active {
+    background: white;
+    font-weight: bold;
+    color: var(--primary-color);
 }
-#logout:hover{
+
+.li-list-logout {
+    background: white;
+}
+
+.li-list-logout:hover {
     background-color: #B22222;
+}
+
+#logout {
+    color: red;
+}
+
+#logout:hover, .li-list-logout:hover {
     color: white;
     cursor: pointer;
     border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-/*-------MAIN CONTENT-------*/
+/*======================================*/
+/*          CONTENIDO PRINCIPAL         */
+/*======================================*/
 .optContent {
     display: none;
     border: none;
@@ -147,25 +142,146 @@ html, body {
     flex-direction: column;
     width: 100%;
 }
-.optContent-title{
+
+.headerDashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.headerDashboard-title{
     padding: 25px 0 10px 30px;
     font-size: 2rem;
 }
 
-#mainSubtitle{
+.headerDashboard-subtitle{
     padding: 0 0 0 30px;
     font-weight: normal;
-    font-size: 1rem;
+    font-size: var(--font-medium);
     color: #969696;
 }
 
-/*-----------------dashboardMain----------------------*/
+.headerDashboard button{
+    margin: 20px 20px 0 0;
+    /*background-color: #36c96c;*/
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: var(--font-mediumSmall);
+    cursor: pointer;
+}
+
+.headerDashboard i{
+    margin-right: 8px;
+}
+/*-----------| ESTILOS VENTANA DE AGREGAR |-----------*/
+.windowAdd{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.windowAdd-content{
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 25%;
+    background-color: white;
+    margin: 10px auto;
+}
+.windowAdd-content > h2{
+    display: flex;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    align-items: flex-start;
+    padding: 15px 0px;
+}
+.closeBtn{
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    align-items: flex-end;
+    float: right;
+}
+.closeBtn:hover{
+    color: red;
+}
+.btnSubmit{
+    margin-top: 10px;
+    background-color: #17821B;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    align-items: center;
+}
+/*-----------| ESTILOS DE BUSCADOR |-----------*/
+.search-container{
+    height: 70px;
+    margin: 20px;
+    display: flex;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    align-items: center;
+}
+.search-card{
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    width: 40%;
+    height: 50%;
+    border: 1px solid #e2e8f0;
+    margin: 25px 0px 25px 25px;
+}
+
+.search-card input{
+    width: 100%;
+    height: 100%;
+    font-size: 1rem;
+    border: none;
+    border-radius: 20px;
+}
+.search-card input:focus{
+    outline: none;
+}
+.search-card i{
+    margin: 10px;
+    color:#64748b ;
+}
+
+.searchBTN-card{
+    display: flex;
+    align-items: center;
+    border-radius: 5px; 
+    padding-left: 10px;
+    height: 50%;
+    flex-direction: column;
+}
+
+/*======================================*/
+/*          DASHBOARD PRINCIPAL         */
+/*======================================*/
+
 /* Contenedor principal del dashboard */
 .dashboardMain {
     width: 100%;
 }
 
-/* === SECCIÓN: Tarjetas Resumen (Métricas) === */
+/* ------------ TARJETAS DE RESUMEN ------------ */
 .dashboard-summary {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -257,7 +373,8 @@ html, body {
     color: #16a34a;
 }
 
-/* === SECCIÓN: Gráficas === */
+/* ------------ GRÁFICAS ------------ */
+
 .dashboard-charts {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -284,43 +401,12 @@ html, body {
     height: 90%;
     margin:20px;
 }
-/*-----------------dashboardUser----------------------*/
-.userHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
-/*------------AGREGAR USUARIO VENTANA ----------------*/
-.windowAddUser{
-    display: none;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    justify-content: center;
-    align-items: center;
-    
-}
+/* ============================================= */
+/*               DASHBOARD USUARIOS              */
+/* ============================================= */
 
-.windowAddUser-content{
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 25%;
-    background-color: white;
-    margin: 10px auto;
-}
-.windowAddUser-content > h2{
-    display: flex;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    align-items: flex-start;
-    padding: 15px 0px;
-}
+
 #addUserForm{
     display: flex;
     flex-direction: column;
@@ -348,92 +434,63 @@ html, body {
 #role{
     padding:5px 5px;
 }
-#btnSubmit{
-    margin-top: 10px;
-    background-color: #17821B;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    align-items: center;
-}
 
-/*-----------------dashboardMain BUSCADOR----------------------*/
-.userHeader button{
-    margin: 20px 20px 0 0;
-    /*background-color: #36c96c;*/
-    background-color: #17821B;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-}
-.userHeader i{
-    margin-right: 8px;
-}
+
+/*-----------------DASHBOARD USUARIOS BUSCADOR----------------------*/
+
 .dashboard-Users{
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
 }
-.search-container{
-    height: 70px;
-    margin: 20px;
-    display: flex;
-    border: 1px solid #e2e8f0;
-    border-radius: 20px;
-    align-items: center;
-}
-.search-card{
-    display: flex;
-    align-items: center;
-    border-radius: 20px;
-    width: 40%;
-    height: 50%;
-    border: 1px solid #e2e8f0;
-    margin: 25px 0px 25px 25px;
-}
 
-.search-card input{
-    width: 100%;
-    height: 100%;
-    font-size: 1rem;
-    border: none;
-    border-radius: 20px;
-}
-.search-card input:focus{
-    outline: none;
-}
-.search-card i{
-    margin: 10px;
-    color:#64748b ;
-}
-
-.searchBTN-card{
-    display: flex;
-    align-items: center;
-    border-radius: 5px; 
-    padding-left: 10px;
-    height: 20px;
-}
 
 #searchButton-roles{
     height: 50%;
-    background-color: #17821B;
+    width: 150px;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     padding: 18px 15px;
     border-radius: 5px;
-    font-size: 0.9rem;
+    font-size: var(--font-mediumSmall);
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
-/*-----------------dashboardMain CONTENEDOR TABLA----------------------*/
+
+.container-list-span{
+    display: none;
+    flex-direction: column;
+    width: 150px;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.div-list-span{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    border: 1px solid #e2e8f0;
+    z-index: 999;
+    background-color: white;
+    border-radius: 5px;
+}
+.list-span{
+    width: 150px;
+    font-size: var(--font-mediumSmall);
+    text-align: left;
+    padding-left: 20%;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.list-span:hover{ 
+    background-color: var(--primary-color) ;
+    color:white;
+}
+/*-----------------DASHBOARD USUARIOS CONTENEDOR TABLA----------------------*/
 
 /*Contenedor header de la tabla de usuarios (Titulo)*/
 .container-table-users{
@@ -445,44 +502,66 @@ html, body {
 #table-users-header{
     display: flex;
     gap: 20px;
-    margin: 20px;
+    margin: 25px 50px;
     font-size: 24px;
 }
 #table-users-header i{
-    color: #21c45d;
+    color: var(--primary-color);
 }
-
+#table-users-list{
+    font-size: var(--font-large);
+}
 
 /*Contenedor padre de la tabla de usuarios*/
 .table-users-container-table{
     border: 1px solid #e2e8f0;
     height: auto;
-    margin: 25px 40px;
-    border-radius: 20px;
+    margin: 30px 50px;
+    display: flex;
 }
 .table-users-container-table th{
-    border-bottom: 1px solid #e2e8f0;
-    color: #64748b;
+    border: 1px solid #e2e8f0;
+    color: #ffffff;
     text-align: start;
     padding: 0.8rem 0.8rem;
     font-weight: bold;
     font-size: 14px;
-            max-width: 350px;
+    max-width: 350px;
+    background-color: hsl(154 65% 25%);
 
 }
 #table-users{
     border-collapse: collapse; /* Asegura que haya espacio entre celdas */
     border-radius: 20px;
     text-align: start;
+    display: flex;
+    flex-direction: column;
 }
-
+#table-users thead tr{
+    display: flex;
+}
+#table-users thead tr th{
+    flex: 1;
+}
 #table-users td{
     text-align: start;
     vertical-align: middle; /* Alinea verticalmente el contenido */    
     padding: 0.8rem 0.8rem;
-    border-bottom: 1px solid #e2e8f0;
     font-size: 14px;
+    border-bottom: 1px solid #e2e8f0;
+}
+#table-users tbody tr{
+    display: flex;
+}
+#table-users tbody tr td{
+    flex: 1;
+}
+#table-users tbody tr:nth-child(even) { /* event = selecciona pares*/
+    background-color: #f9f9f9; 
+}
 
+#table-users tbody tr:nth-child(odd) { /* odd = selecciona impares*/
+    background-color: #f3f3f3;
 }
 
 
@@ -510,12 +589,12 @@ html, body {
     align-items: end;
 }
 .user-name{
-    font-size: 0.9rem;
+    font-size: var(--font-mediumSmall);
     color: #000000;
     font-weight: bold;
 }
 .user-email{
-    font-size: 0.9rem;
+    font-size: var(--font-mediumSmall);
 } 
 .container-user-image img {
     width: 32px;
@@ -530,7 +609,7 @@ html, body {
     align-items: center;
 }
 
-#btnOptions{
+.btnOptions{
     border: 1px solid #e2e8f0;
     background-color: white;
     border-radius: 5px;
@@ -542,7 +621,7 @@ html, body {
 /*[class^="rol-"] → Selecciona cualquier elemento cuya clase comience con rol-.
 [class*=" rol-"] → Selecciona cualquier elemento que tenga rol- en medio de sus clases (por si hay más de una clase).*/
 [class^="rol-"], [class*=" rol-"]{
-    font-size: 0.8rem;
+    font-size: var(--font-mediumSmall);
     font-weight: bold;
     padding: 5px 10px;
     border-radius: 20px;
@@ -582,4 +661,148 @@ html, body {
 .rol-delivery {
     color: #b45309;
     background-color: #fef3c7; 
+}
+
+/*-----------TABLA USUARIOS - OPCIONES------------- */
+.optionsTableUsers-list {
+    display: none;
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 199;
+    background-color: #fafafa;
+    border: 1px solid #ccc;
+}
+
+.optionsTableUsers-list li {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    border-collapse: collapse;
+}
+
+
+/* ============ OPCION BORRAR USUARIO DE LA TABLAS ============ */
+.delete-user {
+    color: #FF7A7A; /* Rojo para eliminar */
+}
+.delete-user:hover {
+    background-color: #DE0000; /* Fondo rojo claro al pasar el mouse */
+    color: white;
+}
+
+
+/* ============ OPCION EDITAR USUARIO DE LA TABLA ============ */
+.edit-user {
+    color: #4CAF50; /* Verde para editar */
+}
+.edit-user:hover {
+    background-color: #1DAB51; /* Fondo verde claro al pasar el mouse */
+    color: white;
+}
+/*------------EDITAR USUARIO VENTANA ----------------*/
+.modalEditUser{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    
+}
+.modalEditUser-content{
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 25%;
+    background-color: white;
+    margin: 10px auto;
+}
+.modalEditUser-content > h2{
+    display: flex;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    align-items: flex-start;
+    padding: 15px 0px;
+}
+.closeEditUserBtn{
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    align-items: flex-end;
+    float: right;
+}
+.closeEditUserBtn:hover{
+    color: red;
+}
+#editUserForm{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: flex-start;
+}
+#editUserForm input{
+    height: 30px;
+}
+#editUserForm label{
+    top: 2px;
+    padding: 0px 5px;
+    font-size: 12px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+#editUserForm input:focus + #editUserForm label{
+    transform: translateY(-20px);
+    color:#16a34a;
+}
+#editUserForm input:focus{
+    border-color: #16a34a;
+}
+#editRole{
+    padding:5px 5px;
+}
+#btnEditSubmit{
+    margin-top: 10px;
+    background-color: #17821B;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    align-items: center;
+}
+
+/* ============ OPCION CAMBIAR CONTRASEÑA DEL USUARIO DE LA TABLA ============ */
+.change-password {
+    color: #FFA500; /* Naranja para cambiar contraseña */
+}
+.change-password:hover {
+    background-color: #D98C16; /* Fondo naranja claro al pasar el mouse */
+    color: white;
+}
+
+/*=======================================|DASHBOARD PRODUCTOS|==========================================================*/
+
+/*-----------Modal Agregar Producto-------------------------*/
+.productModal-imageInput{
+    display: flex;
+    flex-direction: row;
+}
+.productModal-imageInput img{
+    width: 80px;
+    height: 80px;
+}
+#ProductModal-input{
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
 }

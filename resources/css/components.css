@@ -32,7 +32,7 @@ border-radius: 20px;
 font-family: 'Raleway', sans-serif;
 transition: background-color 0.3s ease;
 }
-/* Estilos para ocultar la barra de desplazamiento */
+/* Estilos para esconder el scroll */
 .scrollbar-hide {
     /* Para navegadores webkit (Chrome, Safari, Edge) */
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -55,4 +55,15 @@ transition: background-color 0.3s ease;
     display: block;             /* Chrome, Safari y Opera */
     width: initial;
     background: initial;
+}
+
+/*===================TAMAÑO FUENTES========================*/
+:root {
+    --font-small: 12px;
+    --font-mediumSmall: 14px;
+    --font-medium: 16px;
+    --font-large: 24px;
+
+    --primary-color: #17821B;
+    --background-primary:hsl(154 65% 25%);
 }
