@@ -4,7 +4,8 @@ window.addEventListener('DOMContentLoaded', () => {
     loadUsers();
     usersTotal();
     openAddWindow();
-    closeAddWindow()
+    closeAddWindow();
+    filterCategories();
 
     const inputSearch = document.getElementById("btnSubmitUser");
     
@@ -49,10 +50,13 @@ function openAddWindow() {
     //-------Varible Ventanas-------------
     const windowAddUser = document.getElementById("windowAddUser");
     const windowAddProduct = document.getElementById("windowAddProduct");
+    const windowAddIngredient = document.getElementById("windowAddIngredient");
+
 
     //-------Varible Botones-------------
     const addUser = document.getElementById("openAddUserWindow");
     const addProduct = document.getElementById("openAddProductWindow");
+    const addIngredient = document.getElementById("openAddIngredientWindow");
 
     //-------Varible Formularios-------------
     const formUser = document.getElementById("addUserForm");
@@ -64,6 +68,10 @@ function openAddWindow() {
 
     addProduct.addEventListener("click", function(){
         windowAddProduct.style.display = "block";
+    })
+
+    addIngredient.addEventListener("click", function() {
+        windowAddIngredient.style.display = "block";
     })
 
     //-------Eventos de envío de formularios.-------------
@@ -137,6 +145,11 @@ function closeAddWindow() {
     closeBtnProduct.addEventListener("click", function(){
         const windowAddProduct = document.getElementById("windowAddProduct");
         windowAddProduct.style.display = "none";
+    })
+
+    closeBtnIngredient.addEventListener("click", function(){
+        const windowAddIngredient = document.getElementById("windowAddIngredient");
+        windowAddIngredient.style.display = "none";
     })
 }
 
@@ -421,3 +434,22 @@ document.getElementById("editUserForm").addEventListener("submit", function(e) {
 }
 
 //============================== PESTAÑA DASHBOARD PRODUCTOS ==============================
+
+function filterCategories() {
+    const btnFilterCategories = document.getElementById("searchButton-categories");
+    // Usamos la clase real que tiene el contenedor en tu HTML
+    const list = document.querySelector(".container-list-span-categories");
+
+    if (!btnFilterCategories || !list) return;
+
+    // Agregar el listener una sola vez (ya lo llamás en DOMContentLoaded)
+    btnFilterCategories.addEventListener("click", function(e) {
+        e.preventDefault(); // por si acaso (evita submit)
+        list.style.display = (list.style.display === "flex") ? "none" : "flex";
+    });
+}
+
+"1,5,78"
+let arr= localStorage.getItem("productos").explode(",")
+
+setItem("productos,"+id)

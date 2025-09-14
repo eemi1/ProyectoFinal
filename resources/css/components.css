@@ -65,5 +65,8 @@ transition: background-color 0.3s ease;
     --font-large: 24px;
 
     --primary-color: #17821B;
-    --background-primary:hsl(154 65% 25%);
+    --primary-color-hover:#146e17;
+
+    --background-primary:#166945;
+    --background-primary-hover:#125437
 }

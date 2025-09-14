@@ -67,7 +67,7 @@ CREATE TABLE `direccion_cliente` (
     `pisoApartamento` VARCHAR(100),
     `indicaciones` VARCHAR(255),
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
-        ON DELETE CASCADE --Si se borra el registro padre (tabla: cliente) se borran también los datos en esta.
+        ON DELETE CASCADE -- Si se borra el registro padre (tabla: cliente) se borran también los datos en esta.
 );
 
 -- --------------------------------------------------------
