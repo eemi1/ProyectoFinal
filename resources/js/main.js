@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.success) {
                 document.querySelector(".navbar-buttons").style.display = "none";
                 document.querySelector(".navbar-buttons-logged").style.display = "flex";
+
+                document.getElementById("nameNavLogged").textContent = data.usuario;
+                document.getElementById("emailNavLogged").textContent = data.email;
             } else {
                 document.querySelector(".navbar-buttons").style.display = "flex";
                 document.querySelector(".navbar-buttons-logged").style.display = "none";
@@ -75,7 +78,7 @@ function cerrarSesion() {
                                 popup: 'swal-custom-font'
                             }
                         }).then(() => {
-                            window.location.replace("/proyectoFinal/index.php");
+                            window.location.replace("/proyectoFinal/index.html");
                         });
                     }
                 });

@@ -4,7 +4,13 @@ header("Content-Type: application/json");
 
 function verificarSesion() {
     if (isset($_SESSION['usuario'])){
-        echo json_encode(["success" => true, "message" => "Usuario loggeado."]);
+        echo json_encode([
+            "success" => true, 
+            "message" => "Usuario loggeado.",
+            "usuario" => $_SESSION['usuario'],
+            "email" => $_SESSION['email'] ?? ''
+        
+        ]);
             exit;
     }else{
         echo json_encode(["success" => false, "message" => "Usuario no loggeado." ]);

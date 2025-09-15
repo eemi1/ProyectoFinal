@@ -23,9 +23,9 @@ try{
                         timer: 1500
                     }).then(()=>{
                         if (data.id_rol == "2"){
-                            window.location.replace("/proyectoFinal/app/View/DashboardAdmin/adminPanel.php");
+                            window.location.replace("/proyectoFinal/app/View/DashboardAdmin/adminPanel.html");
                         }else{
-                            window.location.replace("/proyectoFinal/index.php");
+                            window.location.replace("/proyectoFinal/index.html");
                         }
                     })
             }else{
