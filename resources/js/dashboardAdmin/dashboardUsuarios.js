@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
     closeAddWindow();
     filterCategories();
 
-    const inputSearch = document.getElementById("btnSubmitUser");
+    const inputSearch = document.getElementById("searchInputUsers");
     
     inputSearch.addEventListener("input", function() {
 
@@ -136,6 +136,7 @@ function openAddWindow() {
 function closeAddWindow() {
     const closeBtnUser = document.getElementById("closeBtnUser");
     const closeBtnProduct = document.getElementById("closeBtnProduct");
+    const closeBtnIngredient = document.getElementById("closeBtnIngredient")
 
     closeBtnUser.addEventListener("click", function(){
         const windowAddUser = document.getElementById("windowAddUser");
@@ -233,7 +234,7 @@ function usersTotal() {
     .then(res => res.json())
     .then(data => {
         if (data.success) {
-            document.getElementById("totalUsuariosNumber").textContent = `(${data.totalUsuarios})`;
+            document.getElementById("totalUsersNumber").textContent = `(${data.totalUsuarios})`;
         }
     })
     .catch(error => console.error("Error al obtener total de usuarios:", error));
@@ -436,20 +437,15 @@ document.getElementById("editUserForm").addEventListener("submit", function(e) {
 //============================== PESTAÑA DASHBOARD PRODUCTOS ==============================
 
 function filterCategories() {
-    const btnFilterCategories = document.getElementById("searchButton-categories");
-    // Usamos la clase real que tiene el contenedor en tu HTML
+    const btnFilterCategories = document.querySelectorAll(".btnForms");
     const list = document.querySelector(".container-list-span-categories");
 
     if (!btnFilterCategories || !list) return;
 
-    // Agregar el listener una sola vez (ya lo llamás en DOMContentLoaded)
-    btnFilterCategories.addEventListener("click", function(e) {
-        e.preventDefault(); // por si acaso (evita submit)
-        list.style.display = (list.style.display === "flex") ? "none" : "flex";
+    btnFilterCategories.forEach(btn => {
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            list.style.display = (list.style.display === "flex") ? "none" : "flex";
+        });
     });
 }
-
-"1,5,78"
-let arr= localStorage.getItem("productos").explode(",")
-
-setItem("productos,"+id)

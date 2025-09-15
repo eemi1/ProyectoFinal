@@ -165,11 +165,11 @@
 
                     </div>
 
-                    <div class="dashboard-Users">
+                    <div class="dashboard-layout">
                         <div class="search-container">
                             <div class="search-card">
                                 <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" placeholder="Buscar usuario por nombre o email" class="searchInput">
+                                <input type="text" placeholder="Buscar usuario por nombre o email" class="searchInput" id="searchInputUsers">
                             </div>
                             <div class="searchBTN-card">
                                 <button id="searchButton-roles" onclick="filterRoles()">Todos los roles 
@@ -191,30 +191,31 @@
                             </div>
                         </div>
 
-                        <div class="container-table-users">
-                            <div id="table-users-header">
+                        <div class="container-table">
+                            <div id="table-header">
                                 <i class="fa-solid fa-user-group"></i>
-                                <h5 id="table-users-list">
-                                    Lista de Usuarios <span id="totalUsuariosNumber" style="font-family: Montserrat, sans-serif;">(0)</span>
+                                <h5 id="table-list">
+                                    Lista de Usuarios <span id="totalUsersNumber" style="font-family: Montserrat, sans-serif;">(0)</span>
                                 </h5>
                             </div>
 
-                            <div class="table-users-container-table">
-                                <table id="table-users" style="width:100%">
+                            <div class="table-container-table">
+                                <table class="table" id="table-users" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Usuario</th>
                                             <th>Rol</th>
                                             <th>Pedidos</th>
                                             <th>Registro</th>
-                                            <th>Acciones
-                                            </th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         
                                     </tbody>
                                 </table>
+                            </div>
+                    </div>
 
                                 <div class="modalEditUser" id="modalEditUser">
                                     <div class="modalEditUser-content">
@@ -247,10 +248,6 @@
                                 </div>
                             </div>
 
-
-
-                        </div>
-                    </div>
                 </section>
                 <!--==================  | DASHBOARD INGREDIENTES | ==================-->
                 <section class="optContent" id="dashboardIngredientes">
@@ -263,39 +260,31 @@
                             <i class="fa-solid fa-plus"></i> Añadir Ingrediente
                         </button>
                     </header>
-                    <!-- Ventana para agregar producto -->
-                    <div class="windowAdd" id="windowAddIngredient" style="display:block">
+                    <!--======== Ventana para agregar ingredientes ======== -->
+                    <div class="windowAdd" id="windowAddIngredient">
                         <div class="windowAdd-content">
                             <span class="closeBtn" id="closeBtnIngredient">&times;</span>
                             <h2>Agregar Nuevo Ingrediente</h2>
                             <form id="addIngredientForm" action="" method="POST">
-
                                 <div id="ingredientModal-containerInputs">
                                     <div class="ingredientModal-inputs" id="ingredientModal-nameInputDiv">
                                         <label for="">Nombre del ingrediente</label>
-                                        <input type="text" id="ingredientModal-nameInput">
+                                        <input type="text" id="ingredientModal-nameInput" placeholder="Ej: Cebolla, Carne, etc.">
                                     </div>                                    
                                     <div class="ingredientModal-inputs" id="ingredientModal-descriptionDiv">
                                         <label for="">Descripción</label>
-                                        <textarea id="ingredientModal-description" style="resize: none;"></textarea>
+                                        <textarea class="textareaForms" id="ingredientModal-description" placeholder="Descripción del ingrediente."></textarea>
                                     </div>
-                                    <div class="productModal-inputs">
+                                    <div class="ingredientModal-inputs">
                                         <label for="">Tipo de ingrediente</label>
                                         <div class="searchBTN-card">
-                                            <button type="button" class="btnForms"  id="searchButton-categories" onclick="filterCategories()">Seleccionar categoría 
-                                                <svg id="searchBTN-card-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
-                                                </svg>
-                                            </button>
-                                            <div class="container-list-span-categories" >
-                                                <div class="div-list-span">
-                                                    <span class="list-span" data-value="0">-</span>
-                                                    <span class="list-span" data-value="1">Verdura</span>
-                                                    <span class="list-span" data-value="2">Lácteo</span>
-                                                    <span class="list-span" data-value="3">Carne</span>
-                                                    <span class="list-span" data-value="4">Condimento</span>
-                                                </div>
-                                            </div>
+                                            <select name="ingredientCategories" id="ingredientCategories" class="btnForms">
+                                                <option value="">-</option>
+                                                <option value="ingredientCategories-verdura">Verdura</option>
+                                                <option value="ingredientCategories-lacteo">Lácteo</option>
+                                                <option value="ingredientCategories-carne">Carne</option>
+                                                <option value="ingredientCategories-condimento">Condimento</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="ingredientModal-inputs">
@@ -304,11 +293,17 @@
                                     </div> 
                                     <div class="ingredientModal-inputs">
                                         <label for="">Unidad (Kg,Litros,etc)</label>
-                                        <input type="text" id="ingredientModal-unity">
+                                            <select name="ingredientUnity" id="ingredientUnity" class="btnForms">
+                                                <option value="">-</option>
+                                                <option value="ingredientUnity-kg">kg</option>
+                                                <option value="ingredientUnity-g">g</option>
+                                                <option value="ingredientUnity-l">l</option>
+                                                <option value="ingredientUnity-ml">ml</option>
+                                            </select>
                                     </div>
                                     <div class="ingredientModal-inputs">
                                         <label for="">Proovedor</label>
-                                        <input type="text" id="ingredientModal-supplier">
+                                        <input type="text" id="ingredientModal-supplier" placeholder="Nombre del proovedor.">
                                     </div>
                                     <div class="ingredientModal-inputs">
                                         <label for="">Stock Actual</label>
@@ -319,15 +314,47 @@
                                         <label for="">Stock Mínimo</label>
                                         <input type="text" id="ingredientModal-minStock">
                                     </div>
-
                                 </div>
-
-                                
                                 <button type="submit" class="btnSubmit" id="btnSubmitIngredient">Agregar Ingrediente</button>
                             </form>
                         </div>
                     </div>
+                    <!--======== Contenido principal Ingredientes ======== -->
+                    <div class="dashboard-layout">
+                        <div class="search-container">
+                            <div class="search-card">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" placeholder="Buscar ingredientes o proovedores" class="searchInput" id="searchInputIngredients">
+                            </div>
+                        </div>
 
+                        <div class="container-table">
+                            <div id="table-header">
+                                <i class="fa-solid fa-user-group"></i>
+                                <h5 id="table-list">
+                                    Lista de Ingredientes <span id="totalIngredientsNumber" style="font-family: Montserrat, sans-serif;">(0)</span>
+                                </h5>
+                            </div>
+
+                            <div class="table-container-table">
+                                <table class="table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Ingrediente</th>
+                                            <th>Unidad</th>
+                                            <th>Stock Actual</th>
+                                            <th>Stock Mín</th>
+                                            <th>Proveedor</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
 
                 </section>
 
@@ -372,7 +399,7 @@
                                     <div class="productModal-inputs">
                                         <label for="">Categoría</label>
                                         <div class="searchBTN-card">
-                                            <button type="button"  id="searchButton-categories" onclick="filterCategories()">Todas las categorías 
+                                            <button type="button" class="btnForms"  id="searchButton-categories-ingredients" onclick="filterCategories()">Todas las categorías 
                                                 <svg id="searchBTN-card-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
                                                 </svg>
@@ -393,7 +420,7 @@
                                     <div class="productModal-inputs" id="productModal-description">
                                         <label for="">Descripción</label>
                                         <!-- <input type="text" id="productModal-descriptionInput"> -->
-                                        <textarea name="description" id="productModal-descriptionInput" style="resize: none;"></textarea>
+                                        <textarea name="description" class="textareaForms" id="productModal-descriptionInput"></textarea>
                                     </div>
                                     <div class="productModal-inputs">
                                         <label for="">Tiempo de preparación</label>
