@@ -6,6 +6,7 @@ $pdo = require "../../../db.php";
 function mostrarUsuarios($pdo) {
     try {
         $input = json_decode(file_get_contents("php://input"), true);
+        
         $search = isset($input['search']) ? trim($input['search']) : "";
         $valueRol = isset($input['valueRol']) ? trim($input['valueRol']) : "";
 

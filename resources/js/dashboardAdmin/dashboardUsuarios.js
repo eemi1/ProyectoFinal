@@ -6,23 +6,26 @@ window.addEventListener('DOMContentLoaded', () => {
     openAddWindow();
     closeAddWindow();
     filterCategories();
+    loadIngredients();
+    ingredientsTotal();
+    initSearches();
 
-    const inputSearch = document.getElementById("searchInputUsers");
-    
-    inputSearch.addEventListener("input", function() {
-
-        inputSearchValue = inputSearch.value;
-        console.log("Valor actual:", inputSearchValue);
-        
-        if(inputSearchValue == ''){
-            console.log("inpt vacío")
-        }
-
-        loadUsers(inputSearchValue, "");
-
-    });
 });
+function initSearches() {
+    // --- Ingredientes ---
+    const inputSearchIngredients = document.getElementById("searchInputIngredients");
+    inputSearchIngredients.addEventListener("input", () => {
+        loadIngredients(inputSearchIngredients.value);
+    });
+    loadIngredients(); 
 
+    // --- Usuarios ---
+    const inputSearchUsers = document.getElementById("searchInputUsers");
+    inputSearchUsers.addEventListener("input", () => {
+        loadUsers(inputSearchUsers.value); 
+    });
+    loadUsers(); 
+}
 
 //============================== FUNCION PARA CAMBIAR DE PESTAÑAS ==============================
 function options(event, tabOption){
@@ -60,6 +63,7 @@ function openAddWindow() {
 
     //-------Varible Formularios-------------
     const formUser = document.getElementById("addUserForm");
+    const formIngredients = document.getElementById("addIngredientForm");
 
     //-------Eventos de escucha de click en el botón.-------------
     addUser.addEventListener("click", function() {
@@ -74,10 +78,11 @@ function openAddWindow() {
         windowAddIngredient.style.display = "block";
     })
 
-    //-------Eventos de envío de formularios.-------------
+////==================| Eventos de envío de formularios |===================
+    //---------------FORMULARIO USUARIOS---------------------
     formUser.addEventListener("submit", function(e) {
         e.preventDefault();
-        windowAdd.style.display = "none";
+        windowAddUser.style.display = "none";
 
         Swal.fire({
             title: '¿Estás seguro?',
@@ -89,11 +94,11 @@ function openAddWindow() {
             cancelButtonColor: "#d33",
         }).then((result) => {
             if (result.isConfirmed) {
-                const formData = new FormData(form);
+                const formUserData = new FormData(formUser);
 
                 fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=addUsers", {
                     method: 'POST',
-                    body: formData,
+                    body: formUserData,
                     credentials: 'same-origin'
                 })
                 .then(res => res.json())
@@ -130,8 +135,65 @@ function openAddWindow() {
             }
         });
     });
-}
+    //---------------FORMULARIO INGREDIENTES---------------------
+    formIngredients.addEventListener("submit", function(e) {
+        e.preventDefault();
+        windowAddIngredient.style.display = "none";
 
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Deseas registrar este nuevo ingrediente?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, registrar',
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: "#d33",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const formIngredientData = new FormData(formIngredients);
+
+                fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=addIngredient", {
+                    method: 'POST',
+                    body: formIngredientData,
+                    credentials: 'same-origin'
+                })
+                .then(res => res.json()) 
+                .then(data => {
+                    if (data.success) {
+                        windowAddIngredient.style.display = "none"; // cerrar modal después de éxito
+                        Swal.fire({
+                            title: 'Excelente!',
+                            text: 'Nuevo ingrediente registrado correctamente.',
+                            icon: 'success',
+                            timer: 1500, 
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.href = "/proyectoFinal/app/View/DashboardAdmin/adminPanel.html";
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error al intentar conectarse con el servidor.',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                });
+            }
+        });
+    });
+
+}
+////==================| EVENTOS DE CERRAR FORMULARIO |===================
 
 function closeAddWindow() {
     const closeBtnUser = document.getElementById("closeBtnUser");
@@ -190,62 +252,14 @@ function chartVentas(){
 chart.render();
 
 }
-//============================== PESTAÑA DASHBOARD USUARIOS ==============================
-function filterRoles() {
-    const btnFilterRoles = document.getElementById("searchButton-roles");
-    const containerListSpan = document.querySelector(".container-list-span");
-    const listsSpan = document.querySelectorAll(".list-span");
+////==================| EVENTOS DE CARGA DE DATOS DE BD |===================
+function loadUsers(inputSearchUsers = '', rolValue = '') {
 
-    const rolesMap = {
-        1: "Cliente",
-        2: "Administrador",
-        3: "Mozo",
-        4: "Cocinero",
-        5: "Gerente",
-        6: "Delivery"
-    };
-
-    const svg = `<svg id="searchBTN-card-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
-                </svg>`;
-
-    btnFilterRoles.addEventListener("click", () => {
-        containerListSpan.style.display = containerListSpan.style.display === "flex" ? "none" : "flex";
-    });
-
-    listsSpan.forEach(span => {
-        span.addEventListener("click", function() {
-            const rolValue = parseInt(this.getAttribute("data-value"));
-            const rolName = rolesMap[rolValue] || "Todos los roles";
-
-            btnFilterRoles.innerHTML = `${rolName} ${svg}`;
-            containerListSpan.style.display = "none";
-
-            loadUsers("", rolValue);
-            usersTotal(rolValue);  
-        });
-    });
-}
-function usersTotal() {
-    fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=CantidadUsuarios", {
-        method: 'POST',
-        credentials: 'same-origin'
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById("totalUsersNumber").textContent = `(${data.totalUsuarios})`;
-        }
-    })
-    .catch(error => console.error("Error al obtener total de usuarios:", error));
-}
-
-function loadUsers(inputSearchValue = "", rolValue= "" ) {
     fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=mostrarUsuarios", {
         method: 'POST',
         credentials: 'same-origin',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ search: inputSearchValue, valueRol: rolValue })
+        body: JSON.stringify({ search: inputSearchUsers, valueRol: rolValue })
     })
     .then(res => res.json())
     .then(data => {
@@ -312,6 +326,105 @@ function loadUsers(inputSearchValue = "", rolValue= "" ) {
         editUser();
     });
 }
+
+function loadIngredients(inputSearchIngredients = '') {
+
+    fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ search: inputSearchIngredients })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const tableBody = document.querySelector("#table-ingredients tbody");
+        if (!data.success) {
+            tableBody.innerHTML = `<tr><td colspan="6">${data.message}</td></tr>`;
+            return;
+        }
+
+        tableBody.innerHTML = ""; // limpiar tabla
+
+        data.data.ingredientes.forEach(ingrediente => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${ingrediente.nombre}</td>
+                <td>${ingrediente.unidad}</td>
+                <td>${ingrediente.stock_actual}</td>
+                <td>${ingrediente.stock_minimo}</td>
+                <td>${ingrediente.proveedor}</td>
+                <td>off</td>
+                <td>off</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    })
+    .catch(err => console.error(err));
+}
+//============================== PESTAÑA DASHBOARD USUARIOS ==============================
+function filterRoles() {
+    const btnFilterRoles = document.getElementById("searchButton-roles");
+    const containerListSpan = document.querySelector(".container-list-span");
+    const listsSpan = document.querySelectorAll(".list-span");
+
+    const rolesMap = {
+        1: "Cliente",
+        2: "Administrador",
+        3: "Mozo",
+        4: "Cocinero",
+        5: "Gerente",
+        6: "Delivery"
+    };
+
+    const svg = `<svg id="searchBTN-card-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                </svg>`;
+
+    btnFilterRoles.addEventListener("click", () => {
+        containerListSpan.style.display = containerListSpan.style.display === "flex" ? "none" : "flex";
+    });
+
+    listsSpan.forEach(span => {
+        span.addEventListener("click", function() {
+            const rolValue = parseInt(this.getAttribute("data-value"));
+            const rolName = rolesMap[rolValue] || "Todos los roles";
+
+            btnFilterRoles.innerHTML = `${rolName} ${svg}`;
+            containerListSpan.style.display = "none";
+
+            loadUsers(rolValue);
+            usersTotal(rolValue);  
+        });
+    });
+}
+function usersTotal() {
+    fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=CantidadUsuarios", {
+        method: 'POST',
+        credentials: 'same-origin'
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("totalUsersNumber").textContent = `(${data.totalUsuarios})`;
+        }
+    })
+    .catch(error => console.error("Error al obtener total de usuarios:", error));
+}
+function ingredientsTotal() {
+    fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=ingredientsAmount", {
+        method: 'POST',
+        credentials: 'same-origin'
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("totalIngredientsNumber").textContent = `(${data.totalIngredientes})`;
+        }
+    })
+    .catch(error => console.error("Error al obtener total de ingredientes:", error));
+}
+
+
 
 function btnActionsUser(event) {
 

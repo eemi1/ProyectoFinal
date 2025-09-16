@@ -215,7 +215,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                    </div>
+                        </div>
 
                                 <div class="modalEditUser" id="modalEditUser">
                                     <div class="modalEditUser-content">
@@ -269,50 +269,52 @@
                                 <div id="ingredientModal-containerInputs">
                                     <div class="ingredientModal-inputs" id="ingredientModal-nameInputDiv">
                                         <label for="">Nombre del ingrediente</label>
-                                        <input type="text" id="ingredientModal-nameInput" placeholder="Ej: Cebolla, Carne, etc.">
+                                        <input type="text" name="nameIngredient" id="ingredientModal-nameInput" placeholder="Ej: Cebolla, Carne, etc." required>
                                     </div>                                    
                                     <div class="ingredientModal-inputs" id="ingredientModal-descriptionDiv">
                                         <label for="">Descripción</label>
-                                        <textarea class="textareaForms" id="ingredientModal-description" placeholder="Descripción del ingrediente."></textarea>
+                                        <textarea class="textareaForms" name="descriptionIngredient" id="ingredientModal-description" placeholder="Descripción del ingrediente."></textarea>
                                     </div>
                                     <div class="ingredientModal-inputs">
                                         <label for="">Tipo de ingrediente</label>
                                         <div class="searchBTN-card">
-                                            <select name="ingredientCategories" id="ingredientCategories" class="btnForms">
+                                            <select name="categoriesIngredient" id="ingredientCategories" class="btnForms" required>
                                                 <option value="">-</option>
-                                                <option value="ingredientCategories-verdura">Verdura</option>
-                                                <option value="ingredientCategories-lacteo">Lácteo</option>
-                                                <option value="ingredientCategories-carne">Carne</option>
-                                                <option value="ingredientCategories-condimento">Condimento</option>
+                                                <option value="Verdura">Verdura</option>
+                                                <option value="Lácteo">Lácteo</option>
+                                                <option value="Carne">Carne</option>
+                                                <option value="Condimento">Condimento</option>
+                                                <option value="Otro">Otro</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="ingredientModal-inputs">
                                         <label for="">Fecha de vencimiento</label>
-                                        <input type="date" id="ingredientModal-expirationDate">
+                                        <input type="date" name="expirationDateIngredient" id="ingredientModal-expirationDate">
                                     </div> 
                                     <div class="ingredientModal-inputs">
                                         <label for="">Unidad (Kg,Litros,etc)</label>
-                                            <select name="ingredientUnity" id="ingredientUnity" class="btnForms">
+                                            <select name="unityIngredient" id="ingredientUnity" class="btnForms" required>
                                                 <option value="">-</option>
-                                                <option value="ingredientUnity-kg">kg</option>
-                                                <option value="ingredientUnity-g">g</option>
-                                                <option value="ingredientUnity-l">l</option>
-                                                <option value="ingredientUnity-ml">ml</option>
+                                                <option value="kg">kg</option>
+                                                <option value="g">g</option>
+                                                <option value="l">l</option>
+                                                <option value="ml">ml</option>
+                                                <option value="otro">otro</option>
                                             </select>
                                     </div>
                                     <div class="ingredientModal-inputs">
-                                        <label for="">Proovedor</label>
-                                        <input type="text" id="ingredientModal-supplier" placeholder="Nombre del proovedor.">
+                                        <label for="">Proveedor</label>
+                                        <input type="text" name="supplierIngredient" id="ingredientModal-supplier" placeholder="Nombre del proveedor." required>
                                     </div>
                                     <div class="ingredientModal-inputs">
                                         <label for="">Stock Actual</label>
-                                        <input type="text" id="ingredientModal-stock">
+                                        <input type="text" name="stockIngredient" id="ingredientModal-stock" required>  
                                     </div>
 
                                     <div class="ingredientModal-inputs">
                                         <label for="">Stock Mínimo</label>
-                                        <input type="text" id="ingredientModal-minStock">
+                                        <input type="text" name="minStockIngredient" id="ingredientModal-minStock" required>
                                     </div>
                                 </div>
                                 <button type="submit" class="btnSubmit" id="btnSubmitIngredient">Agregar Ingrediente</button>
@@ -337,7 +339,7 @@
                             </div>
 
                             <div class="table-container-table">
-                                <table class="table" style="width:100%">
+                                <table class="table" id="table-ingredients" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Ingrediente</th>

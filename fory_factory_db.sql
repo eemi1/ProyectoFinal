@@ -109,7 +109,7 @@ CREATE TABLE ingrediente (
     nombre VARCHAR(255) NOT NULL,
     descripcion TEXT,
     tipo ENUM('Verdura','Lácteo','Carne','Condimento','Otro') NOT NULL,
-    fecha_vencimiento DATE,
+    fecha_vencimiento DATE NULL,
     unidad ENUM('kg','g','l','ml','otro') NOT NULL,
     proveedor VARCHAR(255),
     stock_actual INT NOT NULL DEFAULT 0,
