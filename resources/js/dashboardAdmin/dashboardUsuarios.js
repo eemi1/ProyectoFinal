@@ -9,6 +9,7 @@ window.addEventListener('DOMContentLoaded', () => {
     loadIngredients();
     ingredientsTotal();
     initSearches();
+    showModalProductsAddIngredients();
 
 });
 function initSearches() {
@@ -561,4 +562,53 @@ function filterCategories() {
             list.style.display = (list.style.display === "flex") ? "none" : "flex";
         });
     });
+}
+
+function showModalProductsAddIngredients(){
+
+    const btnIngredients = document.getElementById("productModal-inputSearchAddIngredient")
+    const checkboxIngredientsList = document.getElementById("productModal-addIngredients-container")
+
+    checkboxIngredientsList.style.display="none"
+
+
+    btnIngredients.addEventListener("click", function(e) {
+        e.preventDefault();
+        checkboxIngredientsList.style.display="flex";
+        getIngredients();
+
+    })
+}
+
+function getIngredients(){
+        fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
+        method: "GET",
+        credentials: "same-origin"
+    })
+    .then(res => res.json())
+    .then(data => {
+        const ingredientInfo = document.querySelector("#productModal-addIngredint-checkboxs");
+        if (!data.success) {
+            ingredientInfo.innerHTML = `<tr><td colspan="6">${data.message}</td></tr>`;
+            return;
+        }
+
+        ingredientInfo.innerHTML = ""; 
+
+        data.data.ingredientes.forEach(ingrediente => {
+            ingredientInfo.innerHTML += `
+
+            <div class="productModal-addIngredient-checkboxcontainer">
+                <label>
+                    <input type="checkbox" name="${ingrediente.id}">
+                    <div class="ingredient-info">
+                        <strong>${ingrediente.nombre}</strong>
+                        <span>${ingrediente.descricpcion}</span>
+                        <p>Stock ${ingrediente.stock_actual}${ingrediente.unidad} | </p>
+                    </div>
+                </label>
+            </div>
+            `;
+        });
+    })
 }

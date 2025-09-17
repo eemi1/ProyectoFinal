@@ -837,7 +837,7 @@ html, body {
 }
 .ingredientModal-inputs{
     display: flex;
-    flex-direction: column;
+    flex-direction: column;     
     gap: 10px;
 }
 .ingredientModal-inputs label{
@@ -855,7 +855,7 @@ html, body {
     outline: none;
     border-radius: 2px;
 }
-#ingredientModal-nameInputDiv, #ingredientModal-descriptionDiv{
+#ingredientModal-nameInputDiv{
     grid-column: 1 / span 2;
 }
 /*=======================================|DASHBOARD PRODUCTOS|==========================================================*/
@@ -899,7 +899,7 @@ html, body {
     margin-top: 20px;
 
 }
-#productModal-description, #productModal-ingredients{
+#productModal-description{
     grid-column: 1 / span 2;
 }
 .productModal-inputs input{
@@ -913,4 +913,52 @@ html, body {
     flex-direction: column;
     gap: 10px;
 }
+#productModal-addIngredients-container{
+    display:none;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid black;
+}
 
+.productModal-addIngredient-search{
+    width: 100%;
+    border-bottom: 1px solid black;
+    padding: 5px;
+}
+.searchInput-productModal{
+    border: none;
+}
+#productModal-addIngredint-checkboxs{
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+}
+.productModal-addIngredient-checkboxcontainer{
+    display: flex;
+    margin: 5px 10px;
+    border-bottom: 1px solid ghostwhite;
+}
+.productModal-addIngredient-checkboxcontainer label{
+    display: flex;
+    align-items: center;
+}
+.ingredient-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.ingredient-info strong {
+  font-size: 14px;
+}
+
+.ingredient-info span {
+  font-size: 12px;
+  color: #666;
+}
+
+.ingredient-info p {
+  font-size: 12px;
+  color: #999;
+  margin: 2px 0 0;
+}
