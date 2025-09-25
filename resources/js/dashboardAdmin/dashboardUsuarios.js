@@ -26,6 +26,13 @@ function initSearches() {
         loadUsers(inputSearchUsers.value); 
     });
     loadUsers(); 
+
+    // --- Productos ---
+    const inputSearchProducts = document.getElementById("searchInputProducts");
+    inputSearchProducts.addEventListener("input", () => {
+        loadProducts(inputSearchProducts.value); 
+    });
+    loadProducts(); 
 }
 
 //============================== FUNCION PARA CAMBIAR DE PESTAÑAS ==============================
@@ -65,6 +72,7 @@ function openAddWindow() {
     //-------Varible Formularios-------------
     const formUser = document.getElementById("addUserForm");
     const formIngredients = document.getElementById("addIngredientForm");
+    const formProducts = document.getElementById("addProductForm");
 
     //-------Eventos de escucha de click en el botón.-------------
     addUser.addEventListener("click", function() {
@@ -80,120 +88,143 @@ function openAddWindow() {
     })
 
 ////==================| Eventos de envío de formularios |===================
-    //---------------FORMULARIO USUARIOS---------------------
-    formUser.addEventListener("submit", function(e) {
-        e.preventDefault();
-        windowAddUser.style.display = "none";
+    if (formUser) {
+        formUser.addEventListener("submit", function(e) {
+            e.preventDefault();
+            windowAddUser.style.display = "none"; 
 
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Deseas registrar este nuevo usuario?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, registrar',
-            cancelButtonText: 'Cancelar',
-            cancelButtonColor: "#d33",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const formUserData = new FormData(formUser);
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Deseas registrar este nuevo usuario?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, registrar',
+                cancelButtonText: 'Cancelar',
+                cancelButtonColor: "#d33",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData(formUser);
 
-                fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=addUsers", {
-                    method: 'POST',
-                    body: formUserData,
-                    credentials: 'same-origin'
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        windowAddUser.style.display = "none"; // cerrar modal después de éxito
-                        Swal.fire({
-                            title: 'Excelente!',
-                            text: 'Nuevo usuario registrado correctamente.',
-                            icon: 'success',
-                            timer: 1500, 
-                            showConfirmButton: false
-                        }).then(() => {
-                            location.href = "/proyectoFinal/app/View/DashboardAdmin/adminPanel.html";
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: data.message,
-                            icon: 'error',
-                            confirmButtonText: 'Ok'
-                        });
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Ocurrió un error al intentar conectarse con el servidor.',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
+                    fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=addUsers", {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'same-origin'
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            windowAddUser.style.display = "none";
+                            Swal.fire({
+                                title: 'Excelente!',
+                                text: 'Nuevo usuario registrado correctamente.',
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => location.reload());
+                        } else {
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    })
+                    .catch(() => {
+                        Swal.fire('Error', 'Ocurrió un error al intentar conectarse con el servidor.', 'error');
                     });
-                });
-            }
+                }
+            });
         });
-    });
-    //---------------FORMULARIO INGREDIENTES---------------------
-    formIngredients.addEventListener("submit", function(e) {
-        e.preventDefault();
-        windowAddIngredient.style.display = "none";
+    }
 
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Deseas registrar este nuevo ingrediente?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, registrar',
-            cancelButtonText: 'Cancelar',
-            cancelButtonColor: "#d33",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const formIngredientData = new FormData(formIngredients);
+    // Submit ingredientes
+    if (formIngredients) {
+        formIngredients.addEventListener("submit", function(e) {
+            e.preventDefault();
+            windowAddIngredient.style.display = "none"; 
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Deseas registrar este nuevo ingrediente?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, registrar',
+                cancelButtonText: 'Cancelar',
+                cancelButtonColor: "#d33",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData(formIngredients);
 
-                fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=addIngredient", {
-                    method: 'POST',
-                    body: formIngredientData,
-                    credentials: 'same-origin'
-                })
-                .then(res => res.json()) 
-                .then(data => {
-                    if (data.success) {
-                        windowAddIngredient.style.display = "none"; // cerrar modal después de éxito
-                        Swal.fire({
-                            title: 'Excelente!',
-                            text: 'Nuevo ingrediente registrado correctamente.',
-                            icon: 'success',
-                            timer: 1500, 
-                            showConfirmButton: false
-                        }).then(() => {
-                            location.href = "/proyectoFinal/app/View/DashboardAdmin/adminPanel.html";
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: data.message,
-                            icon: 'error',
-                            confirmButtonText: 'Ok'
-                        });
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Ocurrió un error al intentar conectarse con el servidor.',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
+                    fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=addIngredient", {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'same-origin'
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            windowAddIngredient.style.display = "none";
+                            Swal.fire({
+                                title: 'Excelente!',
+                                text: 'Nuevo ingrediente registrado correctamente.',
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => location.reload());
+                        } else {
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    })
+                    .catch(() => {
+                        Swal.fire('Error', 'Ocurrió un error al intentar conectarse con el servidor.', 'error');
                     });
-                });
-            }
+                }
+            });
         });
-    });
+    }
+    if (formProducts) {
+        formProducts.addEventListener("submit", function(e) {
+            e.preventDefault();
+            windowAddProduct.style.display = "none"; 
 
-}
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Deseas registrar este nuevo producto?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, registrar',
+                cancelButtonText: 'Cancelar',
+                cancelButtonColor: "#d33",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData(formProducts);
+
+                    fetch("/proyectoFinal/app/Functions/dashboardAdmin/productos.php?action=addProduct", {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'same-origin'
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            windowAddIngredient.style.display = "none";
+                            Swal.fire({
+                                title: 'Excelente!',
+                                text: 'Nuevo producto registrado correctamente.',
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => location.reload());
+                        } else {
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    })
+                    .catch(() => {
+                        Swal.fire('Error', 'Ocurrió un error al intentar conectarse con el servidor.', 'error');
+                    });
+                }
+            });
+        });
+    }
+    }
+
+
+
 ////==================| EVENTOS DE CERRAR FORMULARIO |===================
 
 function closeAddWindow() {
@@ -349,12 +380,58 @@ function loadIngredients(inputSearchIngredients = '') {
         data.data.ingredientes.forEach(ingrediente => {
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td>${ingrediente.nombre}</td>
+                <td id="ingredientsTable-td">
+                    <strong>${ingrediente.nombre}</strong>
+                    <span>${ingrediente.descripcion}</span>
+                </td>
                 <td>${ingrediente.unidad}</td>
                 <td>${ingrediente.stock_actual}</td>
                 <td>${ingrediente.stock_minimo}</td>
                 <td>${ingrediente.proveedor}</td>
                 <td>off</td>
+                <td>off</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    })
+    .catch(err => console.error(err));
+}
+function loadProducts(inputSearchProducts = '') {
+
+    fetch("/proyectoFinal/app/Functions/dashboardAdmin/productos.php?action=showProducts", {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ search: inputSearchProducts })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const tableBody = document.querySelector("#table-products tbody");
+        if (!data.success) {
+            tableBody.innerHTML = `<tr><td colspan="6">${data.message}</td></tr>`;
+            return;
+        }
+
+        tableBody.innerHTML = ""; // limpiar tabla
+
+        data.data.productos.forEach(producto => {
+
+            let ingredientesList = "";
+            producto.ingredientes.forEach(ingrediente => {
+                ingredientesList += `<p class="productsTable-td-ingredientesList">${ingrediente}</p>`;
+            });
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${producto.id}</td>
+                <td id="productsTable-td">
+                    <strong>${producto.nombre}</strong>
+                    <span>${producto.descripcion}</span>
+                </td>
+                <td>${producto.categoria}</td>
+                <td>${producto.precio} $</td>
+                <td id="productTable-td-ingredientes">${ingredientesList}</td>
+                <td>${producto.promocion ? 'Sí' : 'Sin Descuento'}</td>
                 <td>off</td>
             `;
             tableBody.appendChild(row);
@@ -566,14 +643,21 @@ function filterCategories() {
 
 function showModalProductsAddIngredients(){
 
-    const btnIngredients = document.getElementById("productModal-inputSearchAddIngredient")
+    const btnIngredients = document.getElementById("productModal-inputSearchSelectIngredients")
     const checkboxIngredientsList = document.getElementById("productModal-addIngredients-container")
 
     checkboxIngredientsList.style.display="none"
 
+    if(!btnIngredients || !checkboxIngredientsList) return;
+
+
 
     btnIngredients.addEventListener("click", function(e) {
         e.preventDefault();
+        if(checkboxIngredientsList.style.display === "flex") {
+            checkboxIngredientsList.style.display="none";
+            return;
+        }   
         checkboxIngredientsList.style.display="flex";
         getIngredients();
 
@@ -600,7 +684,7 @@ function getIngredients(){
 
             <div class="productModal-addIngredient-checkboxcontainer">
                 <label>
-                    <input type="checkbox" name="${ingrediente.id}">
+                    <input type="checkbox" name="productIngrediente[]" value="${ingrediente.id}">
                     <div class="ingredient-info">
                         <strong>${ingrediente.nombre}</strong>
                         <span>${ingrediente.descricpcion}</span>
@@ -612,3 +696,5 @@ function getIngredients(){
         });
     })
 }
+
+//--------------------- TABLA PRODUCTOS ---------------------------
