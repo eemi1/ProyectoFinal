@@ -15,32 +15,58 @@ function addProduct($pdo) {
     $productPromotion = $_POST['productPromotion'] ?? 'sinDescuento';
     $productIngredients = $_POST['productIngrediente'] ?? []; // array de IDs de ingredientes
     $productFeatured = isset($_POST['productFeatured']) ? 1 : 0;
+    $cantidadesIngredientes = $_POST['cantidadIngrediente'] ?? []; // array asociativo id => cantidad
 
     // Validar campos obligatorios
-    if (empty($productName) || empty($productPrice) || empty($intCategoriesProduct) || empty($productIngredients)) {
+    if (empty($productName) || empty($productPrice) || empty($intCategoriesProduct)) {
         echo json_encode(["success" => false, "message" => "Todos los campos obligatorios deben completarse."]);
         exit;
     }
 
+    if (!is_numeric($productPrice) || $productPrice <= 0 || $productPromotion < 0) {
+        echo json_encode(["success" => false, "message" => "El valor debe ser un número positivo."]);
+        exit;
+    }
+
+    if ($productPromotion != 'sinDescuento' && $productPromotion != '2x1') {
+        $productPromotion = $productPromotion . "%";
+    }
+
     try {
-            $stmt = $pdo->prepare("INSERT INTO producto (id_categoria, nombre, precio, descripcion, tiempoPreparacion, calorias, promocion) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([
-                $intCategoriesProduct,
-                $productName,
-                $productPrice,
-                $productDescription,
-                $productPreparationTime,
-                $productCalories,
-                $productPromotion
-            ]);
+        if ($productFeatured) {
+            $stmtCount = $pdo->query("SELECT COUNT(*) FROM producto WHERE destacado = 1");
+            $countFeatured = $stmtCount->fetchColumn();
+
+            if ($countFeatured >= 4) {
+                echo json_encode([
+                    "success" => false, 
+                    "message" => "No se pueden tener más de 4 productos destacados."
+                ]);
+                exit;
+            }
+        }
+
+        // Insertar producto
+        $stmt = $pdo->prepare("INSERT INTO producto (id_categoria, nombre, precio, descripcion, tiempoPreparacion, calorias, promocion, destacado) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([
+            $intCategoriesProduct,
+            $productName,
+            $productPrice,
+            $productDescription,
+            $productPreparationTime,
+            $productCalories,
+            $productPromotion,
+            $productFeatured
+        ]);
 
         $productId = $pdo->lastInsertId();
 
-        // Insertar relaciones con los ingredientes seleccionados
-        $stmtIng = $pdo->prepare("INSERT INTO producto_ingrediente (id_producto, id_ingrediente) VALUES (?, ?)");
+        // Insertar ingredientes
+        $stmtIng = $pdo->prepare("INSERT INTO producto_ingrediente (id_producto, id_ingrediente, cantidad) VALUES (?, ?, ?)");
         foreach ($productIngredients as $ingredientId) {
-            $stmtIng->execute([$productId, $ingredientId]);
+            $cantidad = isset($cantidadesIngredientes[$ingredientId]) ? $cantidadesIngredientes[$ingredientId] : 0;
+            $stmtIng->execute([$productId, $ingredientId, $cantidad]);
         }
 
         echo json_encode(["success" => true, "message" => "Producto registrado correctamente."]);
@@ -48,6 +74,41 @@ function addProduct($pdo) {
 
     } catch (PDOException $e) {
         echo json_encode(["success" => false, "message" => "Error al registrar el producto: " . $e->getMessage()]);
+        exit;
+    }
+}
+
+function deleteProduct($pdo){
+    $input = json_decode(file_get_contents("php://input"), true);
+    $productId = $input['productId'] ?? null;
+
+    if ($productId === null || !is_numeric($productId)) {
+        echo json_encode(["success" => false, "message" => "ID de producto inválido."]);
+        exit;
+    }
+
+    try {
+        // Verificar si el producto existe
+        $stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM producto WHERE id = ?");
+        $stmtCheck->execute([$productId]);
+        if ($stmtCheck->fetchColumn() == 0) {
+            echo json_encode(["success" => false, "message" => "El producto no existe."]);
+            exit;
+        }
+
+        // Eliminar relaciones en producto_ingrediente
+        $stmtDelIng = $pdo->prepare("DELETE FROM producto_ingrediente WHERE id_producto = ?");
+        $stmtDelIng->execute([$productId]);
+
+        // Eliminar el producto
+        $stmtDelProd = $pdo->prepare("DELETE FROM producto WHERE id = ?");
+        $stmtDelProd->execute([$productId]);
+
+        echo json_encode(["success" => true, "message" => "Producto eliminado correctamente."]);
+        exit;
+
+    } catch (PDOException $e) {
+        echo json_encode(["success" => false, "message" => "Error al eliminar el producto: " . $e->getMessage()]);
         exit;
     }
 }
@@ -81,17 +142,19 @@ function showProducts($pdo){
         // Traer ingredientes de cada producto
         foreach ($productos as &$producto) {
             $stmtIng = $pdo->prepare("
-                SELECT ingrediente.nombre 
+                SELECT ingrediente.nombre, producto_ingrediente.cantidad
                 FROM producto_ingrediente 
                 JOIN ingrediente ON producto_ingrediente.id_ingrediente = ingrediente.id
                 WHERE producto_ingrediente.id_producto = :id_producto
             ");
             $stmtIng->execute(['id_producto' => $producto['id']]);
-            $ingredientes = $stmtIng->fetchAll(PDO::FETCH_COLUMN);
-            $producto['ingredientes'] = $ingredientes; // array de nombres
+            $ingredientes = $stmtIng->fetchAll(PDO::FETCH_ASSOC);
+            $producto['ingredientes'] = $ingredientes; // array de nombre y cantidad
+
+            if ($producto['promocion'] === 'sinDescuento') {
+            $producto['promocion'] = 'Sin Descuento';
         }
-
-
+        };
         echo json_encode([
             "success" => true,
             "message" => "Información obtenida correctamente.",
@@ -106,6 +169,31 @@ function showProducts($pdo){
     }
     exit;
 }
+
+function countProducts($pdo){
+    
+    try {
+        $stmt = $pdo->prepare("SELECT COUNT(*) AS totalProductos FROM producto");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode(["success" => true, "totalProductos" => $result['totalProductos']]);
+    } catch (PDOException $e) {
+        echo json_encode(["success" => false, "message" => "Error al contar productos: " . $e->getMessage()]);
+    }
+}
+
+function countFeatured($pdo){
+    try {
+        $stmt2 = $pdo->prepare("SELECT COUNT(*) AS totalFavoritos FROM producto WHERE destacado = 1");
+        $stmt2->execute();
+        $result2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+        echo json_encode(["success" => true, "totalFavoritos" => $result2['totalFavoritos']]);
+    } catch (PDOException $e) {
+        echo json_encode(["success" => false, "message" => "Error al contar productos destacados: " . $e->getMessage()]);
+    }
+}
+
+
     // RUTEO
 $accion = $_GET['action'] ?? null;
 
@@ -113,8 +201,17 @@ switch ($accion) {
     case 'addProduct':
         addProduct($pdo);
         break;
+    case 'deleteProduct':
+        deleteProduct($pdo);
+        break;
     case 'showProducts':
         showProducts($pdo);
+        break;
+    case 'countProducts':
+        countProducts($pdo);
+        break;
+    case 'countFeatured':
+        countFeatured($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);

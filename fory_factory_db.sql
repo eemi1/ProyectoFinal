@@ -143,6 +143,7 @@ CREATE TABLE `producto` (
 CREATE TABLE `producto_ingrediente` (
     `id_producto` INT NOT NULL,
     `id_ingrediente` INT NOT NULL,
+    `cantidad` FLOAT NOT NULL DEFAULT 0,
     PRIMARY KEY (`id_producto`, `id_ingrediente`),
     CONSTRAINT `fk_producto_ingrediente_producto` FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`) ON DELETE CASCADE,
     CONSTRAINT `fk_producto_ingrediente_ingrediente` FOREIGN KEY (`id_ingrediente`) REFERENCES `ingrediente`(`id`) ON DELETE CASCADE

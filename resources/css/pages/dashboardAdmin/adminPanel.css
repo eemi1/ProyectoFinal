@@ -859,7 +859,7 @@ html, body {
 }
 .ingredientModal-inputs input{
     height: 30px;
-    padding-left: 10px;
+    padding: 5px;
 }
 .ingredientModal-inputs input:hover,.ingredientModal-inputs input:focus,
 .ingredientModal-inputs textarea:hover, .ingredientModal-inputs textarea:focus , .ingredientModal-inputs textarea:active
@@ -902,6 +902,7 @@ html, body {
     display: flex;
     width: 100%;
     box-sizing: border-box;
+    gap: 5px;
 }
 
 /*-----------Tabla Ingredientes-------------------------*/
@@ -962,6 +963,7 @@ html, body {
 .productModal-inputs input{
     height: 30px;
     width: 100%;
+    padding: 0 5px;
 }
 #productModal-descriptionInput, #productModal-ingredientsInput{
     height: 100px;
@@ -1078,5 +1080,117 @@ html, body {
     border-radius: 20px;
     font-size: var(--font-small);
     align-items: center;
-    padding: 0px 5px;
+    padding: 5px 5px;
+    max-height: max-content;
+}
+#productTable-td-options{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#productIcon-trash{
+    color: #FF7A7A;
+}
+
+/*----CARD RESUMEN PRODUCTOS----*/
+.container-summeryProducts{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin: 20px;
+    height: auto;
+    gap: 20px;
+}
+
+
+.card-summaryProducts{
+    height: 100px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.card-summaryProducts-info{
+    display: flex;
+    flex-direction: column;
+}
+.card-summaryProducts-title{
+    font-size: var(--font-mediumSmall);
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #64748b;
+}
+
+.card-summaryProducts-content{
+    font-size: var(--font-large);
+    font-weight: bold;
+    color: #000000;
+}
+
+.card-summaryProducts i{
+    font-size: 1.2rem;
+    height: max-content;
+    color: #f1e205;
+}
+
+/*------ Modal Editar Producto -------*/
+#modalViewProduct{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    overflow:auto;
+}
+
+#modalViewProduct-contentHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#modalViewProduct-headerText{
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+}
+#modalViewProduct-contentHeader span{
+    color:  #64748b;
+    padding-top: 5px;
+}
+
+.modalViewProduct-content{
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 25%;
+    background-color: white;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+        gap: 20px;
+}
+
+#modalViewProduct-main{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+#modalViewProduct-image{
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    background-color: rgba(58, 145, 66, 0.1);
+    padding: 5px;
 }

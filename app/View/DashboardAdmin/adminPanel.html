@@ -427,12 +427,12 @@
                                     <div class="productModal-inputs">
                                         <label for="">Promoción</label>
                                         <div class="productModal-promotion-container">
-                                            <select name="selectPromotion" id="">
+                                            <select name="selectPromotion" id="selectPromotion" >
                                                 <option value="sinDescuento">Sin Descuento</option>
                                                 <option value="porcentaje">% Porcentaje</option>
                                                 <option value="2x1">2x1</option>
                                             </select>
-                                            <input type="text" id="productModal-promotionInput" name="productPromotion">
+                                            <input type="text" id="inputPromotion" name="productPromotion">
                                         </div>
                                         
                                     </div>
@@ -440,12 +440,12 @@
                                         <label for="">Ingredientes requeridos</label>
                                         <button type="button" class="btnForms" id="productModal-inputSearchSelectIngredients">Seleccionar Ingredientes..</button>
                                         <div id="productModal-addIngredients-container">
-                                                    <div class="productModal-addIngredient-search">
-                                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                                    <input type="text" placeholder="Nombre del ingrediente." class="searchInput-productModal">
-                                                </div>
-                                                <div id="productModal-addIngredint-checkboxs">
-                                                </div>
+                                            <div class="productModal-addIngredient-search">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                <input type="text" placeholder="Nombre del ingrediente." class="searchInput-productModal">
+                                            </div>
+                                            <div id="productModal-addIngredint-checkboxs">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="productModal-inputs" id="productModal-productFeatured">
@@ -484,26 +484,85 @@
                                 </div>
                             </div>
                         </div>
-                    
-                    <div class="container-table">
-                    <div class="table-container-table">
-                        <table class="table" id="table-products" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th id="th-productsName">Nombre</th>
-                                    <th>Categoría</th>
-                                    <th>Precio</th>
-                                    <th>Ingredientes</th>
-                                    <th>Promoción</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
+
+                    <!-- CONTENEDOR DE RESUMEN DE PRODUCTOS -->
+                    <div class="container-summeryProducts">
+                        <div class="card-summaryProducts">
+                            <div class="card-summaryProducts-info">
+                                <div class="card-summaryProducts-title">Total De Productos</div>
+                                <div class="card-summaryProducts-content" id="cardSummary-totalProducts"></div>
+                            </div>
+
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+
+                        <div class="card-summaryProducts">
+                            <div class="card-summaryProducts-info">
+                                <div class="card-summaryProducts-title">Productos Destacados</div>
+                                <div class="card-summaryProducts-content" id="cardSummary-totalFeatured"></div>
+                            </div>
+                            <i class="fa-solid fa-bookmark"></i>
+                        </div>
+                        
+                        <div class="card-summaryProducts">
+                            <div class="card-summaryProducts-info">
+                                <div class="card-summaryProducts-title">Productos Sin Stock</div>
+                                <div class="card-summaryProducts-content"></div>
+                            </div>
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                        <div class="card-summaryProducts">
+                            <div class="card-summaryProducts-info">
+                                <div class="card-summaryProducts-title">Productos Vendidos</div>
+                                <div class="card-summaryProducts-content"></div>
+                            </div>
+                        </div>
                     </div>
+                    <!-- TABLA PRODUCTOS-->
+                    <div class="container-table">
+                        <div class="table-container-table">
+                            <table class="table" id="table-products" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th id="th-productsName">Nombre</th>
+                                        <th>Categoría</th>
+                                        <th>Precio</th>
+                                        <th>Ingredientes</th>
+                                        <th>Promoción</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL VER PRODUCTO-->
+                    <div class="modal" id="modalViewProduct">
+                        <div class="modalViewProduct-content">
+
+                            <div id="modalViewProduct-contentHeader">
+                                <div id="modalViewProduct-headerText">
+                                    <h2>Detalles del Producto</h2>
+                                    <span>Información general e ingredientes asociados</span>
+                                </div>
+                                <span class="closeBtn" id="closeModalViewProduct">&times;</span>
+                            </div>
+
+                            <div id="modalViewProduct-main">
+                                <div id="modalViewProduct-image">
+                                    <img src="" alt="" id="modalViewProduct-img">
+                                </div>
+                                <div id="modalViewProduct-imageInfo">
+                                    <h3 id="modalViewProduct-name">Hamburguesa</h3>
+                                    <p id="modalViewProduct-description">Descripción de la hamburguesa</p>
+                                    <p id="modalViewProduct-price">Precio: $10.00</p>
+                                </div>
+
+                        </div>
                     </div>
 
                 </section>
