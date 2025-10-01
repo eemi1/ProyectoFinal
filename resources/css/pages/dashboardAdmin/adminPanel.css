@@ -1065,13 +1065,13 @@ html, body {
 #productsTable-td span{
     color: #64748b;
 }
-#productTable-td-ingredientes{
+.productIngredientsButton{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 5px;
 }
-.productsTable-td-ingredientesList{
+.productIngredientsButtonStyle{
     display: flex;
     font-weight: bold;
     max-width: max-content;
@@ -1088,8 +1088,30 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-#productIcon-trash{
+/*-----------Tabla Columna Acciones-----------*/
+
+.delete-product{
     color: #FF7A7A;
+}
+.delete-product:hover{
+    color: white;
+    background-color: #DE0000;
+}
+.view-product{
+    color: #1DAB51;
+}
+
+.view-product:hover{
+    color: white;
+    background-color: #4CAF50;
+}
+
+.edit-product{
+    color: #EDC200;
+}
+.edit-product:hover{
+    color: white;
+    background-color: #DAB200;
 }
 
 /*----CARD RESUMEN PRODUCTOS----*/
@@ -1172,13 +1194,11 @@ html, body {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 25%;
     background-color: white;
-    margin: 10px auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-        gap: 20px;
+    gap: 20px;
 }
 
 #modalViewProduct-main{
@@ -1193,4 +1213,39 @@ html, body {
     border-radius: 10px;
     background-color: rgba(58, 145, 66, 0.1);
     padding: 5px;
+    min-width: 60px;
+    min-height: 60px;
+}
+
+
+#modalViewProduct-imageInfo{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#modalViewProduct-imageInfo h4{
+    padding-top: 10px;
+}
+
+#modalViewProduct-description{
+    color: #64748b;
+    font-size: var(--font-mediumSmall);
+}
+
+#modalViewProduct-price{
+    font-size: var(--font-large);
+    font-weight: bold;
+    color: #009b00;
+}
+
+#modalViewProduct-ingredientsList{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding-top: 10px;
+}
+.productPromotionStyle{
+    color: black;
+    padding-top: 5px;
 }

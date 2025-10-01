@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Fory Factory | Panel Admin</title>
         <link rel="icon" href="../../../images/logo.jpg" type="image/x-icon">
-        <link rel="stylesheet" href="/proyectoFinal/resources/css/pages/dashboardAdmin/adminPanel.css" type="text/css">
         <link rel="stylesheet" href="/proyectoFinal/resources/css/components.css" type="text/css">
+        <link rel="stylesheet" href="/proyectoFinal/resources/css/pages/dashboardAdmin/adminPanel.css" type="text/css">
         <script src="https://kit.fontawesome.com/29724e3467.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Rasa:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -557,11 +557,23 @@
                                     <img src="" alt="" id="modalViewProduct-img">
                                 </div>
                                 <div id="modalViewProduct-imageInfo">
-                                    <h3 id="modalViewProduct-name">Hamburguesa</h3>
-                                    <p id="modalViewProduct-description">Descripción de la hamburguesa</p>
-                                    <p id="modalViewProduct-price">Precio: $10.00</p>
+                                    <h3 id="modalViewProduct-name"></h3>
+                                    <p id="modalViewProduct-description"></p>
+                                    <div id="modalViewProduct-ingredients">
+                                        <h4>Ingredientes:</h4>
+                                        <ul id="modalViewProduct-ingredientsList">
+                                        </ul>
+                                    </div>
+                                    <div id="modalViewProduct-promotion">
+                                        <h4>Promoción:</h4>
+                                        <ul id="modalViewProduct-promotionValue">
+                                        </ul>
+                                    </div>
                                 </div>
+                                <p id="modalViewProduct-price"></p>
 
+                                
+                            </div>
                         </div>
                     </div>
 
@@ -573,7 +585,12 @@
             </main>
         </div>
         <script src="https://cdn.canvasjs.com/canvasjs.min.js"> </script>
-        <script src="/proyectoFinal/resources/js/dashboardAdmin/dashboardUsuarios.js"></script>
-        
+        <script src="/proyectoFinal/resources/js/dashboardAdmin/dashboard.js"></script>
+        <script src="/proyectoFinal/resources/js/dashboardAdmin/ingredientes.js"></script>
+        <script src="/proyectoFinal/resources/js/dashboardAdmin/producto.js"></script>
+        <script src="/proyectoFinal/resources/js/dashboardAdmin/usuarios.js"></script>
+        <script src="/proyectoFinal/resources/js/dashboardAdmin/util.js"></script>
+        <script src="/proyectoFinal/resources/js/dashboardAdmin/initializer.js"></script>
+
     </body>
     </html>

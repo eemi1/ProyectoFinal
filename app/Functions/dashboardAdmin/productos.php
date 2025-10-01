@@ -139,8 +139,14 @@ function showProducts($pdo){
             exit;
         }
 
-        // Traer ingredientes de cada producto
         foreach ($productos as &$producto) {
+
+            if ($producto['destacado'] == 1) {
+                $producto['booleanDestacado'] = true;
+            } else {
+                $producto['booleanDestacado'] = false;
+            }
+
             $stmtIng = $pdo->prepare("
                 SELECT ingrediente.nombre, producto_ingrediente.cantidad
                 FROM producto_ingrediente 
@@ -193,7 +199,51 @@ function countFeatured($pdo){
     }
 }
 
+function showProductsModal($pdo){
+    try {
+        $input = json_decode(file_get_contents("php://input"), true);
+        $productId = $input['productId'] ?? null;
 
+        $stmt = $pdo->prepare("SELECT * FROM producto WHERE id = :id");
+        $stmt->execute(['id' => $productId]);
+        $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $stmt2 = $pdo->prepare("
+            SELECT ingrediente.nombre, producto_ingrediente.cantidad
+            FROM producto_ingrediente 
+            JOIN ingrediente ON producto_ingrediente.id_ingrediente = ingrediente.id
+            WHERE producto_ingrediente.id_producto = :id_producto
+            ");
+        $stmt2->execute(['id_producto' => $productId]);
+        $ingredientes = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($producto['destacado'] == 0) {
+            $producto['valorPromocion'] = "Sin Descuento";
+        }else{
+            $producto['valorPromocion'] = $producto['promocion'];
+        }
+
+
+        if (count($producto) === 0) {
+            echo json_encode([
+                "success" => false,
+                "message" => "No se encontraron productos.",
+            ]);
+            exit;
+        }
+
+        echo json_encode([
+            "success" => true,
+            "message" => "Información obtenida correctamente.",
+            "data" => $producto,
+            "ingredientes" => $ingredientes
+        ]);
+        exit;
+
+    } catch (PDOException $e) {
+        echo json_encode(["success" => false, "message" => "Error al obtener productos: " . $e->getMessage()]);
+    }
+}
     // RUTEO
 $accion = $_GET['action'] ?? null;
 
@@ -212,6 +262,9 @@ switch ($accion) {
         break;
     case 'countFeatured':
         countFeatured($pdo);
+        break;
+    case 'showProductsModal':
+        showProductsModal($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);
