@@ -1,4 +1,16 @@
 //============================== PESTAÑA DASHBOARD PRODUCTOS ==============================
+function changeImage() {
+    const fileInput = document.getElementById("productModal-input");
+    const fileStatus = document.getElementById("file-status");
+    const containerImage = document.getElementById("productModal-image");
+
+    fileInput.addEventListener("change", function() {
+        fileStatus.textContent = this.files[0].name;
+        const imageURL = URL.createObjectURL(this.files[0]);
+        containerImage.src = imageURL;
+    });
+};
+
 function deleteProduct() {
     document.querySelectorAll(".delete-product").forEach(item => {
         item.addEventListener("click", function() {
@@ -58,7 +70,6 @@ function loadProducts(inputSearchProducts = '') {
         tableBody.innerHTML = ""; // limpiar tabla
 
         data.data.productos.forEach(producto => {
-
             let ingredientesList = "";
             producto.ingredientes.forEach(ingrediente => {
                 ingredientesList += `<p class="productIngredientsButtonStyle">${ingrediente.nombre}</p>`;
@@ -72,11 +83,15 @@ function loadProducts(inputSearchProducts = '') {
             }
 
             const row = document.createElement("tr");
+            let imagePath = `/proyectoFinal/uploads/${producto.id}.jpg`;
             row.innerHTML = `
                 <td>${producto.id}</td>
                 <td id="productsTable-td">
-                    <strong>${producto.nombre} ${productoDestacado}</strong>
-                    <span>${producto.descripcion}</span>
+                    <img src=${imagePath} alt="" id="productModal-image">
+                    <div id=productsTable-td-container>
+                        <strong>${producto.nombre} ${productoDestacado}</strong>
+                        <span>${producto.descripcion}</span>
+                    </div>
                 </td>
                 <td>${producto.categoria}</td>
                 <td>${producto.precio} $</td>
@@ -229,7 +244,10 @@ function viewProduct() {
                     const viewProductPrice = document.getElementById("modalViewProduct-price");
                     const viewProductIngredientes = document.getElementById("modalViewProduct-ingredientsList");
                     const viewProductPromotion = document.getElementById("modalViewProduct-promotionValue");
+                    const viewProductImage = document.getElementById("modalViewProduct-img");
+                    let imagePath = `/proyectoFinal/uploads/${data.data.id}.jpg`;
                 
+                    viewProductImage.src = imagePath;
                     viewProductName.textContent = data.data.nombre;
                     viewProductDescription.textContent = data.data.descripcion;
                     viewProductPrice.textContent = data.data.precio + " $";

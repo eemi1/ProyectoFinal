@@ -1,0 +1,116 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Raleway', sans-serif;
+}
+
+  .section {
+    padding: 2rem;
+  }
+
+  .section h2 {
+    color: #16a34a;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .product-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .product-header {
+    padding: 1rem;
+  }
+
+  .product-header h3 {
+    margin: 0;
+    font-size: var(--font-medium);
+  }
+
+  .product-header p {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+
+
+  .product-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 10px;
+    align-items: flex-start;
+  }
+  .product-info p, .product-info span {
+    margin: 0;
+  }
+    .product-info span{
+        font-size: var(--font-large);
+    font-weight: bold;
+    color: #009b00;
+  }
+  .product-info p{
+      font-size: var(--font-medium);
+    font-weight: bold;
+    display: flex;
+    gap: 5px;
+  }
+.agregarCarrito {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+}
+  /* Sidebar categorías */
+  .sidebar {
+    width: 200px;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 80px;
+  }
+
+  .sidebar a {
+    display: block;
+    padding: 0.5rem 0;
+    color: #16a34a;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .main-content {
+    margin-left: 220px;
+    padding: 2rem;
+        padding-top: 110px;
+  }

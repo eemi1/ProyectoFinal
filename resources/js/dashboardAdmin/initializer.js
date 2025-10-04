@@ -12,4 +12,5 @@ window.addEventListener('DOMContentLoaded', () => {
     showModalProductsAddIngredients();
     switchPromotionSelect();
     summeryCardProducts();
+    changeImage();
 });

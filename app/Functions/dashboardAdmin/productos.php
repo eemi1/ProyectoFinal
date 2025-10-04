@@ -62,6 +62,26 @@ function addProduct($pdo) {
 
         $productId = $pdo->lastInsertId();
 
+        //Subir Imagen
+        if (!empty($_FILES['productImage']['name'])){
+
+            $dirImage = "../../../uploads/";
+            if(!is_dir($dirImage)) {mkdir($dirImage, 0755, true);} 
+
+            $file = $_FILES['productImage'];
+            $fileExtension = pathinfo($_FILES['productImage']['name'], PATHINFO_EXTENSION);
+            $fileName = $productId . "." . "jpg";
+
+            $allowed_extensions = ["jpg", "jpeg", "png"];
+            if (!in_array($fileExtension, $allowed_extensions)) {
+                echo json_encode(["success" => false, "message" => "No se admite este formato de imagen."]);
+                exit;
+            }
+
+            move_uploaded_file($file['tmp_name'], $dirImage.$fileName);
+
+        }
+
         // Insertar ingredientes
         $stmtIng = $pdo->prepare("INSERT INTO producto_ingrediente (id_producto, id_ingrediente, cantidad) VALUES (?, ?, ?)");
         foreach ($productIngredients as $ingredientId) {

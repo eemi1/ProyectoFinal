@@ -377,15 +377,16 @@
                         <div class="windowAdd-content">
                             <span class="closeBtn" id="closeBtnProduct">&times;</span>
                             <h2>Agregar Nuevo Producto</h2>
-                            <form id="addProductForm" action="" method="POST">
+                            <form id="addProductForm" action="" method="POST" enctype="multipart/form-data">
                                 <div class="productModal-main">
                                     <label for="">Imagen</label>
 
                                     <div class="productModal-imageInput">
-                                        <img src="" alt="">
+                                        <img src="" alt="" id="productModal-image">
                                         <div class="productModal-inputContainer">
-                                            <input type="file" id="productModal-input" name="productImage">
+                                            <input type="file" id="productModal-input" name="productImage" accept="image/*">
                                             <label for="productModal-input" id="productModal-label"><i class="fa-solid fa-image" style="margin-right: 10px;"></i>Subir tu imagen</label>
+                                            <span id="file-status">No file chosen</span>
                                         </div>
                                     </div>
                                 </div>
@@ -403,11 +404,13 @@
                                         <label for="">Categoría</label>
                                         <select name="productCategories" id="productModal-categorySelect" class="btnForms" required>
                                             <option value="">-</option>
-                                            <option value="1">Hamburguesa</option>
-                                            <option value="2">Bebída</option>
-                                            <option value="3">Acompañamiento</option>
-                                            <option value="4">Postres</option>
-                                            <option value="5">Otros</option>
+                                            <option value="1">Carne</option>
+                                            <option value="2">Vegetariana</option>
+                                            <option value="3">Vegana</option>
+                                            <option value="4">Acompañamiento</option>
+                                            <option value="5">Bebida</option>
+                                            <option value="6">Postre</option>
+                                            <option value="7">Combo</option>
                                         </select>
                                     </div>
                                     <div class="productModal-inputs">

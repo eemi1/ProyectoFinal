@@ -150,9 +150,14 @@ function closeAddWindow() {
                             Swal.fire('Error', data.message, 'error');
                         }
                     })
-                    .catch(() => {
-                        Swal.fire('Error', 'Ocurrió un error al intentar conectarse con el servidor.', 'error');
-                    });
+                    .catch(error => {
+                            console.error(error); 
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ocurrió un error al intentar conectarse con el servidor.',
+                                icon: 'error'
+                            });
+                    })
                 }
             });
         });
@@ -195,9 +200,14 @@ function closeAddWindow() {
                             Swal.fire('Error', data.message, 'error');
                         }
                     })
-                    .catch(() => {
-                        Swal.fire('Error', 'Ocurrió un error al intentar conectarse con el servidor.', 'error');
-                    });
+                    .catch(error => {
+                            console.error(error); 
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ocurrió un error al intentar conectarse con el servidor.',
+                                icon: 'error'
+                            });
+                    })
                 }
             });
         });
@@ -227,7 +237,7 @@ function closeAddWindow() {
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            windowAddIngredient.style.display = "none";
+                            windowAddProduct.style.display = "none";
                             Swal.fire({
                                 title: 'Excelente!',
                                 text: 'Nuevo producto registrado correctamente.',
@@ -239,10 +249,16 @@ function closeAddWindow() {
                             Swal.fire('Error', data.message, 'error');
                         }
                     })
-                    .catch(() => {
-                        Swal.fire('Error', 'Ocurrió un error al intentar conectarse con el servidor.', 'error');
-                    });
+                    .catch(error => {
+                            console.error(error); 
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ocurrió un error al intentar conectarse con el servidor.',
+                                icon: 'error'
+                            });
+                    })
                 }
             });
+
         });
     }

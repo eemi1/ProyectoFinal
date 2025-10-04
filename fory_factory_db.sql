@@ -120,11 +120,13 @@ CREATE TABLE `categoria_productos` (
 );
 
 INSERT INTO `categoria_productos` (`nombre`) VALUES
-('Hamburguesa'),
-('Bebida'),
+('Carne'),
+('Vegetariana'),
+('Vegana'),
 ('Acompañamiento'),
-('Postres'),
-('Otro');
+('Bebida'),
+('Postre'),
+('Combo');
 
 CREATE TABLE `producto` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -266,5 +268,23 @@ VALUES
 ('Pimienta', 'Pimienta negra molida', 'Condimento', NULL, 'g', 'Distribuidora CondiPlus', 300, 100), 
 ('Leche', 'Leche entera larga vida', 'Lácteo', '2025-12-15', 'l', 'Lácteos Santa Clara', 60, 20), 
 ('Queso', 'Queso cremoso x500g', 'Lácteo', '2025-10-20', 'g', 'Lácteos Santa Clara', 25, 10);
+
+INSERT INTO producto (id_categoria, nombre, precio, descripcion, tiempoPreparacion, calorias, promocion, destacado) 
+VALUES
+(1, 'HOLY', 1200, 'Doble smash burger, cheddar y cebolla morada, con salsa barbacoa y kétchup, acompañado en pan artesanal.', 15, 800, 'sinDescuento', 1),
+(1, 'ORIGINALS', 1100, 'Doble smash burger, cheddar y cebolla morada.', 12, 750, 'sinDescuento', 0),
+(1, 'DELI', 1150, 'Doble smash burger, cheddar y cebolla morada.', 13, 770, 'sinDescuento', 0),
+(2, 'ORIGINALS BEYOND', 1300, 'Beyond burger, muzzarella, pepinillos, huevo, morrón, cebolla, lechuga y tomate.', 14, 680, 'sinDescuento', 0),
+(2, 'CHEESE BEYOND', 1350, 'Beyond burger, doble cheddar, doble muzzarella, huevo y tomate.', 14, 700, 'sinDescuento', 0),
+(3, 'HOLY VEGAN', 1400, 'Beyond burger, cheddar vegano, pepinillos, champiñones, cebolla, lechuga y tomate.', 15, 650, 'sinDescuento', 0),
+(3, 'EPIC HOT', 1450, 'Bife de seitán, cheddar vegano, nueces, pepinillos, morrón, cebolla, lechuga y tomate.', 16, 670, 'sinDescuento', 0),
+(4, 'Papas', 400, 'Crujientes papas fritas.', 10, 300, 'sinDescuento', 0),
+(4, 'Papas + Cheddar', 500, 'Papas fritas con cheddar fundido.', 12, 400, 'sinDescuento', 0),
+(5, 'Coca Cola 1L', 250, 'Refresco de cola.', 0, 150, 'sinDescuento', 0),
+(5, 'Sprite 1L', 250, 'Refresco de limón.', 0, 150, 'sinDescuento', 0),
+(6, 'Helado', 350, 'Helado artesanal.', 0, 200, 'sinDescuento', 0),
+(6, 'Brownie', 400, 'Brownie con chocolate.', 0, 450, 'sinDescuento', 0),
+(7, 'Combo 1', 2000, 'Hamburguesa + Papas + Bebida.', 15, 1200, 'sinDescuento', 1),
+(7, 'Combo 2', 2500, 'Doble hamburguesa + Papas + Bebida.', 20, 1500, 'sinDescuento', 1);
 
 COMMIT;
