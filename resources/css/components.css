@@ -32,6 +32,19 @@ border-radius: 20px;
 font-family: 'Raleway', sans-serif;
 transition: background-color 0.3s ease;
 }
+.closeBtn{
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    align-items: flex-end;
+    float: right;
+    border: none;
+    background: transparent;
+}
+.closeBtn:hover{
+    color: red;
+}
 /* Estilos para esconder el scroll */
 .scrollbar-hide {
     /* Para navegadores webkit (Chrome, Safari, Edge) */
@@ -55,6 +68,142 @@ transition: background-color 0.3s ease;
     display: block;             /* Chrome, Safari y Opera */
     width: initial;
     background: initial;
+}
+
+/*--BADGE PROMOCIÓN DEL PRODUCTO*/
+  .badge-promocion{
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: var(--font-mediumSmall);
+    background-color: var(--primary-color);
+    color: white;
+  }
+  /*--CARRITO LATERAL*/
+.agregarCarrito {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+
+}
+.agregarCarrito:hover{
+    background: #006400; 
+    color: white; 
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+/*=========================*/
+/*= CONTENIDO DEL CARRITO =*/
+/*=========================*/
+
+
+/* CARRITO ITEMS */
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Contenedor de la imagen para poder poner el badge */
+.cart-item-img-container {
+    position: relative; /* Para que el badge se posicione relativo a este contenedor */
+    width: 80px;
+    height: 80px;
+}
+
+.cart-item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Badge de promoción */
+.cart-item-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #28a745; /* verde para tu tema */
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.remove-from-cart {
+    background: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.remove-from-cart:hover {
+    background: #d9363e;
+}
+
+/*CARRITO FOOTER*/
+.cart-footer{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+/*Total*/
+.cart-footer span{
+  font-size: var(--font-large);
+    display: flex;
+    justify-content: space-between;
+}
+/*Total número*/
+#cart-total{
+  color: #16a34a;
+  font-weight: bold;
+}
+#checkout-btn{
+    padding: 15px 10px;
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: var(--font-medium);
+    cursor: pointer;
+    transition: all 0.3s ease; 
+}
+#checkout-btn:hover{
+  background-color: #006400;
+}
+
+/*CARRITO VACÍO*/
+.container-cart-empty{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 20px;
+    color: #c3c9cf;
+}
+.icon-cart-empty{
+  width: 100px;
+  height: 100px;
+}
+.cart-empty-title{
+  font-size: var(--font-large);
 }
 
 /*===================TAMAÑO FUENTES========================*/

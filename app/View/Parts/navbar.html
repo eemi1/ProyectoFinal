@@ -1,0 +1,101 @@
+        <nav class="navbar">
+            <a href="index.php">
+                <div class="navbar-content">
+                    <img src="/proyectoFinal/images/logo.jpg" alt="Logo" class="navbar-logo">
+                    <h1 class="navbar-title">Fory Factory</h1>
+                </div>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="/proyectoFinal/index.html">Inicio</a></li>
+                <li><a href="/proyectoFinal/app/View/Products/products.html">Productos</a></li>
+                <li><a href="#">Contacto</a></li>
+                <li><a href="#">Sobre Nosotros</a></li>
+            </ul>
+            <!-- Menú desplegable para móviles -->
+            <div class="navbar-dropdown">
+                <i class="fa-solid fa-bars fa-2xl" id="icon-menu"></i>
+            </div>
+            <div class="navbar-buttons">
+                <a href="/proyectoFinal/app/View/Auth/Login.html" id="navbar-btn-login">Iniciar Sesión</a>
+                <a href="/proyectoFinal/app/View/Auth/Register.html" class="boton-primario" id="navbar-btn-register">Crear Cuenta</a>
+            </div>
+            <div class="navbar-buttons-logged">
+                <a href="#favoritos" class="icon-nav-logged">
+                    <svg class="icon-heart-outline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-hidden="false">
+                        <title>Favorito</title>
+                        <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                            d="M20.8 7.6c0-2.6-2.1-4.6-4.7-4.6-1.6 0-3.1.8-4.1 2.1-1-1.3-2.5-2.1-4.1-2.1C5.3 3 3.2 5 3.2 7.6c0 6.3 8.8 11.2 8.8 11.2s8.8-4.9 8.8-11.2z"/>
+                    </svg>
+                </a>                
+                <a href="#cartera" class="icon-nav-logged" id="btnCart">
+                    <div class="cart-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <title>Carrito de compras</title>
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M6.3 5H21L19 12H7.38M20 16H8L6 3H3"></path>
+                        </svg>
+                        <span id="cart-count" class="cart-count">0</span>
+                    </div>
+                </a>
+                <div id="cart-sidebar" class="cart-sidebar">
+                    <div class="cart-header">
+                        <h3>Tu Carrito</h3>
+                        <button class="closeBtn" id="close-cart">&times;</button>
+                    </div>
+                    <div class="cart-items">
+                        
+                    </div>
+                    <div class="cart-footer">
+                        <span>Total: <span id="cart-total">0</span></span>
+                        <button id="checkout-btn">Finalizar compra</button>
+                    </div>
+                </div>
+                <div id="cart-overlay" class="cart-overlay"></div>
+
+                <div class="profile-logged">
+                    <a id="icon-profile-nav"><img src="/proyectoFinal/images/default-photo.webp" alt="" id="photo-profile-img"></a>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <ul id="dropdownMenu-list">
+                            <li id="li-profile">
+                                <img src="/proyectoFinal/images/default-photo.webp" id="photo-profile-img-li">
+                                <div class="profile-info">
+                                    <span class="username" id="nameNavLogged"></span>
+                                    <span class="email" id="emailNavLogged"></span>
+                                </div>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="/proyectoFinal/app/View/Dashboard/ClientProfile.php" class="options-profile">
+                                    <i class="fa-regular fa-user"></i>
+                                    Mi perfil</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="#" class="options-profile">
+                                    <i class="fa-solid fa-gear"></i>
+                                    Configuración</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="#" class="options-profile">
+                                    <i class="fa-regular fa-bell"></i>
+                                    Notificaciones
+                                </a>
+                            </li>
+                            <hr>
+                            <li class="dropdown-item">
+                                <a href="#" class="options-profile">
+                                    <i class="fa-regular fa-moon"></i>
+                                    Modo oscuro
+                                </a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="#" class="options-profile-logout" id="logout">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    Cerrar sesión
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </nav>

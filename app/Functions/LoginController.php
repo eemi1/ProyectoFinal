@@ -52,10 +52,12 @@ try {
                 default:
                     $rol = "ERROR";           
             }
+            $_SESSION['id_usuario'] = $usuario['id'];
             $_SESSION['usuario'] = $usuario['nombreCompleto'];
             $_SESSION['email'] = $usuario['mail'];
             $_SESSION['tel'] = $usuario['telefono'];
             $_SESSION['fechaNacimiento'] = $usuario['fechaNacimiento'];
+            $_SESSION['id_rol'] = $usuario['id_rol'];
 
 
             echo json_encode([

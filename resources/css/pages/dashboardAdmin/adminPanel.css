@@ -333,17 +333,6 @@ html, body {
     align-items: flex-start;
     padding: 15px 0px;
 }
-.closeBtn{
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #aaa;
-    cursor: pointer;
-    align-items: flex-end;
-    float: right;
-}
-.closeBtn:hover{
-    color: red;
-}
 .btnSubmit{
     margin-top: 10px;
     background-color: #17821B;

@@ -152,6 +152,31 @@ CREATE TABLE `producto_ingrediente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ==========================================
+-- Productos página
+-- ==========================================
+-- Tabla principal de la factura
+CREATE TABLE factura (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total DECIMAL(10,2) NOT NULL,
+    estado VARCHAR(50) DEFAULT 'pendiente',
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_usuario)
+);
+
+-- Detalle de cada producto en la factura
+CREATE TABLE detalle_factura (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_factura INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_factura) REFERENCES factura(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_producto) REFERENCES producto(id)
+);
+
+-- ==========================================
 -- Mesas, reservas, pedidos y puntos
 -- ==========================================
 CREATE TABLE `mesa` (
@@ -271,20 +296,66 @@ VALUES
 
 INSERT INTO producto (id_categoria, nombre, precio, descripcion, tiempoPreparacion, calorias, promocion, destacado) 
 VALUES
-(1, 'HOLY', 1200, 'Doble smash burger, cheddar y cebolla morada, con salsa barbacoa y kétchup, acompañado en pan artesanal.', 15, 800, 'sinDescuento', 1),
+(1, 'HOLY', 1200, 'Doble smash burger, cheddar y cebolla morada, con salsa barbacoa y kétchup, acompañado en pan artesanal.', 15, 800, '10%', 1),
 (1, 'ORIGINALS', 1100, 'Doble smash burger, cheddar y cebolla morada.', 12, 750, 'sinDescuento', 0),
-(1, 'DELI', 1150, 'Doble smash burger, cheddar y cebolla morada.', 13, 770, 'sinDescuento', 0),
-(2, 'ORIGINALS BEYOND', 1300, 'Beyond burger, muzzarella, pepinillos, huevo, morrón, cebolla, lechuga y tomate.', 14, 680, 'sinDescuento', 0),
+(1, 'DELI', 1150, 'Doble smash burger, cheddar y cebolla morada.', 13, 770, '2x1', 0),
+(2, 'ORIGINALS BEYOND', 1300, 'Beyond burger, muzzarella, pepinillos, huevo, morrón, cebolla, lechuga y tomate.', 14, 680, '15%', 0),
 (2, 'CHEESE BEYOND', 1350, 'Beyond burger, doble cheddar, doble muzzarella, huevo y tomate.', 14, 700, 'sinDescuento', 0),
-(3, 'HOLY VEGAN', 1400, 'Beyond burger, cheddar vegano, pepinillos, champiñones, cebolla, lechuga y tomate.', 15, 650, 'sinDescuento', 0),
+(3, 'HOLY VEGAN', 1400, 'Beyond burger, cheddar vegano, pepinillos, champiñones, cebolla, lechuga y tomate.', 15, 650, '20%', 0),
 (3, 'EPIC HOT', 1450, 'Bife de seitán, cheddar vegano, nueces, pepinillos, morrón, cebolla, lechuga y tomate.', 16, 670, 'sinDescuento', 0),
-(4, 'Papas', 400, 'Crujientes papas fritas.', 10, 300, 'sinDescuento', 0),
-(4, 'Papas + Cheddar', 500, 'Papas fritas con cheddar fundido.', 12, 400, 'sinDescuento', 0),
+(4, 'Papas', 400, 'Crujientes papas fritas.', 10, 300, '2x1', 0),
+(4, 'Papas + Cheddar', 500, 'Papas fritas con cheddar fundido.', 12, 400, '10%', 0),
 (5, 'Coca Cola 1L', 250, 'Refresco de cola.', 0, 150, 'sinDescuento', 0),
 (5, 'Sprite 1L', 250, 'Refresco de limón.', 0, 150, 'sinDescuento', 0),
-(6, 'Helado', 350, 'Helado artesanal.', 0, 200, 'sinDescuento', 0),
-(6, 'Brownie', 400, 'Brownie con chocolate.', 0, 450, 'sinDescuento', 0),
-(7, 'Combo 1', 2000, 'Hamburguesa + Papas + Bebida.', 15, 1200, 'sinDescuento', 1),
+(6, 'Helado', 350, 'Helado artesanal.', 0, 200, '15%', 0),
+(6, 'Brownie', 400, 'Brownie con chocolate.', 0, 450, '2x1', 0),
+(7, 'Combo 1', 2000, 'Hamburguesa + Papas + Bebida.', 15, 1200, '25%', 1),
 (7, 'Combo 2', 2500, 'Doble hamburguesa + Papas + Bebida.', 20, 1500, 'sinDescuento', 1);
+
+INSERT INTO producto_ingrediente (id_producto, id_ingrediente, cantidad) VALUES
+-- HOLY: doble carne vacuna, queso, tomate, cebolla, sal, pimienta
+(1, 5, 0.3), (1, 11, 0.1), (1, 3, 0.05), (1, 2, 0.05), (1, 8, 0.01), (1, 9, 0.005),
+
+-- ORIGINALS: carne vacuna, tomate, cebolla, sal
+(2, 5, 0.25), (2, 11, 0.1), (2, 2, 0.05), (2, 8, 0.01),
+
+-- DELI: carne vacuna, queso, cebolla, tomate
+(3, 5, 0.3), (3, 11, 0.1), (3, 2, 0.05), (3, 8, 0.01),
+
+-- ORIGINALS BEYOND: arroz, tomate, pimienta, aceite, sal
+(4, 6, 0.2), (4, 3, 0.1), (4, 11, 0.1), (4, 9, 0.005), (4, 7, 0.01),
+
+-- CHEESE BEYOND: arroz, queso, leche, aceite
+(5, 6, 0.2), (5, 11, 0.15), (5, 10, 0.1), (5, 7, 0.01),
+
+-- HOLY VEGAN: arroz, tomate, aceite, sal, pimienta
+(6, 6, 0.25), (6, 11, 0.1), (6, 7, 0.02), (6, 8, 0.01), (6, 9, 0.005),
+
+-- EPIC HOT: arroz, cebolla, pimienta, aceite, sal
+(7, 6, 0.25), (7, 2, 0.05), (7, 9, 0.005), (7, 7, 0.01), (7, 8, 0.01),
+
+-- Papas: papa + sal
+(8, 1, 0.3), (8, 8, 0.01),
+
+-- Papas + Cheddar: papa + queso + sal
+(9, 1, 0.3), (9, 11, 0.05), (9, 8, 0.01),
+
+-- Coca Cola 1L: (sin ingredientes compuestos, ejemplo simbólico)
+(10, 7, 0.01),
+
+-- Sprite 1L:
+(11, 7, 0.01),
+
+-- Helado: leche, azúcar (sal en lugar de azúcar por simplificación)
+(12, 10, 0.25), (12, 8, 0.01),
+
+-- Brownie: leche, sal, aceite
+(13, 10, 0.2), (13, 8, 0.01), (13, 7, 0.02),
+
+-- Combo 1: HOLY + Papas + Coca Cola
+(14, 5, 0.3), (14, 11, 0.1), (14, 3, 0.05), (14, 2, 0.05), (14, 1, 0.2), (14, 7, 0.01),
+
+-- Combo 2: doble burger + Papas + Sprite
+(15, 5, 0.4), (15, 11, 0.1), (15, 1, 0.2), (15, 7, 0.01);
 
 COMMIT;

@@ -227,6 +227,21 @@ function closeAddWindow() {
                 cancelButtonColor: "#d33",
             }).then((result) => {
                 if (result.isConfirmed) {
+                    const select = document.getElementById('selectPromotion');
+                    const input = document.getElementById('inputPromotion');
+                    let promotionValue = select.value;
+
+                    if (promotionValue === 'porcentaje') {
+                        // isNaN devuelve true siempre y cuando no sea número
+                        if(input.value && !isNaN(input.value)){
+                            promotionValue = input.value + '%';
+                        } else {
+                            promotionValue = 'sinDescuento';
+                        }
+                    }
+
+                    // Asignar al input antes de crear FormData
+                    input.value = promotionValue;
                     const formData = new FormData(formProducts);
 
                     fetch("/proyectoFinal/app/Functions/dashboardAdmin/productos.php?action=addProduct", {

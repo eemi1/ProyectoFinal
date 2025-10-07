@@ -16,84 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Rasa:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
-        <nav class="navbar">
-            <a href="index.php">
-                <div class="navbar-content">
-                    <img src="images/logo.jpg" alt="Logo" class="navbar-logo">
-                    <h1 class="navbar-title">Fory Factory</h1>
-                </div>
-            </a>
-
-            <ul class="navbar-menu">
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="#">Productos</a></li>
-                <li><a href="#">Contacto</a></li>
-                <li><a href="#">Sobre Nosotros</a></li>
-            </ul>
-
-            <!-- Menú desplegable para móviles -->
-            <div class="navbar-dropdown">
-                <i class="fa-solid fa-bars fa-2xl" id="icon-menu"></i>
-
-            </div>
-
-            <div class="navbar-buttons">
-                <a href="app/View/Auth/Login.html" id="navbar-btn-login">Iniciar Sesión</a>
-                <a href="app/View/Auth/Register.html" class="boton-primario" id="navbar-btn-register">Crear Cuenta</a>
-            </div>
-
-            <div class="navbar-buttons-logged">
-                <a href="#favoritos" class="icon-nav-logged"><i class="fa-regular fa-heart fa-2xl" ></i></a>
-                <a href="#cartera" class="icon-nav-logged"><i class="fa-solid fa-cart-shopping fa-2xl"></i></a>
-                <div class="profile-logged">
-                    <a id="icon-profile-nav"><img src="images/default-photo.webp" alt="" id="photo-profile-img"></a>
-
-                    <div class="dropdown-menu" id="dropdownMenu">
-                        <ul id="dropdownMenu-list">
-                            <li id="li-profile">
-                                <img src="images/default-photo.webp" id="photo-profile-img-li">
-                                <div class="profile-info">
-                                    <span class="username" id="nameNavLogged"></span>
-                                    <span class="email" id="emailNavLogged"></span>
-                                </div>
-                            </li>
-                            <li class="dropdown-item">
-                                <a href="/proyectoFinal/app/View/Dashboard/ClientProfile.php" class="options-profile">
-                                    <i class="fa-regular fa-user"></i>
-                                    Mi perfil</a>
-                            </li>
-                            <li class="dropdown-item">
-                                <a href="#" class="options-profile">
-                                    <i class="fa-solid fa-gear"></i>
-                                    Configuración</a>
-                            </li>
-                            <li class="dropdown-item">
-                                <a href="#" class="options-profile">
-                                    <i class="fa-regular fa-bell"></i>
-                                    Notificaciones
-                                </a>
-                            </li>
-                            <hr>
-                            <li class="dropdown-item">
-                                <a href="#" class="options-profile">
-                                    <i class="fa-regular fa-moon"></i>
-                                    Modo oscuro
-                                </a>
-                            </li>
-                            <li class="dropdown-item">
-                                <a href="#" class="options-profile-logout" id="logout">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                    Cerrar sesión
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-            </div>
-        </nav>
-    </header>
+    <header class="header"></header>
     <hr class="navbar-divisor">
 
     <section class="main-pages">
@@ -106,8 +29,8 @@
                     No podemos cambiar el mundo, ni las injusticias, pero sí podemos hacer que tu día tenga un final feliz con nuestras hamburguesas. ¡Este es nuestro propósito!
                 </p>
                 <div class="page1-buttons">
-                    <button class="boton-primario" id="page1-btn-menu">Ver menú</button>
-                    <button class="boton-secundario" id="page1-btn-reservar">Reservar mesa</button>
+                    <a href="/proyectoFinal/app/View/Products/products.html"><button class="boton-primario" id="page1-btn-menu">Ver menú</button></a>
+                    <a href="/proyectoFinal/app/View/Reservation/reservation.html"><button class="boton-secundario" id="page1-btn-reservar">Reservar mesa</button></a>
                 </div>
                     <svg fill="#000000" viewBox="0 0 39 50" class="page1-animated-arrow" xmlns="http://www.w3.org/2000/svg">
                         <polyline points="19 14 12 21 5 14" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;" />
@@ -188,42 +111,7 @@
         </div>
 
     </section>
-    <footer class="footer">
-        <div class="footer-main-content">
-
-            <div class="footer-container1">
-                <div class="footer-content-1">
-                    <h4 class="footer-content1-h4">Fory Factory</h4>
-                    <p id="footer-content1-description">Especialistas en fabricación de productos de alta calidad. Comprometidos con la excelencia y la innovación en cada proyecto.</p>
-                </div>
-            </div>
-
-            <div class="footer-container2">
-                <div class="footer-content-2">
-                    <h4 class="footer-content2-h4">Atajos</h4>
-                    <a class="footer-content2-a" href="/">Inicio</a>
-                    <a class="footer-content2-a" href="/productos">Productos</a>
-                    <a class="footer-content2-a" href="/sobre-nosotros">Sobre nosotros</a>
-                </div>
-            </div>
-            
-            <div class="footer-container3">
-                <div class="footer-content-3">
-                    <h4 class="footer-content3-h4">Contacto</h4>
-                    <p class="footer-content3-a">contacto@foryfactory.com</p>
-                    <p class="footer-content3-a">+598 99 999 999</p>
-                    <p class="footer-content3-a">Av. Río Negro 1711, Ciudad de la costa</p>
-                </div>
-            </div>
-        </div>
-        <hr class="footer-divisor">
-
-        <div class="footer-content4">
-            <p id="footer-derechos" class="">© 2025 Fory Factory. Todos los derechos reservados.</p>
-            <p id="footer-developedBy" class="">Desarrollado por TEN</p>
-        </div>
-
-    </footer>
+    <footer class="footer"></footer>
     <script src="resources/js/main.js"></script>
     
 </body>

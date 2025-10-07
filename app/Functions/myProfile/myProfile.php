@@ -73,6 +73,7 @@ function fechaMiembro($pdo) {
     }
 }
 
+
 // RUTEO
 $accion = $_GET['action'] ?? null;
 
@@ -84,7 +85,6 @@ switch ($accion) {
         case 'fechaMiembro':
         fechaMiembro($pdo);
         break;
-
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);
         exit;

@@ -8,7 +8,8 @@ function verificarSesion() {
             "success" => true, 
             "message" => "Usuario loggeado.",
             "usuario" => $_SESSION['usuario'],
-            "email" => $_SESSION['email'] ?? ''
+            "email" => $_SESSION['email'] ?? '',
+            "rol" => $_SESSION['id_rol']
         
         ]);
             exit;

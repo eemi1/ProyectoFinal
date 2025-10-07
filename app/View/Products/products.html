@@ -8,175 +8,67 @@
 <script src="https://kit.fontawesome.com/29724e3467.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/proyectoFinal/resources/css/components.css" type="text/css">
 <link rel="stylesheet" href="/proyectoFinal/resources/css/pages/products/indexProducts.css">
-    <link rel="stylesheet" href="../../../resources/css/parts/nav.css" type="text/css">
-    <link rel="stylesheet" href="../../../resources/css/parts/footer.css" type="text/css">
+<link rel="stylesheet" href="../../../resources/css/parts/nav.css" type="text/css">
+<link rel="stylesheet" href="../../../resources/css/parts/footer.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
-
     <header class="header">
-        <nav class="navbar">
-            <a href="../../../index.php">
-                <div class="navbar-content">
-                    <img src="../../../images/logo.jpg" alt="Logo" class="navbar-logo">
-                    <h1 class="navbar-title">Fory Factory</h1>
-                </div>
-            </a>
-
-            <ul class="navbar-menu">
-                <li><a href="../../../index.php">Inicio</a></li>
-                <li><a href="#">Productos</a></li>
-                <li><a href="#">Contacto</a></li>
-                <li><a href="#">Sobre Nosotros</a></li>
-            </ul>
-
-            <!-- Menú desplegable para móviles -->
-            <div class="navbar-dropdown">
-                <i class="fa-solid fa-bars fa-2xl" id="icon-menu"></i>
-
-            </div>
-
-            <div class="navbar-buttons">
-                <a href="../Auth/Login.html" id="navbar-btn-login">Iniciar Sesión</a>
-                <a href="../Auth/Register.html" class="boton-primario" id="navbar-btn-register">Crear Cuenta</a>
-            </div>
-
-            <div class="navbar-buttons-logged">
-                <a href="#favoritos" class="icon-nav-logged"><i class="fa-regular fa-heart fa-2xl" ></i></a>
-                <a href="#cartera" class="icon-nav-logged"><i class="fa-solid fa-cart-shopping fa-2xl"></i></a>
-                <div class="profile-logged">
-                    <a id="icon-profile-nav"><img src="../../../images/default-photo.webp" alt="" id="photo-profile-img"></a>
-
-                    <div class="dropdown-menu" id="dropdownMenu">
-                        <ul id="dropdownMenu-list">
-                            <li id="li-profile">
-                                <img src="../../../images/default-photo.webp" id="photo-profile-img-li">
-                                <div class="profile-info">
-                                    
-                                    <span class="username"><?php echo $_SESSION["usuario"]; ?></span>
-                                    <span class="email"><?php echo $_SESSION["email"]; ?></span>
-                                </div>
-                            </li>
-                            <li class="dropdown-item">
-                                <a href="#" class="options-profile">
-                                    <i class="fa-regular fa-user"></i>
-                                    Mi perfil</a>
-                            </li>
-                            <li class="dropdown-item">
-                                <a href="#" class="options-profile">
-                                    <i class="fa-solid fa-gear"></i>
-                                    Configuración</a>
-                            </li>
-                            <li class="dropdown-item">
-                                <a href="#" class="options-profile">
-                                    <i class="fa-regular fa-bell"></i>
-                                    Notificaciones
-                                </a>
-                            </li>
-                            <hr>
-                            <li class="dropdown-item">
-                                <a href="#" class="options-profile">
-                                    <i class="fa-regular fa-moon"></i>
-                                    Modo oscuro
-                                </a>
-                            </li>
-                            <li class="dropdown-item">
-                                <a href="#" class="options-profile-logout" id="logout">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                    Cerrar sesión
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-            </div>
-        </nav>
     </header>
+    <hr class="navbar-divisor">
 
-<div class="sidebar">
-  <a href="#beef-page">Hamburguesas de carne</a>
-  <a href="#vegetarian-page">Hamburguesas vegetarianas</a>
-  <a href="#vegan-page">Hamburguesas veganas</a>
-  <a href="#accompaniment-page">Acompañamientos</a>
-  <a href="#drink-page">Bebidas</a>
-  <a href="#dessert-page">Postres</a>
-  <a href="#combo-page">Combos</a>
-</div>
+    <div class="sidebar">
+        <a href="#beef-page">Hamburguesas de carne</a>
+        <a href="#vegetarian-page">Hamburguesas vegetarianas</a>
+        <a href="#vegan-page">Hamburguesas veganas</a>
+        <a href="#accompaniment-page">Acompañamientos</a>
+        <a href="#drink-page">Bebidas</a>
+        <a href="#dessert-page">Postres</a>
+        <a href="#combo-page">Combos</a>
+    </div>
 
-<div class="main-content">
-  <!-- Secciones vacías, JS las llenará -->
-  <div id="beef-page" class="section">
-    <h2>Hamburguesas de carne</h2>
-    <div class="products-grid"></div>
-  </div>
+    <div class="main-content">
+        <!-- Secciones vacías, JS las llenará -->
+        <div id="beef-page" class="section">
+            <h2>Hamburguesas de carne</h2>
+            <div class="products-grid"></div>
+        </div>
 
-  <div id="vegetarian-page" class="section">
-    <h2>Hamburguesas vegetarianas</h2>
-    <div class="products-grid"></div>
-  </div>
+        <div id="vegetarian-page" class="section">
+            <h2>Hamburguesas vegetarianas</h2>
+            <div class="products-grid"></div>
+        </div>
 
-  <div id="vegan-page" class="section">
-    <h2>Hamburguesas veganas</h2>
-    <div class="products-grid"></div>
-  </div>
+        <div id="vegan-page" class="section">
+            <h2>Hamburguesas veganas</h2>
+            <div class="products-grid"></div>
+        </div>
 
-  <div id="accompaniment-page" class="section">
-    <h2>Acompañamientos</h2>
-    <div class="products-grid"></div>
-  </div>
+        <div id="accompaniment-page" class="section">
+            <h2>Acompañamientos</h2>
+            <div class="products-grid"></div>
+        </div>
 
-  <div id="drink-page" class="section">
-    <h2>Bebidas</h2>
-    <div class="products-grid"></div>
-  </div>
+        <div id="drink-page" class="section">
+            <h2>Bebidas</h2>
+            <div class="products-grid"></div>
+        </div>
 
-  <div id="dessert-page" class="section">
-    <h2>Postres</h2>
-    <div class="products-grid"></div>
-  </div>
+        <div id="dessert-page" class="section">
+            <h2>Postres</h2>
+            <div class="products-grid"></div>
+        </div>
 
-  <div id="combo-page" class="section">
-    <h2>Combos</h2>
-    <div class="products-grid"></div>
-  </div>
-</div>
+        <div id="combo-page" class="section">
+            <h2>Combos</h2>
+            <div class="products-grid"></div>
+        </div>
+    </div>
 
     <footer class="footer">
-        <div class="footer-main-content">
-
-            <div class="footer-container1">
-                <div class="footer-content-1">
-                    <h4 class="footer-content1-h4">Fory Factory</h4>
-                    <p id="footer-content1-description">Especialistas en fabricación de productos de alta calidad. Comprometidos con la excelencia y la innovación en cada proyecto.</p>
-                </div>
-            </div>
-
-            <div class="footer-container2">
-                <div class="footer-content-2">
-                    <h4 class="footer-content2-h4">Atajos</h4>
-                    <a class="footer-content2-a" href="/">Inicio</a>
-                    <a class="footer-content2-a" href="/productos">Productos</a>
-                    <a class="footer-content2-a" href="/sobre-nosotros">Sobre nosotros</a>
-                </div>
-            </div>
-            
-            <div class="footer-container3">
-                <div class="footer-content-3">
-                    <h4 class="footer-content3-h4">Contacto</h4>
-                    <p class="footer-content3-a">contacto@foryfactory.com</p>
-                    <p class="footer-content3-a">+598 99 999 999</p>
-                    <p class="footer-content3-a">Av. Río Negro 1711, Ciudad de la costa</p>
-                </div>
-            </div>
-        </div>
-        <hr class="footer-divisor">
-
-        <div class="footer-content4">
-            <p id="footer-derechos" class="">© 2025 Fory Factory. Todos los derechos reservados.</p>
-            <p id="footer-developedBy" class="">Desarrollado por TEN</p>
-        </div>
-
     </footer>
+    <script src="/proyectoFinal/resources/js/main.js"></script>
     <script src="/proyectoFinal/resources/js/products/indexProducts.js"></script>
 </body>
 </html>
