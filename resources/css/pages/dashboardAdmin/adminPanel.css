@@ -271,7 +271,7 @@ html, body {
 
 .headerDashboard-title{
     padding: 25px 0 10px 30px;
-    font-size: 2rem;
+    font-size: var(--font-title);
 }
 
 .headerDashboard-subtitle{

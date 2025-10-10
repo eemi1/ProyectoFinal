@@ -1,0 +1,57 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Raleway', sans-serif;
+    background-color: rgb(218, 218, 218);
+}
+
+main{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    padding-top: 110px;
+}
+
+/*==================================*/
+/*=     CONTENEDOREDORES BASE      =*/
+/*==================================*/
+.containerForm, .containerReservations{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    padding: 20px 30px;
+}
+.formContent, .reservationContent{
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--borderColor);
+    border-radius: 20px;
+}
+
+/*==================================*/
+/*=       FORMULARIO CONTENT       =*/
+/*==================================*/
+
+.formHeader{
+    margin: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.formHeader h5{
+    font-size: var(--font-title);
+    display: flex;
+    gap: 10px;
+}
+.formHeader h5 i{
+    color: var(--primary-color);
+}
+.formHeader p{
+    color: var(--subtitleColor);
+}

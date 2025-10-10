@@ -1,7 +1,7 @@
 <?php
 session_start();
 header("Content-Type: application/json");
-require "../../db.php"; // tu archivo de conexión PDO
+require "../../../db.php"; // tu archivo de conexión PDO
 
 $name = $_POST['username'] ?? '';
 $email = $_POST['new-email'] ?? '';

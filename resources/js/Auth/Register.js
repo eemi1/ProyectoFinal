@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const register = document.getElementById('registerForm');
+    const register = document.querySelector('form');
 
     try {
         register.addEventListener('submit', (e) => {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (result.isConfirmed) {
                     let form_Register = new FormData(register);
 
-                    fetch("../../Functions/RegisterController.php", {
+                    fetch("/proyectoFinal/app/Functions/RegisterController.php", {
                         method: 'POST',
                         body: form_Register
                     })

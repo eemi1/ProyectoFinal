@@ -1,7 +1,7 @@
 <?php
 session_start();
 header("Content-Type: application/json"); // Indica que la respuesta que va a devolver el servidor será en formato JSON.
-require "../../db.php";
+require "../../../db.php";
 
 $email = $_POST["email"] ?? ''; // ??: sirve para asignar una cadena vacía si el campo no existe
 $password = $_POST["password"] ?? '';

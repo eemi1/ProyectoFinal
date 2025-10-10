@@ -32,6 +32,10 @@ function addProduct($pdo) {
         $productPromotion = $productPromotion . "%";
     }
 
+    if ($productPreparationTime !== '') {
+        $productPreparationTime = $productPreparationTime . ' minutos';
+    }
+
     try {
         if ($productFeatured) {
             $stmtCount = $pdo->query("SELECT COUNT(*) FROM producto WHERE destacado = 1");
@@ -65,7 +69,7 @@ function addProduct($pdo) {
         //Subir Imagen
         if (!empty($_FILES['productImage']['name'])){
 
-            $dirImage = "../../../uploads/";
+            $dirImage = "../../../uploads/products/";
             if(!is_dir($dirImage)) {mkdir($dirImage, 0755, true);} 
 
             $file = $_FILES['productImage'];

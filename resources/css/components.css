@@ -212,10 +212,13 @@ transition: background-color 0.3s ease;
     --font-mediumSmall: 14px;
     --font-medium: 16px;
     --font-large: 24px;
+    --font-title: 2rem;
 
     --primary-color: #17821B;
     --primary-color-hover:#146e17;
+    --borderColor: #e2e8f0;
+    --subtitleColor: #969696;
 
     --background-primary:#166945;
-    --background-primary-hover:#125437
+    --background-primary-hover:#125437;
 }

@@ -45,10 +45,13 @@
     list-style-type: none; /*Sacar puntos de la lista ordenada*/
 }
 .navbar-menu a {
-    color: black;
+    color: rgb(65, 64, 64);
     text-decoration: none;
     font-size: 18px;
-    transition: 0.5;
+}
+.navbar-menu a:hover{
+    color: black;
+    transition: color 0.3s ease;
 }
 
 .navbar-buttons{
@@ -83,6 +86,7 @@
 #navbar-btn-login:hover{
     background-color:#17821B;
     color:white;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .navbar-buttons-logged{
     display: none;

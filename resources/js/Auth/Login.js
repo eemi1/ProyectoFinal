@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", ()=>{
 
-const formLogin = document.getElementById('form-login')
+const formLogin = document.querySelector('.form')
 
 try{
     formLogin.addEventListener('submit', (e) => {
         e.preventDefault()
         let formulario = new FormData(formLogin)
 
-        fetch("../../Functions/LoginController.php", {
+        fetch("/proyectoFinal/app/Functions/Auth/LoginController.php", {
             method: 'POST',
             body: formulario
         })

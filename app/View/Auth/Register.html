@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fory Factory | Registro</title>
     <meta charset="UTF-8" />
-        <link rel="icon" href="../../../images/logo.jpg" type="image/x-icon">
-        <link rel="stylesheet" href="../../../resources/css/pages/auth.css" type="text/css">
+        <link rel="icon" href="/proyectoFinal/images/logo.jpg" type="image/x-icon">
+        <link rel="stylesheet" href="../../../resources/css/pages/Auth/register.css" type="text/css">
         <link rel="stylesheet" href="../../../resources/css/components.css" type="text/css">
         <link rel="stylesheet" href="../../../resources/css/parts/nav.css" type="text/css">
         <link rel="stylesheet" href="../../../resources/css/parts/footer.css" type="text/css">
@@ -15,118 +15,152 @@
     </head>
 
 <body>
-    <header class="header">
-        <nav class="navbar">
-            <a href="../../../index.html">
-                <div class="navbar-content">
-                    <img src="../../../images/logo.jpg" alt="Logo" class="navbar-logo">
-                    <h1 class="navbar-title">Fory Factory</h1>
-                </div>
-            </a>
-
-            <ul class="navbar-menu">
-                <li><a href="../../../index.html">Inicio</a></li>
-                <li><a href="#">Productos</a></li>
-                <li><a href="#">Contacto</a></li>
-                <li><a href="#">Sobre Nosotros</a></li>
-            </ul>
-
-            <!-- Menú desplegable para móviles -->
-            <div class="navbar-dropdown">
-                <i class="fa-solid fa-bars fa-2xl" id="icon-menu"></i>
-
-            </div>
-
-            <div class="navbar-buttons">
-                <a href="Login.html" id="navbar-btn-login">Iniciar Sesión</a>
-                <a href="Register.html" class="boton-primario" id="navbar-btn-register">Crear Cuenta</a>
-            </div>
-        </nav>
-    </header>
+    <header class="header"></header>
     
 
-    <!---------------MAIN CONTENT-->
     <main>
-        <div class="container-register">
+        <div class="imgContainer">
+            <img src="/proyectoFinal/images/bg/bg-register.jpg"> 
+        </div>
+        <div class="formContainer">
 
-        <section class="register-background">
-        <img src="../../../images/bg/bg-register.jpg" alt="Fondo página registro." class="">
-        </section>
+            <div class="formHeader">
+                <h5>¡Bienvenido!</h5>
+                <p>Perfecto para tu almuerzo, rápido pero sabroso 🔥</p>
+            </div>
+            <div class="formContent">
+                <form class="form" action="/proyectoFinal/app/Functions/Auth/RegisterController.php">
 
-        <form class="form" id="registerForm" action="../../Functions/RegisterController.php" method="POST">
-            <div class="form-container-title">
-                <h1 class="form-title">¡Bienvenido!</h1>
-                <p class="form-description">Perfecto para tu almuerzo, rápido pero sabroso 🔥</p>
-                <hr class="form-divisor">
+                    <div class="formAuth">
+                        <label for="name">Nombre completo</label>
+                        <div class="inputContainer">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="input-icon"
+                                width="24" height="24" 
+                                fill="none" stroke="var(--primary-color)" 
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                viewBox="0 0 24 24">
+                                <title>Nombre completo</title>
+                                <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M4 21v-2a4 4 0 0 1 3-3.87"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <input type="name" id="name" name="name" placeholder="Ingresa tu nombre" autocomplete="name" required>
+                        </div>
+                        
+                    </div>
 
-                <div class="form-container">
-                <label for="username">Nombre completo</label>
-                <input type="text" id="username" name="username" class="input-forms" required>
+                    <div class="formAuth">
+                        <label for="email">Email</label>
+                        <div class="inputContainer">
+                            <svg class="input-icon" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M207.8 20.73c-93.45 18.32-168.7 93.66-187 187.1c-27.64 140.9 68.65 266.2 199.1 285.1c19.01 2.888 36.17-12.26 36.17-31.49l.0001-.6631c0-15.74-11.44-28.88-26.84-31.24c-84.35-12.98-149.2-86.13-149.2-174.2c0-102.9 88.61-185.5 193.4-175.4c91.54 8.869 158.6 91.25 158.6 183.2l0 16.16c0 22.09-17.94 40.05-40 40.05s-40.01-17.96-40.01-40.05v-120.1c0-8.847-7.161-16.02-16.01-16.02l-31.98 .0036c-7.299 0-13.2 4.992-15.12 11.68c-24.85-12.15-54.24-16.38-86.06-5.106c-38.75 13.73-68.12 48.91-73.72 89.64c-9.483 69.01 43.81 128 110.9 128c26.44 0 50.43-9.544 69.59-24.88c24 31.3 65.23 48.69 109.4 37.49C465.2 369.3 496 324.1 495.1 277.2V256.3C495.1 107.1 361.2-9.332 207.8 20.73zM239.1 304.3c-26.47 0-48-21.56-48-48.05s21.53-48.05 48-48.05s48 21.56 48 48.05S266.5 304.3 239.1 304.3z"></path>
+                            </svg>
+                            <input type="email" id="email" name="email" placeholder="Ingresa tu email" autocomplete="email" required>
+                        </div>
+                        
+                    </div>
 
-                <label for="email">Dirección de correo electrónico</label>
-                <input type="email" id="new-email" name="new-email" class="input-forms" placeholder="example@gmail.com" autocomplete="new-email" required>
+                    <div class="formAuth">
+                        <label for="password">Contraseña</label>
+                        <div class="inputContainer">
+                            <svg class="input-icon" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"></path>
+                            </svg>
+                            <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" autocomplete="password" required>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="formAuth">
+                        <label for="repeatPassword">Confirmar contraseña</label>
+                        <div class="inputContainer">
+                            <svg class="input-icon" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"></path>
+                            </svg>
+                            <input type="repeatPassword" id="repeatPassword" name="repeatPassword" placeholder="Confirma la contraseña" autocomplete="repeatPassword" required>
+                        </div>
+                        
+                    </div>
 
-                <label for="password">Contraseña</label>
-                <input type="password" id="new-password" name="new-password" autocomplete="new-password" class="input-forms" required>
+                    <div class="formAuth">
+                        <label for="phone">Télefono</label>
+                        <div class="inputContainer">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="input-icon"
+                                width="24" height="24"
+                                fill="none" stroke="var(--primary-color)"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                viewBox="0 0 24 24">
+                                <title>Teléfono</title>
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 
+                                19.79 19.79 0 0 1-8.63-3.07
+                                19.5 19.5 0 0 1-6-6
+                                19.79 19.79 0 0 1-3.07-8.63
+                                A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72
+                                12.05 12.05 0 0 0 .65 2.73
+                                2 2 0 0 1-.45 2.11L8.09 9.91
+                                a16 16 0 0 0 6 6l1.35-1.35
+                                a2 2 0 0 1 2.11-.45
+                                12.05 12.05 0 0 0 2.73.65
+                                A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            <input type="phone" id="phone" name="phone" placeholder="Ingresa tu teléfono" autocomplete="phone" required>
+                        </div>
+                        
+                    </div>
 
-                <label for="repeat-password">Confirmar contraseña</label>
-                <input type="password" id="new-password_confirmation" name="new-password_confirmation" autocomplete="new-password_confirmation" class="input-forms" required>
+                    
+                    <div class="formContainerSubmit">
+                        <button type="submit" class="submitForm">Crear cuenta</button>
+                    <label class="noRegister">
+                    ¿Ya tienes una cuenta?
+                        <a href="Register.html" class="noRegisterA">Inicia sesión aquí</a>
+                    </label>
+                    </div>
 
-                <label for="tel">Teléfono</label>
-                <input type="tel" id="new-phone" name="new-phone" class="input-forms" required>
 
-                <button type="submit" class="form-btn-submit">
-                Crear Cuenta
-                </button>
+                </form>
+            </div>
+            <div class="formFooter">
+                <div class="divisorOrWith">
+                    <hr>
+                    <p>O con:</p>
+                    <hr>
+                </div>   
+                <script src="https://accounts.google.com/gsi/client" async defer></script>   
+                <!-- Configuración de Google -->
+                <div class="ContinueWithGoogle">
+                    <div id="g_id_onload"
+                        data-client_id="350728797977-cv03e2jicnvf65ot0acjb4q7l265r8qu.apps.googleusercontent.com"
+                        data-context="signin"
+                        data-ux_mode="redirect"
+                        data-login_uri="http://localhost/proyectoFinal/app/Functions/config/authGoogle.php"
+                        data-auto_prompt="false">
+                    </div>
 
-                <label class="no-register-register">
-                ¿Ya tienes una cuenta?
-                    <a href="Login.html" class="no-register-a-register">inicia sesión aquí</a>
-                </label>
+                    <!-- Botón de Google -->
+                    <div class="g_id_signin"
+                        data-type="standard"
+                        data-shape="rectangular"
+                        data-theme="outline"
+                        data-text="continue_with"
+                        data-size="large"
+                        data-logo_alignment="left">
+                    </div>
                 </div>
             </div>
-            
-        </form>
         </div>
+
+
     </main>
 
     <footer class="footer">
-        <div class="footer-main-content">
-
-            <div class="footer-container1">
-                <div class="footer-content-1">
-                    <h4 class="footer-content1-h4">Fory Factory</h4>
-                    <p id="footer-content1-description">Especialistas en fabricación de productos de alta calidad. Comprometidos con la excelencia y la innovación en cada proyecto.</p>
-                </div>
-            </div>
-
-            <div class="footer-container2">
-                <div class="footer-content-2">
-                    <h4 class="footer-content2-h4">Atajos</h4>
-                    <a class="footer-content2-a" href="/">Inicio</a>
-                    <a class="footer-content2-a" href="/productos">Productos</a>
-                    <a class="footer-content2-a" href="/sobre-nosotros">Sobre nosotros</a>
-                </div>
-            </div>
-            
-            <div class="footer-container3">
-                <div class="footer-content-3">
-                    <h4 class="footer-content3-h4">Contacto</h4>
-                    <p class="footer-content3-a">contacto@foryfactory.com</p>
-                    <p class="footer-content3-a">+598 99 999 999</p>
-                    <p class="footer-content3-a">Av. Río Negro 1711, Ciudad de la costa</p>
-                </div>
-            </div>
-        </div>
-        <hr class="footer-divisor">
-
-        <div class="footer-content4">
-            <p id="footer-derechos" class="">© 2025 Fory Factory. Todos los derechos reservados.</p>
-            <p id="footer-developedBy" class="">Desarrollado por TEN</p>
-        </div>
 
     </footer>
-    <script src="../../../resources/js/Auth/Register.js"></script>
+    <script src="/proyectoFinal/resources/js/Auth/Register.js"></script>
+    <script src="/proyectoFinal/resources/js/main.js"></script>
+
 
 </body>
 </html>

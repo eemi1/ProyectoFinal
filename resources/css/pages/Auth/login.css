@@ -1,0 +1,192 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Raleway', sans-serif;
+    background-color: rgb(218, 218, 218);
+}
+/*==================*/
+/*=     MAIN       =*/
+/*==================*/
+main{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: grey;
+    padding-top: 110px;
+}
+/*==================================*/
+/*=     CONTENEDOR IMAGEN BG       =*/
+/*==================================*/
+.imgContainer{
+    min-width: 20%;
+    width: 60%;
+    max-width: 60%;
+    height: 100%;
+    display: flex;
+    background: black;
+
+}
+/*Imágen*/
+.imgContainer img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/*===================================*/
+/*=     CONTENEDOR FORMULARIO       =*/
+/*===================================*/
+.formContainer{
+    min-width: 40%;
+    width: 40%;
+    max-width: 40%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/*===================================*/
+/*=       FORMULARIO HEADER         =*/
+/*===================================*/
+.formHeader{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;    
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+.formHeader h5{
+    font-family: 'Rasa', serif;
+    font-size: clamp(3rem, 4vw, 4.5rem);
+    color: var(--primary-color);
+}
+.formHeader p{
+    font-size: 1rem;
+}
+/*===================================*/
+/*=       FORMULARIO CONTENT         =*/
+/*===================================*/
+.formContent{
+    width: 100%;
+    min-height: 33%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.formAuth{
+    width: 50%;
+}
+
+.input-icon {
+    height: 1em;
+    width: 1em;
+    fill: var(--primary-color);
+    opacity: 0.7;
+}
+.inputContainer  {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding: 0 10px;
+    gap: 5px;
+}
+.inputContainer input{
+    height: 40px;
+    width: 100%;
+    padding: 19px 5px;
+    border:none;
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    background: white;
+}
+
+.inputContainer input:hover{
+    border:none;
+}
+.inputContainer input:focus, .inputContainer input:focus-visible{
+    border:none;
+    outline: none;
+}
+/*Haz olvidado la contraseña*/
+.passwordLoss{
+    text-decoration: none;
+    color: #17821B;
+    font-weight: 600;
+    width: 100%;
+    text-align: right;
+    margin-top: 5px;
+}
+/*No tienes cuenta, crea una!*/
+.noRegisterA , .login{
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/*Button Submit*/
+.submitContainer{
+    display: flex;
+    width: 50%;
+    height: 60%;
+    border: 1px solid var(--primary-color);
+    background: var(--primary-color);
+    border-radius: .5rem;
+}
+.submitForm{
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    color: white;
+    font-size: var(--font-medium);
+    height: 40px;
+    cursor: pointer;
+}
+.submitForm:hover{
+    background-color: var(--primary-color-hover);
+    transition: background-color 0.3s ease;
+    border-radius: 0.5rem;
+}
+/*===================================*/
+/*=       FORMULARIO FOOTER         =*/
+/*===================================*/
+.formFooter{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: COLUMN;
+    gap: 10px;
+    padding-top: 20px;
+}
+/*Divisór*/
+.divisorOrWith{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+.divisorOrWith hr{
+    width: 20%;
+    height: 1px;
+}
+/*Continue with Google*/
+.ContinueWithGoogle{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}

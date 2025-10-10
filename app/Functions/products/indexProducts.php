@@ -83,72 +83,6 @@ function loadProductsIndex($pdo) {
     }
 }
 
-function addCartTmp() {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $id = $data['id'] ?? null;
-    $precio = $data['precio'] ?? null;
-    $promocion = $data['promocion'] ?? null;
-    $valorPromocion = $data['valorPromocion'] ?? null;
-    $tipoPromocion = $data['tipoPromocion'] ?? null;
-
-    if (!isset($_SESSION['id_usuario'])) {
-        echo json_encode([
-            "success" => false,
-            "message" => "Debes iniciar sesión para agregar productos al carrito."
-        ]);
-        return;
-    }
-
-    if (!$id) {
-        echo json_encode(["success" => false, "message" => "No se recibió id"]);
-        return;
-    }
-
-    if (!isset($precio)) {
-        echo json_encode(["success" => false, "message" => "No se recibió el precio del producto"]);
-        return;
-    }
-
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-
-    if (isset($_SESSION['cart'][$id]) && is_array($_SESSION['cart'][$id])) {
-        // Si el producto ya existe, sumamos cantidad
-        $_SESSION['cart'][$id]['cantidad']++;
-        $_SESSION['cart'][$id]['precio'] = $precio;
-        $_SESSION['cart'][$id]['promocion'] = $promocion;
-        $_SESSION['cart'][$id]['valorPromocion'] = $valorPromocion;
-        $_SESSION['cart'][$id]['tipoPromocion'] = $tipoPromocion;
-    } else {
-        // Si es nuevo producto, guardamos cantidad, precio y promocion
-        $_SESSION['cart'][$id] = [
-            'cantidad' => 1,
-            'precio' => $precio,
-            'promocion' => $promocion,
-            'valorPromocion' => $valorPromocion,
-            'tipoPromocion' => $tipoPromocion
-        ];
-    }
-
-    echo json_encode([
-        "success" => true,
-        "message" => "Producto agregado",
-        "cart" => $_SESSION['cart']
-    ]);
-}
-
-function removeCartItem() {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $id = $data['id'] ?? null;
-
-    if ($id && isset($_SESSION['cart'][$id])) {
-        unset($_SESSION['cart'][$id]);
-        echo json_encode(["success" => true, "message" => "Producto eliminado del carrito"]);
-    } else {
-        echo json_encode(["success" => false, "message" => "Producto no encontrado en el carrito"]);
-    }
-}
 
 // RUTEO
 $accion = $_GET['action'] ?? null;
@@ -163,12 +97,6 @@ switch ($accion) {
             "cart" => $_SESSION['cart'] ?? []
         ]);
     break;
-    case 'addCartTmp':
-        addCartTmp();
-        break;
-    case 'removeCartItem':
-        removeCartItem();
-        break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);
         exit;

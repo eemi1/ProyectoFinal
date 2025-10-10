@@ -1,12 +1,16 @@
+// =====================
+// INICIALIZACIÓN
+// =====================
 document.addEventListener("DOMContentLoaded", () => {
+    // Cargar Header y Footer
     loadHTMLComponent('header', '/proyectoFinal/app/View/Parts/navbar.html')
         .then(() => {
-            // Se inicializan funciones del header SOLO después de cargarlo
+            // Inicializar funciones del header solo después de cargarlo
             navLoggeado();
             menuProfile();
             cerrarSesion();
             viewCart();
-            getCart();
+            renderCartFromLocalStorage(); // Renderiza carrito desde localStorage
             addProductsToCart();
             finalizarPedido();
         })
@@ -15,6 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
     loadHTMLComponent('footer', '/proyectoFinal/app/View/Parts/footer.html');
 });
 
+// =====================
+// CARGA DE COMPONENTES HTML
+// =====================
 function loadHTMLComponent(selector, url) {
     return fetch(url)
         .then(response => response.text())
@@ -24,6 +31,9 @@ function loadHTMLComponent(selector, url) {
         .catch(err => console.error(`Error cargando ${url}:`, err));
 }
 
+// =====================
+// GESTIÓN DE SESIÓN
+// =====================
 function navLoggeado() {
     fetch("/proyectoFinal/app/Functions/check.php?action=verificar")
         .then(res => res.json())
@@ -48,7 +58,6 @@ function navLoggeado() {
         .catch(error => console.error("Error al verificar sesión:", error));
 }
 
-// Mostrar/Ocultar dropdown de perfil
 function menuProfile() {
     const profile = document.getElementById('icon-profile-nav');
     const ddMenu = document.getElementById('dropdownMenu');
@@ -58,7 +67,6 @@ function menuProfile() {
         ddMenu.style.display = ddMenu.style.display === 'flex' ? 'none' : 'flex';
     });
 
-    // Cerrar dropdown al hacer click fuera
     document.addEventListener('click', (e) => {
         if (!profile.contains(e.target) && !ddMenu.contains(e.target)) {
             ddMenu.style.display = 'none';
@@ -103,7 +111,9 @@ function cerrarSesion() {
     });
 }
 
-// Carrito lateral
+// =====================
+// CARRITO LATERAL
+// =====================
 function viewCart() {
     const btnCart = document.getElementById('btnCart'); 
     const cartSidebar = document.getElementById('cart-sidebar');
@@ -112,198 +122,135 @@ function viewCart() {
 
     if (!btnCart || !cartSidebar || !closeCart || !cartOverlay) return;
 
-    btnCart.addEventListener('click', () => {
-        cartSidebar.classList.add('open')
-        cartOverlay.classList.add('open')
-
-    });
-
-    const closeFn = () => {
-        cartSidebar.classList.remove('open')
-        cartOverlay.classList.remove('open')
-
+    const openCart = () => {
+        cartSidebar.classList.add('open');
+        cartOverlay.classList.add('open');
+    };
+    const closeCartFn = () => {
+        cartSidebar.classList.remove('open');
+        cartOverlay.classList.remove('open');
     };
 
-    closeCart.addEventListener('click', closeFn);
-    cartOverlay.addEventListener('click', closeFn);
+    btnCart.addEventListener('click', openCart);
+    closeCart.addEventListener('click', closeCartFn);
+    cartOverlay.addEventListener('click', closeCartFn);
 }
 
-function getCart() { //Se carga en main.js
-    const cartCount = document.getElementById("cart-count");
-    fetch("/proyectoFinal/app/Functions/products/indexProducts.php?action=getCart")
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            renderCart(data.cart); //Pasamos los datos a la funcion renderCart
-            let totalProductos = 0;
-            let totalPrecio = 0;
-            let subTotal = 0;
-
-            for (const id in data.cart) {
-                const item = data.cart[id];
-                const cantidad = item.cantidad ?? 0;
-                const precio = item.precio ?? 0;
-                const promocion = item.promocion ?? 'Sin Descuento';
-                const valorPromocion = item.valorPromocion ?? 0;
-                const tipoPromocion = item.tipoPromocion ?? 'none';
-
-
-                if (tipoPromocion === '2x1'){
-                    if (cantidad % 2 === 0){
-                        subTotal = (cantidad / 2) * precio;
-                    }else{
-                        subTotal = ((cantidad - 1) / 2 + 1) * precio;
-                    };
-                }else if (tipoPromocion === 'porcentaje' && valorPromocion > 0){
-                    subTotal = cantidad * precio * (1 - valorPromocion); 
-                }else{
-                    subTotal = cantidad * precio;
-                }
-
-                totalProductos += cantidad;
-                totalPrecio += subTotal;
-
-                console.log(`Producto ${id}: cantidad ${cantidad}: precio ${precio}`);
-                console.log(`promocion: ${promocion}`);
-            }
-                // Actualizamos el contador del carrito al cargar la página
-                cartCount.textContent = totalProductos;
-                cartCount.style.display = totalProductos > 0 ? "inline" : "none";
-
-        }
-    })
-    .catch(err => console.error("Error al obtener el carrito:", err));
+// =====================
+// LOCAL STORAGE DEL CARRITO
+// =====================
+function getCartFromLocalStorage() {
+    return JSON.parse(localStorage.getItem("cart") || "{}");
 }
+
+function saveCartToLocalStorage(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCartFromLocalStorage();
+}
+
+// =====================
+// AGREGAR PRODUCTOS AL CARRITO
+// =====================
 function addProductsToCart() {
     const btnAddCart = document.querySelectorAll(".agregarCarrito");
     const cartCount = document.getElementById("cart-count");
 
-
     btnAddCart.forEach(btn => {
-        btn.addEventListener("click", function() {
-            let id = btn.getAttribute("data-id"); // le ponemos data-id al botón
-            let precio = btn.getAttribute("data-precio")
-            let promocion = btn.getAttribute("data-promocion");      // ej: "10%" o "2x1" o "Sin Descuento"
-            let tipoPromocion = btn.getAttribute("data-tipo-promocion"); // "porcentaje", "2x1", "none"
-            let valorPromocion = parseFloat(btn.getAttribute("data-valor-promocion")); // 0.1, 0, etc.
+        btn.addEventListener("click", () => {
+            const id = btn.dataset.id;
+            const precio = parseFloat(btn.dataset.precio);
+            const promocion = btn.dataset.promocion;
+            const tipoPromocion = btn.dataset.tipoPromocion;
+            const valorPromocion = parseFloat(btn.dataset.valorPromocion);
 
-            fetch("/proyectoFinal/app/Functions/products/indexProducts.php?action=addCartTmp", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                credentials: "same-origin",
-                body: JSON.stringify({ id, precio, promocion, valorPromocion, tipoPromocion })
+            let cart = getCartFromLocalStorage();
 
-            })
-            .then(result => result.json())
-            .then(data => {
-                console.log(data);
-                if (data.success){
-                let totalProductos = 0;
-                for (const id in data.cart) {
-                    const item = data.cart[id];
-                
-                    const cantidad = item.cantidad ?? item;
-                    totalProductos += cantidad;
-                }
-                
+            if (cart[id]) cart[id].cantidad++;
+            else cart[id] = { cantidad: 1, precio, promocion, tipoPromocion, valorPromocion };
+
+            saveCartToLocalStorage(cart);
+
+            // Actualizar contador
+            const totalProductos = Object.values(cart).reduce((sum, item) => sum + item.cantidad, 0);
+            if (cartCount) {
                 cartCount.textContent = totalProductos;
                 cartCount.style.display = totalProductos > 0 ? "inline" : "none";
-                renderCart(data.cart); 
+            }
 
-                    Swal.fire({
-                        title: '¡Agregado!',
-                        text: data.message,
-                        icon: 'success',
-                        timer: 500,
-                        showConfirmButton: false
-                    });
-                }else{
-                    Swal.fire({
-                        title: 'Error',
-                        text: data.message,
-                        icon: 'warning',
-                        showConfirmButton: true,
-                    })
-                }
-            });        
-        })
-    })
+            Swal.fire({ 
+                title: '¡Agregado!', 
+                text: 'Producto agregado al carrito', 
+                icon: 'success', 
+                timer: 500, 
+                showConfirmButton: false 
+            });
+        });
+    });
 }
-function renderCart(cartData) {
-    const cartItemsContainer = document.querySelector(".cart-items"); // devuelve 1 elemento
-    const cartTotalPrice = document.getElementById("cart-total");
 
-    cartItemsContainer.innerHTML = ""; // limpiar contenido previo
+// =====================
+// RENDERIZAR CARRITO
+// =====================
+function renderCartFromLocalStorage() {
+    const cart = getCartFromLocalStorage();
+    renderCart(cart);
+}
+
+function removeFromCart(id) {
+    let cart = getCartFromLocalStorage();
+    if (cart[id]) delete cart[id];
+    saveCartToLocalStorage(cart);
+}
+
+function renderCart(cartData) {
+    const cartItemsContainer = document.querySelector(".cart-items");
+    const cartTotalPrice = document.getElementById("cart-total");
+    const cartCount = document.getElementById("cart-count");
+
+    cartItemsContainer.innerHTML = "";
     let totalPrecio = 0;
     let totalProductos = 0;
 
-    if (cartData.length === 0){
-        svgCart = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-cart-empty" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                   </svg>`
-
+    if (Object.keys(cartData).length === 0){
+        const svgCart = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-cart-empty" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> 
+        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/> 
+        </svg>`; // tu SVG
         cartItemsContainer.innerHTML = `
-        <div class="container-cart-empty">
-        ${svgCart}
-        <p class="cart-empty-title">No hay productos en el carrito</p>
-        <p class="cart-empty">Agrega productos para comenzar tu pedido</p>
-        </div>
-        `;
-        cartTotalPrice.textContent = "$ 0.00";
-        return; // salir de la función
+            <div class="container-cart-empty">
+                ${svgCart}
+                <p class="cart-empty-title">No hay productos en el carrito</p>
+                <p class="cart-empty">Agrega productos para comenzar tu pedido</p>
+            </div>`;
+        if (cartTotalPrice) cartTotalPrice.textContent = "$ 0.00";
+        if (cartCount) {
+            cartCount.textContent = 0;
+            cartCount.style.display = "none";
+        }
+        return;
     }
 
     for (const id in cartData) {
         const item = cartData[id];
-
-    console.log("Producto recibido:", item);
-    console.log("ID:", id);
-    console.log("Cantidad:", item.cantidad);
-    console.log("Precio:", item.precio);
-    console.log("Tipo de promoción:", item.tipoPromocion);
-    console.log("Valor promoción:", item.valorPromocion);
-    console.log("Promoción:", item.promocion);
         const cantidad = item.cantidad ?? 0;
         const precio = parseFloat(item.precio) ?? 0;
         const tipoPromocion = item.tipoPromocion ?? 'none';
         let valorPromocion = item.valorPromocion ?? 0;
 
-
-        // Calcular subtotal según promoción
         let subTotal = 0;
+        if (tipoPromocion === '2x1') subTotal = (Math.floor(cantidad/2) + cantidad%2) * precio;
+        else if (tipoPromocion === 'porcentaje' && valorPromocion > 0) subTotal = cantidad * precio * (1 - valorPromocion);
+        else subTotal = cantidad * precio;
 
-        if (tipoPromocion === '2x1') {
-            // Calcular subtotal
-            if (cantidad % 2 === 0) {
-                subTotal = (cantidad / 2) * precio;
-            } else {
-                subTotal = ((cantidad - 1) / 2 + 1) * precio;
-            }
-            item.promocion = '2x1';
-        
-        } else if (tipoPromocion === 'porcentaje' && valorPromocion > 0) {
-            subTotal = cantidad * precio * (1 - valorPromocion);
-            item.promocion = (valorPromocion * 100).toFixed(0) + '% OFF';
-        
-        } else {
-            subTotal = cantidad * precio;
-            item.promocion = 'Sin promoción';
-        }
-
-        
         totalProductos += cantidad;
         totalPrecio += subTotal;
 
-        // Crear elemento HTML para este producto
         const productDiv = document.createElement("div");
         productDiv.className = "cart-item";
         productDiv.innerHTML = `
             <div class="cart-item-img-container">
                 <img src="/proyectoFinal/uploads/${id}.jpg" alt="${item.nombre}" class="cart-item-img"
                      onerror="this.onerror=null;this.src='/proyectoFinal/uploads/imagen-default.png';">
-                ${item.promocion && item.promocion !== 'Sin promoción' 
-                    ? `<span class="cart-item-badge">${item.promocion}</span>` 
-                    : ''}
+                ${item.promocion && item.promocion !== 'Sin promoción' ? `<span class="cart-item-badge">${item.promocion}</span>` : ''}
             </div>
             <div class="cart-item-info">
                 <p>${cantidad} x $${precio.toFixed(2)}</p>
@@ -313,95 +260,77 @@ function renderCart(cartData) {
         `;
         cartItemsContainer.appendChild(productDiv);
     }
-    // toFixed : fuerza a que el return del decimal tenga 2 cifras máximo
-    cartTotalPrice.textContent = `$ ${totalPrecio.toFixed(2)}`;
-    // Añadir funcionalidad de eliminar
+
+    if (cartTotalPrice) cartTotalPrice.textContent = `$ ${totalPrecio.toFixed(2)}`;
+    if (cartCount) {
+        cartCount.textContent = totalProductos;
+        cartCount.style.display = totalProductos > 0 ? "inline" : "none";
+    }
+
+    // Añadir evento para eliminar
     document.querySelectorAll(".remove-from-cart").forEach(btn => {
         btn.addEventListener("click", function() {
-            const id = btn.getAttribute("data-id");
-            removeFromCart(id);
+            removeFromCart(btn.dataset.id);
         });
     });
 }
-function removeFromCart(id) {
-    fetch("/proyectoFinal/app/Functions/products/indexProducts.php?action=removeCartItem", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({id})
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            getCart();
-        } else {
-            console.error(data.message);
-        }
-    });
-}
+
+// =====================
+// FINALIZAR PEDIDO
+// =====================
 function finalizarPedido() {
     const btnFinalizar = document.getElementById("checkout-btn");
     if (!btnFinalizar) return;
 
     btnFinalizar.addEventListener("click", () => {
-        fetch("/proyectoFinal/app/Functions/products/indexProducts.php?action=getCart")
-            .then(res => res.json())
-            .then(data => {
-                if (!data.success || !data.cart || Object.keys(data.cart).length === 0) {
-                    Swal.fire("Carrito vacío", "Agrega productos antes de finalizar el pedido.", "warning");
-                    return;
-                }
+        const cart = getCartFromLocalStorage();
 
-                let productos = [];
-                let total = 0;
+        if (!cart || Object.keys(cart).length === 0) {
+            Swal.fire("Carrito vacío", "Agrega productos antes de finalizar el pedido.", "warning");
+            return;
+        }
 
-                for (const id in data.cart) {
-                    const item = data.cart[id];
-                    const cantidad = item.cantidad ?? 0;
-                    const precio = parseFloat(item.precio) ?? 0;
-                    const tipoPromocion = item.tipoPromocion ?? 'none';
-                    let valorPromocion = item.valorPromocion ?? 0;
-                    let subTotal = 0;
+        let productos = [];
+        let total = 0;
 
-                    if (tipoPromocion === '2x1') {
-                        if (cantidad % 2 === 0) {
-                            subTotal = (cantidad / 2) * precio;
-                        } else {
-                            subTotal = ((cantidad - 1) / 2 + 1) * precio;
-                        }
-                    } else if (tipoPromocion === 'porcentaje' && valorPromocion > 0) {
-                        subTotal = cantidad * precio * (1 - valorPromocion);
-                    } else {
-                        subTotal = cantidad * precio;
-                    }
+        for (const id in cart) {
+            const item = cart[id];
+            const cantidad = item.cantidad ?? 0;
+            const precio = parseFloat(item.precio) ?? 0;
+            const tipoPromocion = item.tipoPromocion ?? 'none';
+            const valorPromocion = item.valorPromocion ?? 0;
 
-                    total += subTotal;
+            let subTotal = 0;
+            if (tipoPromocion === '2x1') subTotal = (Math.floor(cantidad/2) + cantidad%2) * precio;
+            else if (tipoPromocion === 'porcentaje' && valorPromocion > 0) subTotal = cantidad * precio * (1 - valorPromocion);
+            else subTotal = cantidad * precio;
 
-                    // Agrega el producto al array para el backend
-                    productos.push({
-                        id_producto: id,
-                        cantidad: cantidad,
-                        precio: precio,
-                        tipoPromocion: tipoPromocion,
-                        valorPromocion: valorPromocion
-                    });
-                }
+            total += subTotal;
 
-                // Enviar pedido al backend
-                fetch("/proyectoFinal/app/Functions/products/guardarPedido.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ productos, total })
-                })
-                .then(res => res.json())
-                .then(result => {
-                    if (result.success) {
-                        Swal.fire("¡Pedido realizado!", "Tu pedido fue guardado correctamente.", "success");
-                        // Vacía el carrito en el frontend
-                        getCart(); // Vacía el carrito
-                    } else {
-                        Swal.fire("Error", result.message, "error");
-                    }
-                });
-            });
+            productos.push({ id_producto: id, cantidad, precio, tipoPromocion, valorPromocion });
+        }
+
+        // Enviar pedido al backend
+        fetch("/proyectoFinal/app/Functions/products/guardarPedido.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ productos, total })
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (result.success) {
+                Swal.fire("¡Pedido realizado!", "Tu pedido fue guardado correctamente.", "success");
+                saveCartToLocalStorage({}); // vaciar carrito
+            } else {
+                Swal.fire("Error", result.message, "error");
+            }
+        });
     });
+}
+
+// =====================
+// FUNCIONES AUXILIARES
+// =====================
+function getUserId() {
+    return localStorage.getItem("id_usuario") || null;
 }
