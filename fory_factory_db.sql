@@ -179,24 +179,33 @@ CREATE TABLE detalle_factura (
 -- ==========================================
 -- Mesas, reservas, pedidos y puntos
 -- ==========================================
-CREATE TABLE `mesa` (
+
+CREATE TABLE mesa (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `numero` INT NOT NULL UNIQUE,
-  `capacidad` INT NOT NULL,
-  `estado` VARCHAR(50) DEFAULT NULL
-);
+  `numero` INT NOT NULL UNIQUE,                -- número físico de la mesa en el restaurante
+  `capacidad` INT NOT NULL,                    -- cantidad máxima de personas
+  `estado` ENUM('disponible','reservada','ocupada','inactiva') DEFAULT 'disponible',
+  `descripcion` VARCHAR(255) DEFAULT NULL,     -- detalles extra (ej: "cerca de la barra")
+  `fecha_actualizacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+    ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `reservas` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `id_cliente` INT NOT NULL,
+  `id_usuario` INT NOT NULL,
   `id_mesa` INT NOT NULL,
   `fechaReserva` DATETIME NOT NULL,
-  `fechaActual` DATETIME DEFAULT current_timestamp(),
+  `fechaActual` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `numeroPersonas` INT NOT NULL,
-  `estado` VARCHAR(50) DEFAULT NULL,
-  FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_usuario`),
-  FOREIGN KEY (`id_mesa`) REFERENCES `mesa` (`id`)
-);
+  `estado` VARCHAR(50) DEFAULT 'pendiente',
+  `codigoReserva` VARCHAR(20) UNIQUE,
+  `nombreCliente` VARCHAR(255) NOT NULL,
+  `telefonoCliente` VARCHAR(50) NOT NULL,
+  `emailCliente` VARCHAR(255) NOT NULL,
+  `notas` TEXT DEFAULT NULL,
+  CONSTRAINT `fk_reserva_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario`(`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_reserva_mesa` FOREIGN KEY (`id_mesa`) REFERENCES `mesa`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `noshow` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -315,47 +324,49 @@ VALUES
 INSERT INTO producto_ingrediente (id_producto, id_ingrediente, cantidad) VALUES
 -- HOLY: doble carne vacuna, queso, tomate, cebolla, sal, pimienta
 (1, 5, 0.3), (1, 11, 0.1), (1, 3, 0.05), (1, 2, 0.05), (1, 8, 0.01), (1, 9, 0.005),
-
 -- ORIGINALS: carne vacuna, tomate, cebolla, sal
 (2, 5, 0.25), (2, 11, 0.1), (2, 2, 0.05), (2, 8, 0.01),
-
 -- DELI: carne vacuna, queso, cebolla, tomate
 (3, 5, 0.3), (3, 11, 0.1), (3, 2, 0.05), (3, 8, 0.01),
-
 -- ORIGINALS BEYOND: arroz, tomate, pimienta, aceite, sal
 (4, 6, 0.2), (4, 3, 0.1), (4, 11, 0.1), (4, 9, 0.005), (4, 7, 0.01),
-
 -- CHEESE BEYOND: arroz, queso, leche, aceite
 (5, 6, 0.2), (5, 11, 0.15), (5, 10, 0.1), (5, 7, 0.01),
-
 -- HOLY VEGAN: arroz, tomate, aceite, sal, pimienta
 (6, 6, 0.25), (6, 11, 0.1), (6, 7, 0.02), (6, 8, 0.01), (6, 9, 0.005),
-
 -- EPIC HOT: arroz, cebolla, pimienta, aceite, sal
 (7, 6, 0.25), (7, 2, 0.05), (7, 9, 0.005), (7, 7, 0.01), (7, 8, 0.01),
-
 -- Papas: papa + sal
 (8, 1, 0.3), (8, 8, 0.01),
-
 -- Papas + Cheddar: papa + queso + sal
 (9, 1, 0.3), (9, 11, 0.05), (9, 8, 0.01),
-
 -- Coca Cola 1L: (sin ingredientes compuestos, ejemplo simbólico)
 (10, 7, 0.01),
-
 -- Sprite 1L:
 (11, 7, 0.01),
-
 -- Helado: leche, azúcar (sal en lugar de azúcar por simplificación)
 (12, 10, 0.25), (12, 8, 0.01),
-
 -- Brownie: leche, sal, aceite
 (13, 10, 0.2), (13, 8, 0.01), (13, 7, 0.02),
-
 -- Combo 1: HOLY + Papas + Coca Cola
 (14, 5, 0.3), (14, 11, 0.1), (14, 3, 0.05), (14, 2, 0.05), (14, 1, 0.2), (14, 7, 0.01),
-
 -- Combo 2: doble burger + Papas + Sprite
 (15, 5, 0.4), (15, 11, 0.1), (15, 1, 0.2), (15, 7, 0.01);
 
+INSERT INTO mesa (numero, capacidad, estado, descripcion) VALUES
+(1, 2, 'disponible', 'Mesa pequeña junto a la ventana'),
+(2, 4, 'disponible', 'Mesa familiar'),
+(3, 6, 'disponible', 'Mesa grande'),
+(4, 4, 'disponible', 'Mesa junto al pasillo'),
+(5, 8, 'disponible', 'Mesa para grupos grandes'),
+(6, 2, 'disponible', 'Mesa íntima en esquina'),
+(7, 2, 'disponible', 'Mesa cerca de la barra'),
+(8, 4, 'disponible', 'Mesa central'),
+(9, 4, 'disponible', 'Mesa con vista al jardín'),
+(10, 6, 'disponible', 'Mesa grande cerca de la cocina'),
+(11, 6, 'disponible', 'Mesa junto a la ventana panorámica'),
+(12, 8, 'disponible', 'Mesa para eventos o grupos grandes'),
+(13, 2, 'disponible', 'Mesa pequeña detrás de la barra'),
+(14, 4, 'disponible', 'Mesa familiar al lado del pasillo'),
+(15, 6, 'disponible', 'Mesa grande en área VIP');
 COMMIT;
