@@ -229,7 +229,7 @@ function initDireccionForm() {
             if(data.success) {
                 
                 data.direcciones.forEach(dir => {
-                    if (dir.activo === 1){
+                    if (dir.activo === 1 || dir.activo === "1"){
                         valorPredeterminado = `<p class='valorPredeterminado activo'>Predeterminado</p>`;
                     }else{
                         valorPredeterminado = "";

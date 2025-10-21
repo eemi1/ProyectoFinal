@@ -29,4 +29,21 @@ main{
     height: auto;
     border: 1px solid var(--borderColor);
     border-radius: 5px;
+    padding: 10px 20px;
+}
+
+/*DIRECCION*/
+.headerAddress h3{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    font-size: var(--font-large);
+}
+.headerAddress p{
+    font-size: var(--font-medium);
+    color: var(--subtitleColor);
+}
+.headerAddress h3 i{
+    color: var(--primary-color);
 }
