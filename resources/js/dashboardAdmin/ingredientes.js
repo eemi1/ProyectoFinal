@@ -10,6 +10,7 @@ function loadIngredients(inputSearchIngredients = '') {
     .then(res => res.json())
     .then(data => {
         const tableBody = document.querySelector("#table-ingredients tbody");
+
         if (!data.success) {
             tableBody.innerHTML = `<tr><td colspan="6">${data.message}</td></tr>`;
             return;
@@ -19,16 +20,33 @@ function loadIngredients(inputSearchIngredients = '') {
 
         data.data.ingredientes.forEach(ingrediente => {
             const row = document.createElement("tr");
+
+            // Estado de los ingredientes
+            let estadoStock = '';
+                switch (ingrediente.estado_stock) {
+                    case 'agotado':
+                        estadoStock = '<span style="background-color:red;font-weight:bold;">Agotado</span>';
+                        stockActual = `<span style="color:darkred;font-weight:bold;">${ingrediente.stock_actual}</span>`;
+                        break;
+                    case 'bajo':
+                        estadoStock = '<span style="background-color:orange;">Bajo</span>';
+                        stockActual = `<span style="color:orange;font-weight:bold;">${ingrediente.stock_actual}</span>`;
+                        break;
+                    case 'normal':
+                        estadoStock = '<span style="background-color:green;">Normal</span>';
+                        break;
+            }
+
             row.innerHTML = `
                 <td id="ingredientsTable-td">
                     <strong>${ingrediente.nombre}</strong>
                     <span>${ingrediente.descripcion}</span>
                 </td>
                 <td>${ingrediente.unidad}</td>
-                <td>${ingrediente.stock_actual}</td>
+                <td>${ingrediente.stock_actual || stockActual}</td>
                 <td>${ingrediente.stock_minimo}</td>
                 <td>${ingrediente.proveedor}</td>
-                <td>off</td>
+                <td id="ingredientsTable-estadoStock">${estadoStock}</td>
                 <td>off</td>
             `;
             tableBody.appendChild(row);

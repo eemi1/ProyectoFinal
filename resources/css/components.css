@@ -198,6 +198,7 @@ transition: background-color 0.3s ease;
     height: 100%;
     gap: 20px;
     color: #c3c9cf;
+    text-align: center;
 }
 .icon-cart-empty{
   width: 100px;

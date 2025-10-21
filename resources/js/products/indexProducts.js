@@ -17,7 +17,7 @@ function loadAndRenderProducts() {
                 const card = document.createElement("div");
                 card.className = "product-card";
 
-                const imgSrc = `/proyectoFinal/uploads/${product.id}.jpg`;
+                const imgSrc = `/proyectoFinal/uploads/products/${product.id}.jpg`;
                 const svgCarrito = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
@@ -39,7 +39,7 @@ function loadAndRenderProducts() {
                 }
 
                 card.innerHTML = `
-                    <img src="${imgSrc}" alt="${product.nombre}" onerror="this.onerror=null;this.src='/proyectoFinal/uploads/imagen-default.png';">
+                    <img src="${imgSrc}" alt="${product.nombre}" onerror="this.onerror=null;this.src='/proyectoFinal/uploads/products/imagen-default.png';">
                     <div class="product-header">
                         <h3>${product.nombre} ${promocionHTML}</h3>
                         <p>${product.descripcion}</p>

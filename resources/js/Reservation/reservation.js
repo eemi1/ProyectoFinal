@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function minDate() {
     const inputDate = document.getElementById("date");
     const hoy = new Date();
-    const dia = String(hoy.getDate());
+    const dia = String(hoy.getDate() + 1).padStart(2, '0');
     const mes = String(hoy.getMonth() + 1).padStart(2, '0');
     const año = String(hoy.getFullYear()).padStart(2, '0');
     const fechaActual = (año+"-"+mes+"-"+dia);

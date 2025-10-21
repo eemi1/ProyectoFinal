@@ -84,6 +84,16 @@ function showIngredients($pdo) {
             ]);
             exit;
         }
+        // Calcular estado de los ingredientes
+        foreach ($ingredientes as &$ingrediente) {
+            if ($ingrediente['stock_actual'] <= 0) {
+                $ingrediente['estado_stock'] = 'agotado';
+            } elseif ($ingrediente['stock_actual'] <= $ingrediente['stock_minimo']) {
+                $ingrediente['estado_stock'] = 'bajo';
+            } else {
+                $ingrediente['estado_stock'] = 'normal';
+            }
+        }
 
         echo json_encode([
             "success" => true,
@@ -116,6 +126,8 @@ function ingredientsAmount($pdo) {
         exit;
     }
 }
+
+
 
 // RUTEO
 $accion = $_GET['action'] ?? null;

@@ -1059,6 +1059,12 @@ html, body {
     color: #64748b;
 }
 
+#ingredientsTable-estadoStock span{
+    padding: 5px 10px;
+    color: white;
+    border-radius: 20px;
+}
+
 #productsTable-td-container {
     display: flex;
     flex-direction: column;

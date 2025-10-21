@@ -1,0 +1,46 @@
+
+/*CONTENEDOR PADRE*/
+.pedidos{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    width: 62.5rem;
+    max-width: 62.5em;
+    border-radius: 5px;
+    border: 1px solid var(--borderColor);
+    height: auto;
+    min-height: 10rem;
+}
+/*CONTENEDOR ENCABEZADO*/
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 50%;
+    width: 100%;
+    max-width: 100%;
+    
+}
+.headerInfo, .headerPrice{
+    flex: 1
+}
+/*Header de productos*/
+.headerInfo{
+    display: flex;
+    flex-direction: row;
+    padding: 20px 20px;
+}
+.statusOrder{
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    padding: 5px 5px;
+    font-size: var(--font-small);
+    color: white;
+    background: red;
+}
+
+/*CONTENEDOR CONTENIDO*/
+.content{
+    height: 50%;
+}

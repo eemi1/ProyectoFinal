@@ -64,7 +64,7 @@ try {
                 "success" => true,
                 "message" => "Haz iniciado sesión correctamente.",
                 "nameRol" => $rol,
-                "id_rol" => $rol_usuario
+                "id_rol" => $rol_usuario,
 
             ]);
                 exit;

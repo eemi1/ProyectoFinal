@@ -63,13 +63,18 @@ CREATE TABLE `cliente` (
   CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
 );
 
-CREATE TABLE `direccion_cliente` (
-  `id_direccion` INT AUTO_INCREMENT PRIMARY KEY,
-  `id_cliente` INT NOT NULL,
-  `direccion` VARCHAR(255) NOT NULL,
-  `pisoApartamento` VARCHAR(100),
-  `indicaciones` VARCHAR(255),
-  FOREIGN KEY (`id_cliente`) REFERENCES `cliente`(`id_usuario`) ON DELETE CASCADE
+CREATE TABLE direccion_usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    alias VARCHAR(50),              -- Ej: "Casa", "Trabajo"
+    calle VARCHAR(100) NOT NULL,
+    numero VARCHAR(10),
+    ciudad VARCHAR(100),
+    departamento VARCHAR(100),
+    codigo_postal VARCHAR(10),
+    referencia VARCHAR(255),        -- Ej: "Frente a la plaza" o "Apartamento 302"
+    activo BOOLEAN DEFAULT 1,    -- Para marcar dirección actual o habilitada
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
 CREATE TABLE `cocinero` (
@@ -107,8 +112,8 @@ CREATE TABLE ingrediente (
     fecha_vencimiento DATE NULL,
     unidad ENUM('kg','g','l','ml','otro') NOT NULL,
     proveedor VARCHAR(255),
-    stock_actual INT NOT NULL DEFAULT 0,
-    stock_minimo INT NOT NULL DEFAULT 0
+    stock_actual FLOAT NOT NULL DEFAULT 0,
+    stock_minimo FLOAT NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ==========================================
@@ -158,10 +163,11 @@ CREATE TABLE `producto_ingrediente` (
 CREATE TABLE factura (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
+    codigo VARCHAR(20) UNIQUE,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2) NOT NULL,
     estado VARCHAR(50) DEFAULT 'pendiente',
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id_usuario)
+    FOREIGN KEY (id_cliente) REFERENCES usuario(id)
 );
 
 -- Detalle de cada producto en la factura
