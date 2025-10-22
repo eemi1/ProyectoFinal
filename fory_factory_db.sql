@@ -164,6 +164,7 @@ CREATE TABLE factura (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
     codigo VARCHAR(20) UNIQUE,
+    id_direccion INT NULL,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2) NOT NULL,
     estado VARCHAR(50) DEFAULT 'pendiente',
@@ -375,4 +376,13 @@ INSERT INTO mesa (numero, capacidad, estado, descripcion) VALUES
 (13, 2, 'disponible', 'Mesa pequeña detrás de la barra'),
 (14, 4, 'disponible', 'Mesa familiar al lado del pasillo'),
 (15, 6, 'disponible', 'Mesa grande en área VIP');
+
+INSERT INTO direccion_usuario (id_usuario, alias, calle, numero, ciudad, departamento, codigo_postal, referencia, activo
+) VALUES
+(2, '', 'Av. pepe Esq Rio Azul', 12, 'Canelones', 'Apartamento 2', 11300, 'Casa de rejas rojas', 0),
+(2, 'Casa', 'av papaeya', 1337, 'Montevideo', '', 11300, 'Casa de pared amarilla en la esquina', 0),
+(2, 'Trabajo', 'Av Giannatassio Esq Jose Rondou', 1337, 'Montevideo', 'Apartamento 2', 11300, 'Edificio ', 1),
+(2, 'Amor', 'Av centenario', 1337, 'Montevideo', '', 11300, 'Casa roja', 0),
+(2, '', 'test', 1234, 'test', 'test', 11300, 'test', 0);
+
 COMMIT;

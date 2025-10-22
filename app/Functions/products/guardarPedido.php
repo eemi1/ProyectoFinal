@@ -25,7 +25,7 @@ try {
     // Iniciar transacción
     $pdo->beginTransaction();
 
-    $codigo = 'PED-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(4)));
+    $codigo = 'PED-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(2)));
 
     // 1️⃣ Guardar factura
     $stmt = $pdo->prepare("INSERT INTO factura (id_cliente, fecha, total, codigo, id_direccion) VALUES (?, NOW(), ?, ?, ?)");

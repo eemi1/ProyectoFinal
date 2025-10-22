@@ -6,12 +6,12 @@
 
 html, body {
     height: 100%;
-    font-family:  sans-serif, serif;
+    font-family: 'Raleway' , sans-serif;
 }
 
 main{
     width: 100%;
-    height: auto;
+    height: 110vh;
     display: flex;
     padding: 110px 15px;
     gap: 20px;
@@ -26,7 +26,7 @@ main{
     border: 1px solid var(--borderColor);
     border-radius: 5px;
     margin-top: 47px;
-    padding: 10px 20px;
+    padding: 20px 20px;
 }
 .containerMain{
     display: flex;
@@ -34,12 +34,17 @@ main{
     gap: 10px;
 }
 .Address, .paymentMethod{
+    
     width: 100%;
     height: auto;
     border: 1px solid var(--borderColor);
     border-radius: 5px;
     padding: 10px 20px;
     flex: 1;
+}
+.Address{
+    /*Margen para dividir los contenedores "Addres, paymentMethod"*/
+    margin-bottom: 40px;
 }
 
 /*DIRECCION*/
@@ -223,8 +228,16 @@ main{
     height: 40px;
 }
 
+.contentSummary{
+    height: 50vh;
+    overflow: auto;
+}
 .footerSummary p{
     text-align: center;
-    color: var(--textMuted);
     margin-top: 10px;
+}
+
+.btnConfirm p{
+    margin-top: 20px;
+    color: var(--textMuted);
 }

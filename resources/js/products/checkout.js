@@ -88,12 +88,43 @@ function eventButton() {
 }
 
 function loadProducts() {
+    
     const cartData = JSON.parse(localStorage.getItem("cart")) || {}; // ← agrega esto
     const cartItemsContainer = document.querySelector(".contentSummary");
+    const cartTotalContainer = document.querySelector(".footerSummary");
     cartItemsContainer.innerHTML = "";
 
     let totalProductos = 0;
     let totalPrecio = 0;
+
+    // 🔹 Verificar si el carrito está vacío
+    if (Object.keys(cartData).length === 0) {
+        const svgCart = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-cart-empty" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> 
+            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/> 
+        </svg>`;
+
+        cartItemsContainer.innerHTML = `
+            <div class="container-cart-empty" style="margin: 30px 0px;">
+                ${svgCart}
+                <p class="cart-empty-title">No hay productos en el carrito</p>
+                <p class="cart-empty">Agrega productos para comenzar tu pedido</p>
+            </div>
+            <div class="total-summary">
+                <div class="subtotal">
+                    <span><p>Total de productos:</p> ${totalProductos}</span>
+                    <span><p>Envío:</p> $80</span>
+                </div>
+                <hr>
+            <div class="total">
+                <p><strong>Total:</strong> $${totalPrecio.toFixed(2)}</p>
+                </div>
+            </div>
+            
+            `;
+            
+        
+        return;
+    }
 
     for (const id in cartData) {
         const item = cartData[id];
@@ -108,6 +139,7 @@ function loadProducts() {
         else subTotal = cantidad * precio;
         totalProductos += cantidad;
         totalPrecio += subTotal;
+
         const productDiv = document.createElement("div");
         productDiv.className = "cart-item";
         productDiv.innerHTML = `
@@ -128,6 +160,7 @@ function loadProducts() {
     const totalDiv = document.createElement("div");
     totalDiv.className = "cart-total";
     totalDiv.innerHTML = `
+    
         <div class="total-summary">
             <div class="subtotal">
                 <span><p>Total de productos:</p> ${totalProductos}</span>
@@ -138,9 +171,13 @@ function loadProducts() {
                 <p><strong>Total:</strong> $${totalPrecio.toFixed(2)}</p>
             </div>
         </div>
+                        <div class="btnConfirm">
+                    <button type="submit" class="confirmOrder boton-primario" id="submit">Confirmar Pedido</button>
+                    <p>Al confirmar aceptas nuestros términos y condiciones</p>
+                </div>
         
     `;
-    cartItemsContainer.appendChild(totalDiv);
+    cartTotalContainer.appendChild(totalDiv);
 
 }
 

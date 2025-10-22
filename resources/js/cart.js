@@ -119,6 +119,7 @@ function renderCart(cartData) {
     document.querySelectorAll(".remove-from-cart").forEach(btn => {
         btn.addEventListener("click", function() {
             removeFromCart(btn.dataset.id);
+            loadProducts();
         });
     });
 }
