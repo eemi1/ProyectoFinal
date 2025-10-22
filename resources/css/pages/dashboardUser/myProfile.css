@@ -92,6 +92,7 @@ background-color: hsl(142, 69%, 98%);
     width: 100%;
     height: 100%;
     padding-bottom: 20px;
+    align-items: center;
     
 }
 
@@ -111,8 +112,7 @@ background-color: hsl(142, 69%, 98%);
 .accountDetails-photo-Title{
     width: 62.5em;
     height: 12rem;
-    margin: 20px;
-    margin-left: 24%;
+    margin: 20px 0px;
     box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.075);
     
 }
@@ -189,7 +189,6 @@ background-color: hsl(142, 69%, 98%);
     flex-direction: row;
     width: 62.5em;
     height: 35em;
-    margin-left: 24%;
     gap: 10px;
     justify-content: space-between;
     
@@ -504,7 +503,6 @@ border-radius: 5px;
 .allergiesAndfoodRestrictions{
     width: 62.5em;
     height: 30em;
-    margin-left: 24%;
     margin-top: 20px;
 }
 
@@ -557,7 +555,6 @@ border-radius: 5px;
 }
 .statistics{
     width: 62.5em;
-    margin-left: 24%;
     margin-top: 20px;
     height: 30em;
 }

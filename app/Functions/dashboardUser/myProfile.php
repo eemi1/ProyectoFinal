@@ -112,9 +112,11 @@ function getOrders($pdo) {
         // 3️⃣ Para cada factura, traer los productos
         foreach ($facturas as $factura) {
             $stmt = $pdo->prepare("
-                SELECT id_factura, id_producto, cantidad, precio_unitario
-                FROM detalle_factura
-                WHERE id_factura = :id_factura
+                SELECT df.id_factura, df.id_producto, df.cantidad, df.precio_unitario,
+                    p.nombre
+                FROM detalle_factura df
+                JOIN producto p ON df.id_producto = p.id
+                WHERE df.id_factura = :id_factura
             ");
             $stmt->execute([':id_factura' => $factura['id']]);
             $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
