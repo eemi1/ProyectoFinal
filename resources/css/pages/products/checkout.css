@@ -6,18 +6,27 @@
 
 html, body {
     height: 100%;
-    font-family: 'Raleway', sans-serif;
+    font-family:  sans-serif, serif;
 }
 
 main{
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
-}
-.containerMain, .containerAside{
-    height: 100%;
-    width: 50%;
     padding: 110px 15px;
+    gap: 20px;
+}
+.containerMain{
+    height: 100%;
+    width: 55%;
+}
+.containerAside{
+    height: 100%;
+    width: 30%;
+    border: 1px solid var(--borderColor);
+    border-radius: 5px;
+    margin-top: 47px;
+    padding: 10px 20px;
 }
 .containerMain{
     display: flex;
@@ -30,20 +39,192 @@ main{
     border: 1px solid var(--borderColor);
     border-radius: 5px;
     padding: 10px 20px;
+    flex: 1;
 }
 
 /*DIRECCION*/
-.headerAddress h3{
+.header{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.header h3{
     display: flex;
     flex-direction: row;
     gap: 5px;
+    font-family: 'Raleway', sans-serif;
+}
+.header h3{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
     align-items: center;
     font-size: var(--font-large);
 }
-.headerAddress p{
+.header p{
     font-size: var(--font-medium);
     color: var(--subtitleColor);
 }
-.headerAddress h3 i{
+.header h3 i{
     color: var(--primary-color);
+}
+.option{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid var(--borderColor);
+    border-radius: 5px;
+    padding: 10px;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.option input{
+    display: flex;
+    align-items: start;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0px;
+    overflow:auto;
+    height: auto;
+}
+#contentAddress{
+    height: 20rem;
+}
+.addressLabel{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.addressLabel h4{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.addressLabel h4 i{
+    color: var(--textMuted);
+}
+.addressLabel p{
+    color: var(--textMuted);
+}
+
+.valorPredeterminado.activo{
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 3px;
+    border-radius: 15px;
+    font-size: var(--font-small);
+}
+
+.valorPredeterminado.activo:hover{
+    background: var(--primary-color);
+}
+
+#references{
+    font-size: var(--font-small);
+    color: var(--subtitleColor);
+}
+
+.option.selected{
+    background-color: #CEF6D0;
+}
+.option:hover{
+    border-color: var(--primary-color);
+}
+.addAddress{
+    width: 100%;
+}
+
+.addAddress button{
+    width: 100%;
+    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: var(--font-medium);
+    cursor: pointer;
+    transition: all 0.3 ease;
+}
+
+.addAddress button:hover{
+    background-color: var(--primary-color-hover);
+}
+
+
+
+#productCheckout{
+    width: 75px;
+    height: 75px;
+}
+
+.cart-item-info span{
+    font-weight: bold;
+}
+
+.amoutProductCheckout{
+    color: var(--textMuted);
+}
+.subtotalProductCheckout{
+    color: #149c19c2;
+    font-weight: bold;
+}
+.total-summary{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.subtotal{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
+    
+}
+.subtotal span{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    
+}
+.subtotal span p{
+    color: var(--subtitleColor);
+}
+.total{
+    margin-top: 10px;
+
+}
+.total p{
+    font-size: var(--font-large);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #149c19c2;
+    font-weight: bold;
+}
+
+.total p strong{
+    color: black;
+    font-weight: 600;
+}
+.footerSummary{
+    padding: 10px;
+}
+
+.confirmOrder{
+    width: 100%;
+    height: 40px;
+}
+
+.footerSummary p{
+    text-align: center;
+    color: var(--textMuted);
+    margin-top: 10px;
 }

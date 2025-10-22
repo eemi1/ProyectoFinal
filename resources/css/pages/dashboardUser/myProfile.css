@@ -199,6 +199,7 @@ background-color: hsl(142, 69%, 98%);
     flex-direction: column;
     width: 49%;
     height: 100%;
+    padding: 10px 0;
 }
 .container-btn-edit{
     display: flex;

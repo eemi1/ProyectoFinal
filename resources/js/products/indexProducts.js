@@ -49,6 +49,8 @@ function loadAndRenderProducts() {
                             <span>${product.precio}</span>
                     </div>
                     <button class="agregarCarrito" 
+                            data-nombre="${product.nombre}"
+                            data-nombre="${product.descripcion}"
                             data-id="${product.id}" 
                             data-precio="${product.precio}" 
                             data-promocion="${product.promocion}" 

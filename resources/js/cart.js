@@ -146,7 +146,8 @@ function addProductsToCart() {
                         });
                         return;
                     }
-
+                    const nombre = btn.dataset.nombre;
+                    const descripcion = btn.dataset.descripcion;
                     const id = btn.dataset.id;
                     const precio = parseFloat(btn.dataset.precio);
                     const promocion = btn.dataset.promocion;
@@ -156,7 +157,7 @@ function addProductsToCart() {
                     let cart = getCartFromLocalStorage();
 
                     if (cart[id]) cart[id].cantidad++;
-                    else cart[id] = { cantidad: 1, precio, promocion, tipoPromocion, valorPromocion };
+                    else cart[id] = { cantidad: 1,nombre, descripcion, precio, promocion, tipoPromocion, valorPromocion };
 
                     saveCartToLocalStorage(cart);
 
@@ -184,53 +185,6 @@ function finalizarPedido() {
     btnFinalizar.addEventListener("click", (e) => {
         e.preventDefault();
         window.location.href = "/proyectoFinal/app/View/Products/checkout.html";
-        // const cart = getCartFromLocalStorage();
-
-        // if (!cart || Object.keys(cart).length === 0) {
-        //     Swal.fire("Carrito vacío", "Agrega productos antes de finalizar el pedido.", "warning");
-        //     return;
-        // }
-
-        // let productos = [];
-        // let total = 0;
-
-        // for (const id in cart) {
-        //     const item = cart[id];
-        //     const cantidad = item.cantidad ?? 0;
-        //     const precio = parseFloat(item.precio) ?? 0;
-        //     const tipoPromocion = item.tipoPromocion ?? 'none';
-        //     const valorPromocion = item.valorPromocion ?? 0;
-
-        //     let subTotal = 0;
-        //     if (tipoPromocion === '2x1') subTotal = (Math.floor(cantidad/2) + cantidad%2) * precio;
-        //     else if (tipoPromocion === 'porcentaje' && valorPromocion > 0) subTotal = cantidad * precio * (1 - valorPromocion);
-        //     else subTotal = cantidad * precio;
-
-        //     total += subTotal;
-
-        //     productos.push({ id_producto: id, cantidad, precio, tipoPromocion, valorPromocion });
-        // }
-
-        // // Enviar pedido al backend
-        // fetch("/proyectoFinal/app/Functions/products/guardarPedido.php", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     credentials: "same-origin",
-        //     body: JSON.stringify({ productos, total })
-        // })
-        // .then(res => res.json())
-        // .then(data => {
-        //     console.log(data); // opcional: ver en consola
-        
-        //     if (data.success) {
-        //         Swal.fire("¡Pedido realizado!", "Tu pedido fue guardado correctamente.", "success");
-        //         saveCartToLocalStorage({}); // vaciar carrito
-        //         renderCartFromLocalStorage(); // actualizar visualmente el carrito
-        //     } else {
-        //         Swal.fire("Error", data.message, "error");
-        //     }
-        // })
-        // .catch(err => console.error("Error en fetch:", err));
     });
     
 }

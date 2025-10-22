@@ -19,19 +19,65 @@
         <div class="containerMain">
             <h1>Checkout</h1>
             <div class="Address">
-                <div class="headerAddress">
+                <div class="header">
                     <h3><i class="fa-solid fa-location-dot"></i>Dirección entrega</h3>
                     <p>Selecciona donde quieres recibir tu pedido</p>
                 </div>
-                <div class="contentAddress" id="contentAddress">
-
+                <div class="content" id="contentAddress">
+                </div>
+                <div class="addAddress">
+                    <button type="button" class="admDireciones">Administrar direcciones</button>
                 </div>
             </div>
             <div class="paymentMethod">
+                <div class="header">
+                    <h3><i class="fa-solid fa-money-check-dollar"></i>Método de pago</h3>
+                    <p>Elige cómo prefieres pagar</p>
+                </div>
 
+                <div class="content" id="contentPayment">
+
+                    <div class="option method" id="containerPayment1">
+                        <input type="radio" id="efectivo" name="metodoPago" value="efectivo">
+                        <label for="efectivo" class="addressLabel">
+                            <h4><i class="fa-solid fa-money-bill-1-wave"></i>Efectivo</h4>
+                            <p>Paga al recibir tu pedido</p>
+                        </label>
+                    </div>
+                    
+                    <div class="option method" id="containerPayment2">
+                        <input type="radio" id="tarjeta" name="metodoPago" value="tarjeta">
+                        <label for="tarjeta" class="addressLabel">
+                            <h4><i class="fa-solid fa-credit-card"></i>Crédito/Débito</h4>
+                            <p>Visa, Mastercard, OCA</p>
+                        </label>
+                    </div>
+                    
+                    <div class="option method" id="containerPayment3">
+                        <input type="radio" id="transferencia" name="metodoPago" value="transferencia">
+                        <label for="transferencia" class="addressLabel">
+                            <h4><i class="fa-solid fa-building-columns"></i>Transferencia</h4>
+                            <p>BROU, Santander, Itaú</p>
+                        </label>
+                    </div>
+
+                </div>
             </div>
         </div> 
-        <div class="containerAside"></div>
+        <div class="containerAside">
+            <div class="summary">
+                <div class="headerSummary">
+                    <h2>Resumen del pedido</h2>
+                </div>
+                <div class="contentSummary">
+
+                </div>
+            </div>
+            <div class="footerSummary">
+                    <button type="submit" class="confirmOrder boton-primario" id="submit">Confirmar Pedido</button>
+                    <p>Al confirmar aceptas nuestros términos y condiciones</p>
+                </div>
+            </div>
     </main>
     <footer></footer>
     <script src="/proyectoFinal/resources/js/main.js"></script>
