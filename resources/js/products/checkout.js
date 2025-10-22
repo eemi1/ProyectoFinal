@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     eventButton();
     loadProducts();
     finalizarPedido();
+
 })
     
 function loadAddresses() {
@@ -19,6 +20,7 @@ function loadAddresses() {
             if(data.success) {
                 
                 data.direcciones.forEach(dir => {
+                    let valorPredeterminado = "";
                     if (dir.activo === 1 || dir.activo === "1"){
                         valorPredeterminado = `<p class='valorPredeterminado activo'>Predeterminado</p>`;
                     }else{
@@ -27,11 +29,11 @@ function loadAddresses() {
                     const div = document.createElement("div");
                     div.classList.add("option");
                     div.innerHTML = `
-                        <input type="radio" name="address" id="address${dir.id}">
+                        <input type="radio" class="options" name="address" id="address${dir.id}" data-id="${dir.id}">
                             <label for="address${dir.id}" class="addressLabel" data-id="${dir.id}">
                                 <h4>${dir.alias || "Sin alias"} ${valorPredeterminado}</h4>
                                 <p>${dir.calle || "Sin calle"}, ${dir.numero || "Sin número"}, ${dir.ciudad || " Sin ciudad"}, ${dir.departamento || "Sin Departamento"}, ${dir.codigo_postal || "Sin código postal"} </p>
-                                <p id=references">Referencias: ${dir.referencia || "Sin referencias"}</p>
+                                <p id="references">Referencias: ${dir.referencia || "Sin referencias"}</p>
                             </label>
                     `;
                     addressesContainer.appendChild(div);
@@ -139,6 +141,7 @@ function loadProducts() {
         
     `;
     cartItemsContainer.appendChild(totalDiv);
+
 }
 
 function finalizarPedido() {
@@ -147,13 +150,30 @@ function finalizarPedido() {
 
     btnFinalizar.addEventListener("click", (e) => {
         e.preventDefault();
+
+        // Verificaciones
         const cart = getCartFromLocalStorage();
         if (!cart || Object.keys(cart).length === 0) {
             Swal.fire("Carrito vacío", "Agrega productos antes de finalizar el pedido.", "warning");
             return;
         }
+
+        const direccionSeleccionada = document.querySelector('input[name="address"]:checked');
+        if (!direccionSeleccionada) {
+            Swal.fire("Falta la dirección", "Selecciona una dirección de entrega antes de continuar.", "warning");
+            return;
+        }
+
+        const metodoPagoSeleccionado = document.querySelector('input[name="paymentMethod"]:checked');
+        if (!metodoPagoSeleccionado) {
+            Swal.fire("Falta método de pago", "Selecciona un método de pago antes de finalizar el pedido.", "warning");
+            return;
+        }
+
         let productos = [];
         let total = 0;
+        const idDireccion = direccionSeleccionada.dataset.id;
+        const metodoPago = metodoPagoSeleccionado.value;
         for (const id in cart) {
             const item = cart[id];
             const cantidad = item.cantidad ?? 0;
@@ -166,13 +186,14 @@ function finalizarPedido() {
             else subTotal = cantidad * precio;
             total += subTotal;
             productos.push({ id_producto: id, cantidad, precio, tipoPromocion, valorPromocion });
+
         }
         // Enviar pedido al backend
         fetch("/proyectoFinal/app/Functions/products/guardarPedido.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "same-origin",
-            body: JSON.stringify({ productos, total })
+            body: JSON.stringify({ productos, total, id_direccion: idDireccion })
         })
         .then(res => res.json())
         .then(data => {
@@ -181,6 +202,8 @@ function finalizarPedido() {
                 Swal.fire("¡Pedido realizado!", "Tu pedido fue guardado correctamente.", "success");
                 saveCartToLocalStorage({}); // vaciar carrito
                 renderCartFromLocalStorage(); // actualizar visualmente el carrito
+                loadProducts();
+
             } else {
                 Swal.fire("Error", data.message, "error");
             }

@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
             viewCart();
             renderCartFromLocalStorage(); // Renderiza carrito desde localStorage
             addProductsToCart();
-            finalizarPedido();
+            checkout();
         })
         .catch(err => console.error(err));
 

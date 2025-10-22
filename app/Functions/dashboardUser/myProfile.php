@@ -82,83 +82,92 @@ function getOrders($pdo) {
         exit;
     }
 
-try {
-    // 1. Obtener ID del usuario
-    $stmt = $pdo->prepare("SELECT id FROM usuario WHERE mail = :email");
-    $stmt->execute([':email' => $_SESSION['email']]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    try {
+        // 1️⃣ Obtener ID del usuario
+        $stmt = $pdo->prepare("SELECT id FROM usuario WHERE mail = :email");
+        $stmt->execute([':email' => $_SESSION['email']]);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$usuario) {
-        echo json_encode(["success" => false, "message" => "Usuario no encontrado"]);
-        exit;
-    }
-
-    $id_usuario = $usuario['id'];
-
-    // 2. Traer todas las facturas del usuario
-    $stmt = $pdo->prepare("SELECT id, fecha, total, estado, codigo FROM factura WHERE id_cliente = :id_cliente ORDER BY fecha DESC");
-    $stmt->execute([':id_cliente' => $id_usuario]);
-    $facturas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    $pedidos = [];
-
-    // 3. Para cada factura, traer los productos
-    foreach ($facturas as $factura) {
-        $stmt = $pdo->prepare("
-            SELECT id_factura, id_producto, cantidad, precio_unitario
-            FROM detalle_factura
-            WHERE id_factura = :id_factura
-        ");
-        $stmt->execute([':id_factura' => $factura['id']]);
-        $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Calcular subtotal de cada producto
-        foreach ($productos as &$prod) {
-            $prod['subtotal'] = $prod['cantidad'] * $prod['precio_unitario'];
-
+        if (!$usuario) {
+            echo json_encode(["success" => false, "message" => "Usuario no encontrado"]);
+            exit;
         }
 
-        $fecha = new DateTime($factura['fecha']);
-            
-        $fmt = new IntlDateFormatter(
-            'es_ES', // idioma español
-            IntlDateFormatter::LONG, // formato de fecha largo ("20 de octubre de 2025")
-            IntlDateFormatter::NONE  // sin hora
-        );
-        $fechaFormateada = $fmt->format($fecha);
+        $id_usuario = $usuario['id'];
 
-        // Guardar factura como pedido
-        $pedidos[] = [
-            "id_pedido" => $factura['id'],
-            "fecha" => $factura['fecha'],
-            "total" => $factura['total'],
-            "estado" => $factura['estado'],
-            "codigo" => $factura['codigo'],
-            "fechaFormateada" => $fechaFormateada,
-            "productos" => $productos
-        ];
+        // 2️⃣ Traer todas las facturas con su dirección
+        $stmt = $pdo->prepare("
+            SELECT f.id, f.fecha, f.total, f.estado, f.codigo,
+                   d.id AS id_direccion, d.calle, d.numero, d.ciudad, d.departamento, d.codigo_postal, d.referencia
+            FROM factura f
+            LEFT JOIN direccion_usuario d ON f.id_direccion = d.id
+            WHERE f.id_cliente = :id_cliente
+            ORDER BY f.fecha DESC
+        ");
+        $stmt->execute([':id_cliente' => $id_usuario]);
+        $facturas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $pedidos = [];
 
+        // 3️⃣ Para cada factura, traer los productos
+        foreach ($facturas as $factura) {
+            $stmt = $pdo->prepare("
+                SELECT id_factura, id_producto, cantidad, precio_unitario
+                FROM detalle_factura
+                WHERE id_factura = :id_factura
+            ");
+            $stmt->execute([':id_factura' => $factura['id']]);
+            $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($productos as &$prod) {
+                $prod['subtotal'] = $prod['cantidad'] * $prod['precio_unitario'];
+            }
+
+            $fecha = new DateTime($factura['fecha']);
+            $fmt = new IntlDateFormatter(
+                'es_ES',
+                IntlDateFormatter::LONG,
+                IntlDateFormatter::NONE
+            );
+            $fechaFormateada = $fmt->format($fecha);
+
+            // Guardar factura como pedido
+            $pedidos[] = [
+                "id_pedido" => $factura['id'],
+                "fecha" => $factura['fecha'],
+                "total" => $factura['total'],
+                "estado" => $factura['estado'],
+                "codigo" => $factura['codigo'],
+                "direccion" => [
+                    "id_direccion" => $factura['id_direccion'],
+                    "calle" => $factura['calle'],
+                    "numero" => $factura['numero'],
+                    "ciudad" => $factura['ciudad'],
+                    "departamento" => $factura['departamento'],
+                    "codigo_postal" => $factura['codigo_postal'],
+                    "referencia" => $factura['referencia']
+                ],
+                "fechaFormateada" => $fechaFormateada,
+                "productos" => $productos
+            ];
+        }
+
+        echo json_encode([
+            "success" => !empty($pedidos),
+            "pedidos" => $pedidos
+        ]);
+        exit;
+
+    } catch (PDOException $e) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al obtener pedidos: " . $e->getMessage()
+        ]);
+        exit;
     }
-
-    echo json_encode([
-        "success" => !empty($pedidos),
-        "pedidos" => $pedidos
-    ]);
-    exit;
-
-} catch (PDOException $e) {
-    echo json_encode([
-        "success" => false,
-        "message" => "Error al obtener pedidos: " . $e->getMessage()
-    ]);
-    exit;
 }
 
-}
-function saveAddress($pdo){
-    
-}
+
 
 
 // RUTEO
@@ -173,8 +182,6 @@ switch ($accion) {
         break;
     case 'getOrders':
         getOrders($pdo);
-    case 'saveAddress':
-        saveAddress($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);

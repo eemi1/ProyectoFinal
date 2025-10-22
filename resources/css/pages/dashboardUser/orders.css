@@ -29,6 +29,7 @@
     display: flex;
     flex-direction: row;
     padding: 20px 20px;
+    gap: 10px;
 }
 .statusOrder{
     border: none;
@@ -43,4 +44,15 @@
 /*CONTENEDOR CONTENIDO*/
 .content{
     height: 50%;
+}
+/*Icono*/
+.productStatus{
+    color: var(--primary-color);
+}
+
+/*Titulo order*/
+.productInfo span{
+    display:flex;
+    gap:10px;
+    font-size: var(--font-medium);
 }

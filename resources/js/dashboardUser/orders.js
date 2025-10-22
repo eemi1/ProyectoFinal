@@ -5,7 +5,7 @@ function getOrders() {
     })
     .then(res => res.json())
     .then(data => {
-        // console.log(data);
+        console.log(data);
         const pedidosSection = document.getElementById('pedidos');
 
         if (!data.success || data.pedidos.length === 0) {
@@ -31,18 +31,18 @@ function getOrders() {
             switch(estadoPedido) {
                 case "pendiente":
                     console.log(estadoPedido);
-                    svgEstado = `<i class="fa-solid fa-clock"></i>`;
+                    svgEstado = `<i class="fa-solid fa-clock fa-lg"></i>`;
                     estado = `<span class="statusOrder pendiente">Pendiente</span>`;
 
                     break;
                 case "entregado":
                     console.log(estadoPedido);
-                    svgEstado = `<i class="fa-solid fa-check"></i>`;
+                    svgEstado = `<i class="fa-solid fa-check fa-lg"></i>`;
                     estado = `<span class="statusOrder entregado">Entregado</span>`;
                     break;
                 case "cancelado":
                     console.log(estadoPedido);
-                    svgEstado = `<i class="fa-solid fa-exclamation"></i>`
+                    svgEstado = `<i class="fa-solid fa-exclamation fa-lg"></i>`
                     estado = `<span class="statusOrder cancelado">Cancelado</span>`;
                     break;
                 default:
@@ -57,8 +57,9 @@ function getOrders() {
                                 ${svgEstado}
                             </div>
                             <div class="productInfo">
-                                <span>${pedido.codigo} ${estado}</span>
+                                <span>Pedido: #${pedido.codigo} ${estado}</span>
                                 <p>${pedido.fechaFormateada}</p>
+                                <p>${pedido.direccion.calle}</p>
                             </div>
                         </div>
                         <div class="headerPrice">

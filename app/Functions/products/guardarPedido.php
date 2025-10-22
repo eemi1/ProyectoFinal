@@ -14,6 +14,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 $id_usuario = $_SESSION['id_usuario'];
 $productos = $data['productos'] ?? [];
 $total = $data['total'] ?? 0;
+$id_direccion = $data['id_direccion'] ?? null;
 
 if (empty($productos)) {
     echo json_encode(['success' => false, 'message' => 'No hay productos en el pedido']);
@@ -27,8 +28,8 @@ try {
     $codigo = 'PED-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(4)));
 
     // 1️⃣ Guardar factura
-    $stmt = $pdo->prepare("INSERT INTO factura (id_cliente, fecha, total, codigo) VALUES (?, NOW(), ?, ?)");
-    $stmt->execute([$id_usuario, $total, $codigo]);
+    $stmt = $pdo->prepare("INSERT INTO factura (id_cliente, fecha, total, codigo, id_direccion) VALUES (?, NOW(), ?, ?, ?)");
+    $stmt->execute([$id_usuario, $total, $codigo, $id_direccion]);
     $id_factura = $pdo->lastInsertId();
 
     // 2️⃣ Guardar detalle de productos

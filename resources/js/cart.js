@@ -178,7 +178,7 @@ function addProductsToCart() {
 // =====================
 // FINALIZAR PEDIDO
 // =====================
-function finalizarPedido() {
+function checkout() {
     const btnFinalizar = document.getElementById("checkout-btn");
     if (!btnFinalizar) return;
 
