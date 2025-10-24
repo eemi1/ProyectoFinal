@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     abrirModalDireccion();
     currentDateUser();
     getOrders();
+    getReservations();
     initDireccionForm();
 
 });

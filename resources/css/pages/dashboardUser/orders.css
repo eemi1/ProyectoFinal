@@ -57,11 +57,12 @@ body, html{height: 100%; font-family: 'Raleway', sans-serif;}
     gap:10px;
     font-size: 20px;
     align-items: center;
-    font-family: 'Sans serif', 'Raleway';
+    font-family: 'Sans serif', Arial;
 }
 .productInfo p{
     color: var(--textMuted);
     margin-left: 5px;
+    font-size: var(--font-mediumSmall);
 }
 
 /*Icono*/

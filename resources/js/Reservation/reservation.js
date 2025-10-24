@@ -116,17 +116,17 @@ function addReservation() {
                     })
                     .then(res => res.json())
                     .then(data => {
+                        console.log(data);
                         if (data.success) {
-                            // Aquí llamamos al modal pasando los datos que nos devuelve el servidor
                             showReservationModal({
-                                codigo: data.codigo,          // Código de confirmación generado en PHP
-                                fecha: form.date.value,       // Fecha de la reserva
-                                hora: form.time.value,        // Hora
-                                personas: form.numberPeople.value, // Cantidad de personas
-                                mesa: data.mesa,        // Número de la mesa reservada (de PHP)
-                                nombre: data.nombre,          // Nombre del usuario
-                                telefono: data.telefono,      // Teléfono
-                                email: data.email             // Email
+                                codigo: data.codigo,
+                                fecha: form.date.value, 
+                                hora: form.time.value,
+                                personas: form.numberPeople.value,
+                                mesa: data.mesa, 
+                                nombre: data.nombre,
+                                telefono: data.telefono,
+                                email: data.email
                             });
                         
                             form.reset();

@@ -126,12 +126,7 @@ function getOrders($pdo) {
             }
 
             $fecha = new DateTime($factura['fecha']);
-            $fmt = new IntlDateFormatter(
-                'es_ES',
-                IntlDateFormatter::LONG,
-                IntlDateFormatter::NONE
-            );
-            $fechaFormateada = $fmt->format($fecha);
+            $fechaFormateada = $fecha->format('d \d\e F \d\e Y');
 
             // Guardar factura como pedido
             $pedidos[] = [
@@ -167,9 +162,51 @@ function getOrders($pdo) {
         ]);
         exit;
     }
+};
+
+function getReservations($pdo) {
+    if (!isset($_SESSION['email'])) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Usuario no autenticado"
+        ]);
+        exit;
+    }
+
+    try {
+        $stmt = $pdo->prepare("SELECT id FROM usuario WHERE mail = :email");
+        $stmt->execute([':email' => $_SESSION['email']]);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$usuario) {
+            echo json_encode(["success" => false, "message" => "Usuario no encontrado"]);
+            exit;
+        }
+
+        $id_usuario = $usuario['id'];
+
+        // 2️⃣ Traer todas las reservas
+        $stmt = $pdo->prepare("
+            select * FROM reservas where id_usuario = :id_usuario
+            ORDER BY fechaReserva DESC
+        ");
+        $stmt->execute([':id_usuario' => $id_usuario]);
+        $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);   
+
+        echo json_encode([
+            "success" => !empty($reservas),
+            "reservas" => $reservas
+        ]);
+        exit;
+
+    } catch (PDOException $e) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al obtener las reservas: " . $e->getMessage()
+        ]);
+        exit;
+    }
 }
-
-
 
 
 // RUTEO
@@ -184,6 +221,9 @@ switch ($accion) {
         break;
     case 'getOrders':
         getOrders($pdo);
+        break;
+    case 'getReservations':
+        getReservations($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);

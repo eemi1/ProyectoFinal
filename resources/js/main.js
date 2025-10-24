@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
             renderCartFromLocalStorage(); // Renderiza carrito desde localStorage
             addProductsToCart();
             checkout();
+            listenerScroll();
         })
         .catch(err => console.error(err));
 
@@ -56,6 +57,33 @@ function navLoggeado() {
             }
         })
         .catch(error => console.error("Error al verificar sesión:", error));
+}
+
+function listenerScroll() {
+    let scrollPos = 0;
+    const nav = document.querySelector('nav');
+    const foryFactoryTitle = document.querySelector('.navbar-title');
+    if (!nav) return;
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+
+        if (currentScroll > scrollPos) {
+            nav.style.height = '60px'
+            nav.style.transition = 'height 0.3s ease';
+            foryFactoryTitle.style.visibility = 'hidden';
+            foryFactoryTitle.style.transition = 'visibility 0.1s ease';
+        } else {
+            console.log('¡El usuario ha subido!');
+            nav.style.height = '80px'
+            nav.style.transition = 'height 0.3s ease';
+            foryFactoryTitle.style.visibility = 'visible';
+            foryFactoryTitle.style.transition = 'visibility 0.1s ease';
+
+        }
+
+        scrollPos = currentScroll;
+    });
 }
 
 function menuProfile() {

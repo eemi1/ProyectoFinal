@@ -29,7 +29,7 @@ main {
 /*==================================*/
 .containerForm, .containerReservations {
     width: 50%;
-    height: 100%;
+    height: auto;
     display: flex;
     padding: 20px 30px;
 }
@@ -136,7 +136,22 @@ main {
     width: 100%;
     min-height: 15rem;
     height: auto;
-    background-color: var(--borderColor);
+    border: 1px solid var(--borderColor);
+}
+.mesaDefaultMessage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    color: #a7a7a7;
+    padding: 5% 0;
+}
+#alertaNoMesas{
+    width: 50px;
+    height: 50px;
+    fill: #a7a7a7;
 }
 /* contenedor grid */
 .mesa-grid {
