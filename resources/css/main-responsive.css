@@ -15,7 +15,7 @@
 @media (min-height:600px) and (max-height: 858px){
 .page1-overlay{padding-top: 12rem;}
 .page2-products{font-size: var(--font-Large);}
-.page2-products-images{height: 50%;}
+.page2-products-images{height: 15rem;}
 .page2-products-descriptions{ font-size: var(--font-mediumSmall);}
 .page2-products-buttons{
     margin-bottom: 0px; 

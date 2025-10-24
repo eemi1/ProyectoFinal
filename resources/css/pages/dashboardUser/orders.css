@@ -1,4 +1,10 @@
 
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+body, html{height: 100%; font-family: 'Raleway', sans-serif;}
 /*CONTENEDOR PADRE*/
 .pedidos{
     width: 100px;
@@ -64,6 +70,11 @@
     align-content: center;
 
 }
+.productInfo{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
 .statusOrder.pendiente{
     font-size: var(--font-mediumSmall);
 }
@@ -74,7 +85,7 @@
   color: #149c19c2;
 }
 hr{
-    margin: 5px 10px;
+    margin: 15px 10px;
     color: var(--borderColor);
 }
 
@@ -82,4 +93,13 @@ hr{
     color: var(--textMuted);
     font-weight: bold;
     margin: 5px 5px;
+}
+
+.productoItem{
+    display: flex;
+    justify-content:space-between;
+    margin: 10px 10px;
+    font-weight: 100;
+    color: black;
+    font-size: var(--font-mediumSmall);
 }

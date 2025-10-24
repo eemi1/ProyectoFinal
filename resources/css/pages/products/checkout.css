@@ -94,7 +94,7 @@ main{
     flex-direction: column;
     gap: 10px;
     margin: 20px 0px;
-    overflow:auto;
+    overflow:scroll;
     height: auto;
 }
 #contentAddress{
@@ -203,6 +203,7 @@ main{
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: end;
     
 }
 .subtotal span p{

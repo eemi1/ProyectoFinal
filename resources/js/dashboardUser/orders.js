@@ -46,16 +46,12 @@ data.pedidos.forEach(pedido => {
             break;
     }
 
-    // Generar HTML de productos sin usar map/join
     let productosHTML = "";
     pedido.productos.forEach(prod => {
         productosHTML += `
             <div class="productoItem">
-                <img src="/proyectoFinal/img/${prod.imagen}" alt="${prod.nombre}" width="50">
-                <span>${prod.nombre}</span>
-                <span>Cantidad: ${prod.cantidad}</span>
-                <span>Precio unitario: $${prod.precio_unitario}</span>
-                <span>Subtotal: $${prod.subtotal}</span>
+                <p>${prod.cantidad}x ${prod.nombre}</p>
+                <p style="font-weight:bold;">$${prod.subtotal}</p>
             </div>
         `;
     });
