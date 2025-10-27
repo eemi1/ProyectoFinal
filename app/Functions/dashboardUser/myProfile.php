@@ -174,6 +174,7 @@ function getReservations($pdo) {
     }
 
     try {
+        // Obtener ID del usuario logueado
         $stmt = $pdo->prepare("SELECT id FROM usuario WHERE mail = :email");
         $stmt->execute([':email' => $_SESSION['email']]);
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -185,16 +186,36 @@ function getReservations($pdo) {
 
         $id_usuario = $usuario['id'];
 
-        // 2️⃣ Traer todas las reservas
+        // Obtener reservas del usuario
         $stmt = $pdo->prepare("
-            select * FROM reservas where id_usuario = :id_usuario
+            SELECT * 
+            FROM reservas 
+            WHERE id_usuario = :id_usuario
             ORDER BY fechaReserva DESC
         ");
         $stmt->execute([':id_usuario' => $id_usuario]);
-        $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);   
+        $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$reservas) {
+            echo json_encode([
+                "success" => false,
+                "reservas" => [],
+                "message" => "No se encontraron reservas."
+            ]);
+            exit;
+        }
+
+        foreach ($reservas as &$reserva) {
+            if (!empty($reserva['fechaReserva'])) {
+                $fecha = new DateTime($reserva['fechaReserva']);
+                $reserva['fechaFormateada'] = $fecha->format('d \d\e F \d\e Y');
+            } else {
+                $reserva['fechaFormateada'] = null;
+            }
+        }
 
         echo json_encode([
-            "success" => !empty($reservas),
+            "success" => true,
             "reservas" => $reservas
         ]);
         exit;
@@ -208,6 +229,61 @@ function getReservations($pdo) {
     }
 }
 
+function cancelReservation($pdo) {
+    if (!isset($_SESSION['email'])) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Usuario no autenticado"
+        ]);
+        exit;
+    }
+
+    $data = json_decode(file_get_contents("php://input"), true);
+    $codigoReserva = $data['codigoReserva'] ?? null;
+
+    if (!$codigoReserva) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Código de reserva no válido"
+        ]);
+        exit;
+    }
+
+    try {
+        // Obtener ID del usuario logueado
+        $stmt = $pdo->prepare("SELECT id FROM usuario WHERE mail = :email");
+        $stmt->execute([':email' => $_SESSION['email']]);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$usuario) {
+            echo json_encode(["success" => false, "message" => "Usuario no encontrado"]);
+            exit;
+        }
+
+        $id_usuario = $usuario['id'];
+
+        // Cancelar la reserva
+        $stmt = $pdo->prepare("
+            UPDATE reservas
+            SET estado = 'Cancelado'
+            WHERE codigoReserva = :codigoReserva AND id_usuario = :id_usuario
+        ");
+        $stmt->execute([':codigoReserva' => $codigoReserva, ':id_usuario' => $id_usuario]);
+
+        echo json_encode([
+            "success" => true,
+            "message" => "Reserva cancelada exitosamente"
+        ]);
+        exit;
+
+    } catch (PDOException $e) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al cancelar la reserva: " . $e->getMessage()
+        ]);
+        exit;
+    }
+}
 
 // RUTEO
 $accion = $_GET['action'] ?? null;
@@ -224,6 +300,9 @@ switch ($accion) {
         break;
     case 'getReservations':
         getReservations($pdo);
+        break;
+    case 'cancelReservation':
+        cancelReservation($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);

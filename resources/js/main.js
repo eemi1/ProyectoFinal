@@ -58,28 +58,30 @@ function navLoggeado() {
         })
         .catch(error => console.error("Error al verificar sesión:", error));
 }
-
+// =====================
+// ANIMACIÓN AL BAJAR NAV
+// =====================
 function listenerScroll() {
     let scrollPos = 0;
     const nav = document.querySelector('nav');
     const foryFactoryTitle = document.querySelector('.navbar-title');
-    if (!nav) return;
+    if (!nav || !foryFactoryTitle) return;
+
+    nav.style.transition = 'height 0.3s ease';
+    foryFactoryTitle.style.transition = 'opacity 0.3s ease';
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
 
         if (currentScroll > scrollPos) {
-            nav.style.height = '60px'
-            nav.style.transition = 'height 0.3s ease';
-            foryFactoryTitle.style.visibility = 'hidden';
-            foryFactoryTitle.style.transition = 'visibility 0.1s ease';
+            // Scrollea hacia abajo
+            nav.style.height = '60px';
+            foryFactoryTitle.style.opacity = '0';
         } else {
+            // Scrollea hacia arriba
             console.log('¡El usuario ha subido!');
-            nav.style.height = '80px'
-            nav.style.transition = 'height 0.3s ease';
-            foryFactoryTitle.style.visibility = 'visible';
-            foryFactoryTitle.style.transition = 'visibility 0.1s ease';
-
+            nav.style.height = '80px';
+            foryFactoryTitle.style.opacity = '1';
         }
 
         scrollPos = currentScroll;

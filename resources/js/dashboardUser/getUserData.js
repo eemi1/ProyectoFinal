@@ -115,24 +115,120 @@ function getReservations() {
         }
 
         if (data.success) {
+            let estado = '';
             reservasSection.innerHTML = '';
             data.reservas.forEach(reserva => {
-                const reservaDiv = document.createElement('div');
-                reservaDiv.classList.add('reservaItem');
-                reservaDiv.innerHTML = `
-                    <div class="reservaHeader">
-                        <h3>Reserva #${reserva.codigoReserva}</h3>
-                        <p>📅 ${reserva.fechaFormateada}</p>
+                let estado = '';
+                switch (reserva.estado) {
+                    case "Pendiente":
+                        estado = `<span class="estadoPendiente">${reserva.estado}</span>`;
+                        break;
+                    case "Confirmado":
+                        estado = `<span class="estadoConfirmado">${reserva.estado}</span>`;
+                        break;
+                    case "Cancelado":
+                        estado = `<span class="estadoCancelado">${reserva.estado}</span>`;
+                        break;
+                    default:
+                        estado = `<span>${reserva.estado}</span>`;
+                }
+            
+            // === Calcular diferencia de tiempo ===
+            const horaReserva = new Date(`${reserva.fechaReserva}T${reserva.hora}`);
+            const horaActual = new Date();
+            const diferenciaHoras = (horaReserva - horaActual) / (1000 * 60 * 60);
+
+            const puedeCancelar = diferenciaHoras > 2;
+
+            // Texto botones
+            let botonDeshabilitado;
+            let textoBoton;
+
+            if (!puedeCancelar || reserva.estado === 'Cancelado') {
+                botonDeshabilitado = 'disabled';
+                textoBoton = 'Cancelación no disponible';
+            } else {
+                botonDeshabilitado = '';
+                textoBoton = 'Cancelar reserva';
+            }
+            
+            const reservaDiv = document.createElement('div');
+            reservaDiv.classList.add('reservaItem');
+            reservaDiv.innerHTML = `
+                <div class="reservaHeader">
+                    <div class="reservaHeaderTitle">
+                        <h3><i class="fa-regular fa-calendar"></i><span>Reserva</span> #${reserva.codigoReserva}</h3>
+                        <p>${reserva.fechaFormateada}</p>
                     </div>
-                    <div class="reservaDetails">
-                        <p><strong>Fecha de Reserva:</strong> ${reserva.fechaReserva}</p>
-                        <p><strong>Número de Personas:</strong> ${reserva.numeroPersonas}</p>
-                        <p><strong>Mesa:</strong> ${reserva.id_mesa}</p>
-                        <p><strong>Estado:</strong> ${reserva.estado}</p>
+                    <div class="reservaHeaderEstado">${estado}</div>
+                </div>
+                <div class="reservaDetails">
+                    <p><strong><i class="fa-regular fa-clock"></i>Hora:</strong> ${reserva.hora}</p>
+                    <p><strong><i class="fa-solid fa-phone"></i>Teléfono:</strong> ${reserva.telefonoCliente}</p>
+                    <p><strong><i class="fa-regular fa-user"></i>Número de Personas:</strong> ${reserva.numeroPersonas}</p>
+                    <p><strong><i class="fa-regular fa-envelope"></i>Email:</strong> ${reserva.emailCliente}</p>
+                    <p><strong><i class="fa-solid fa-location-dot"></i>Número de mesa:</strong> ${reserva.id_mesa}</p>
+                    <div>
+                        <p><strong><i class="fa-regular fa-note-sticky"></i>Notas</strong></p>
+                        <small>${reserva.notas || "Sin nota"}</small>
                     </div>
-                `;
+                </div>
+                <div class="reservaButton">
+                    <button class="btnCancelarReserva" 
+                        data-codigo="${reserva.codigoReserva}" ${botonDeshabilitado}>
+                        ${textoBoton}
+                    </button>
+                </div>
+            `;
+            
                 reservasSection.appendChild(reservaDiv);
             });
-        }    })
+            cancelarReserva();
+        }    
+    })
     .catch(err => console.error('Error al obtener reservas:', err));
+}
+
+function cancelarReserva() {
+    const btnCancelar = document.querySelectorAll('.btnCancelarReserva');
+    btnCancelar.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            Swal.fire({
+                title: '¿Estás seguro de cancelar esta reserva?',
+                text: "Esta acción no se puede deshacer.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, cancelar reserva',
+                cancelButtonText: 'No, mantener reserva'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const codigoReserva = e.target.dataset.codigo;
+                    // console.log(`Cancelar reserva: ${codigoReserva}`);
+                    fetch(`/proyectoFinal/app/Functions/dashboardUser/myProfile.php?action=cancelReservation`, {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ codigoReserva: codigoReserva })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.success) { 
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Reserva cancelada',
+                                text: 'La reserva ha sido cancelada exitosamente.'
+                            });
+                            getReservations()
+                        } else {
+                            console.error('Error al cancelar la reserva:', data.message);
+                        }
+                    })
+                    .catch(err => console.error('Error al cancelar la reserva:', err));
+                }
+            });
+        });
+    });
 }

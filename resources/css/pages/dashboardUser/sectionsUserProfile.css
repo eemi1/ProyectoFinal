@@ -1,0 +1,232 @@
+
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+body, html{height: 100%; font-family: sans-serif, 'Raleway';}
+
+/*=====================*/
+/*===== PEDIDOS =======*/
+/*=====================*/
+
+/*CONTENEDOR PADRE*/
+.pedidos{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    width: 62.5rem;
+    max-width: 62.5em;
+    border-radius: 5px;
+    border: 1px solid var(--borderColor);
+    height: auto;
+    min-height: 10rem;
+    font-family: Sans-serif, 'Raleway';
+    padding: 20px 20px;
+}
+/*CONTENEDOR ENCABEZADO*/
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: auto;
+    width: 100%;
+    max-width: 100%;
+    
+}
+
+/*Header de productos*/
+.headerInfo{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.statusOrder{
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    padding: 5px 5px;
+    font-size: var(--font-small);
+    color: white;
+    background: red;
+}
+
+/*CONTENEDOR CONTENIDO*/
+.content{
+    height: 50%;
+}
+
+/*Titulo order*/
+.productInfo span{
+    display:flex;
+    gap:10px;
+    font-size: 20px;
+    align-items: center;
+    font-family: 'Sans serif', Arial;
+}
+.productInfo p{
+    color: var(--textMuted);
+    margin-left: 5px;
+    font-size: var(--font-mediumSmall);
+}
+
+/*Icono*/
+.productStatus{
+    color: var(--primary-color);
+    align-content: center;
+
+}
+.productInfo{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+.statusOrder.pendiente{
+    font-size: var(--font-mediumSmall);
+}
+
+.headerPrice span{
+    font-weight: bold;
+  font-size: var(--font-large);
+  color: #149c19c2;
+}
+hr{
+    margin: 15px 10px;
+    color: var(--borderColor);
+}
+
+.content span{
+    color: var(--textMuted);
+    font-weight: bold;
+    margin: 5px 5px;
+}
+
+.productoItem{
+    display: flex;
+    justify-content:space-between;
+    margin: 10px 10px;
+    font-weight: 100;
+    color: black;
+    font-size: var(--font-mediumSmall);
+}
+
+/*======================*/
+/*===== RESERVAS =======*/
+/*======================*/
+#reservas{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.reservaItem{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--borderColor);
+    background-color: white;
+    min-height: 10rem;
+    width: 62.5rem;
+    max-width: 62.5em;
+    border-radius: 5px;
+    height: auto;
+}
+
+
+.reservaHeader{
+    padding: 10px;
+    border-bottom: 1px solid var(--borderColor);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.reservaHeaderEstado{
+    display: flex;
+}
+.reservaHeaderEstado span{
+    border: 1px solid var(--borderColor);
+    border-radius: 20rem;
+    padding: 5px 10px;
+    font-size: var(--font-mediumSmall);
+    height: max-content;
+}
+
+.estadoPendiente{
+    background-color: rgb(231, 208, 0);
+    color: white;
+}
+.estadoConfirmado{
+    background-color: var(--primary-color);
+    color: white;
+}
+.estadoCancelado{
+    background-color: red;
+    color: white;
+}
+.reservaHeader h3{
+    display: flex;
+    gap: 10px;
+    font-size: 20px;
+    align-items: center;
+    font-family: 'Sans serif', Arial;
+    font-weight: 100;
+}
+
+.reservaHeader span{
+    font-weight: bold;
+}
+/*Fecha reserva HEADER*/
+.reservaHeader p{
+    font-size: var(--font-mediumSmall);
+    font-family: 'Sans Seriff', Arial;
+    color: var(--textMuted);
+}
+
+.reservaHeaderTitle{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+/*Reservas contenedor*/
+.reservaDetails{
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    padding: 20px 30px;
+    gap: 20px;
+}
+
+.reservaDetails p{
+    display: flex;
+    font-size: var(--font-medium);
+    gap: 5px;
+}
+
+.reservaDetails small{
+    color: var(--textMuted);
+}
+.reservaDetails p strong{
+    display: flex;
+    gap: 5px;
+}
+
+.reservaDetails i{
+    color: var(--textMuted);
+}
+
+.btnCancelarReserva{
+    padding: 5px 10px;
+    margin: 5px 5px;
+    border: none;
+    outline: none;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-medium);
+}
+
+button:disabled {
+    background-color: rgb(184, 182, 182);
+    cursor: not-allowed;
+    opacity: 0.7;
+}

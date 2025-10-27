@@ -24,19 +24,25 @@ if (!$fecha || !$hora || !$cantidadPersonas || !$id_mesa || !$nombreCliente || !
     exit;
 }
 
-// Fecha y hora de reserva
+// Solo guardar fecha (sin hora)
+$fechaReserva = date('Y-m-d', strtotime($fecha));
+
+// Calcular rango de hora para verificar disponibilidad
 $fechaInicio = date('Y-m-d H:i:s', strtotime("$fecha $hora"));
 $fechaFin = date('Y-m-d H:i:s', strtotime("$fecha $hora +2 hours"));
+
+// Código generado
 $codigoReserva = 'RES-' . date('Ymd') . '-' . rand(1000, 9999);
 
 // Verificar disponibilidad de la mesa
 $check = $pdo->prepare("
     SELECT COUNT(*) FROM reservas
     WHERE id_mesa = ?
-    AND fechaReserva BETWEEN ? AND ?
+    AND fechaReserva = ?
+    AND hora = ?
     AND estado != 'cancelada'
 ");
-$check->execute([$id_mesa, $fechaInicio, $fechaFin]);
+$check->execute([$id_mesa, $fechaReserva, $hora]);
 if ($check->fetchColumn() > 0) {
     echo json_encode(['success' => false, 'message' => 'La mesa ya está reservada para este horario.']);
     exit;
@@ -46,19 +52,20 @@ if ($check->fetchColumn() > 0) {
 try {
     $stmt = $pdo->prepare("
         INSERT INTO reservas 
-        (id_usuario, id_mesa, fechaReserva, numeroPersonas, estado, codigoReserva, nombreCliente, telefonoCliente, emailCliente, notas)
-        VALUES (?, ?, ?, ?, 'pendiente', ?, ?, ?, ?, ?)
+        (id_usuario, id_mesa, fechaReserva, numeroPersonas, estado, codigoReserva, nombreCliente, telefonoCliente, emailCliente, notas, hora)
+        VALUES (?, ?, ?, ?, 'Pendiente', ?, ?, ?, ?, ?, ?)
     ");
     $stmt->execute([
         $id_usuario,
         $id_mesa,
-        $fechaInicio,
+        $fechaReserva,
         $cantidadPersonas,
         $codigoReserva,
         $nombreCliente,
         $telefonoCliente,
         $emailCliente,
-        $notas
+        $notas,
+        $hora
     ]);
 
     // Obtener número de mesa

@@ -22,20 +22,21 @@ main {
     height: auto;
     background-color: white;
     padding-top: 110px;
+    justify-content: center;
 }
 
 /*==================================*/
 /*=     CONTENEDORES PRINCIPALES   =*/
 /*==================================*/
-.containerForm, .containerReservations {
+.containerForm {
     width: 50%;
     height: auto;
     display: flex;
     padding: 20px 30px;
 }
 
-.formContent, .reservationContent {
-    width: 50vw;
+.formContent {
+    width: 100vw;
     height: 100%;
     border: 1px solid var(--borderColor);
     border-radius: 20px;
@@ -366,3 +367,26 @@ main {
 .modalSubmit button:hover {
     background-color: var(--primary-color-hover);
 }
+
+
+/*==================================*/
+/*=     CONTENDOR INFORMACIÓN      =*/
+/*==================================*/
+
+.information{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: max-content;
+    background-color: #A7FFD0;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.information ul{
+    display: flex;
+    flex-direction: column; 
+}
+
