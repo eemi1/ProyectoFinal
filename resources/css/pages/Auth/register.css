@@ -189,10 +189,16 @@ main{
     .form {
         grid-template-columns: repeat(2, 1fr);
         align-items: self-start;
+        margin: 0px 10px;
     }
 
     .formContainerName, .formContainerEmail, .formContainerPassword, .formContainerRepeatPassword, .formContainerPhone, .formContainerSubmit {
         width: 90%;
+        align-items: center;
+    }
+
+    .formAuth {
+        width: auto;
         align-items: center;
     }
 }

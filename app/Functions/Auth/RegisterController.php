@@ -3,11 +3,11 @@ session_start();
 header("Content-Type: application/json");
 require "../../../db.php"; // tu archivo de conexión PDO
 
-$name = $_POST['username'] ?? '';
-$email = $_POST['new-email'] ?? '';
-$password = $_POST['new-password'] ?? '';
-$password_repeat = $_POST['new-password_confirmation'] ?? '';
-$phone = $_POST['new-phone'] ?? '';
+$name = $_POST['name'] ?? '';
+$email = $_POST['email'] ?? '';
+$password = $_POST['password'] ?? '';
+$password_repeat = $_POST['repeatPassword'] ?? '';
+$phone = $_POST['phone'] ?? '';
 
 // Validaciones
 if (empty($name) || empty($email) || empty($password) || empty($password_repeat) || empty($phone)) {

@@ -44,7 +44,7 @@ try {
                         $rol = "Rol cocinero";
                     break;
                 case 5:
-                        $rol = "Rol cajero";
+                        $rol = "Rol gerente";
                     break;
                 case 6:
                         $rol = "Rol delivery";

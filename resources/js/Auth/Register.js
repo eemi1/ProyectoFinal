@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (result.isConfirmed) {
                     let form_Register = new FormData(register);
 
-                    fetch("/proyectoFinal/app/Functions/RegisterController.php", {
+                    fetch("/proyectoFinal/app/Functions/Auth/RegisterController.php", {
                         method: 'POST',
                         body: form_Register
                     })

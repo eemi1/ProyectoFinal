@@ -22,37 +22,64 @@ try{
                         showConfirmButton: false,
                         timer: 1500
                     }).then(()=>{
-                        if (data.id_rol == "2"){
-                            window.location.replace("/proyectoFinal/app/View/DashboardAdmin/adminPanel.html");
-                        }else{
-                            window.location.replace("/proyectoFinal/index.html");
-                        }
+                        fetch('/proyectoFinal/app/Functions/check.php?action=verificar', {
+                            credentials: "same-origin"
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                    
+                            if (!data.success) {
+                                // No logueado
+                                window.location.href = '/proyectoFinal/index.html';
+                                return;
+                            }
+                            switch (data.rol) {
+                                case "1": // Cliente
+                                    window.location.href = "/proyectoFinal/index.html";
+                                    break;
+                    
+                                case "2": // Admin
+                                    window.location.href = "/proyectoFinal/app/View/DashboardAdmin/adminPanel.html";
+                                    break;
+                    
+                                case "3": // Mozo
+                                    window.location.href = "/proyectoFinal/app/View/DashboardAdmin/mozoPanel.html";
+                                    break;
+                    
+                                case "4": // Cocinero
+                                    window.location.href = "/proyectoFinal/app/View/DashboardAdmin/cocineroPanel.html";
+                                    break;
+                    
+                                case "5": // Gerente
+                                    window.location.href = "/proyectoFinal/app/View/DashboardAdmin/gerentePanel.html";
+                                    break;
+                                
+                                case "6": // Delivery
+                                    window.location.href = "/proyectoFinal/app/View/DashboardAdmin/deliveryPanel.html";
+                                    break;
+                    
+                                default:
+                                    console.warn("Rol no reconocido:", data.rol);
+                            }
+                        })
                     })
-            }else{
-                console.log("error de autenticación")
+                } else {
                     Swal.fire({
                         title: 'Error',
                         text: data.message,
                         icon: 'error',
                         confirmButtonText: 'Ok'
-                    }).then(()=>{
-                        return;
-                    })
-                
-                
-            }
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log(error); 
+            })
         })
-    })
 }catch(error){
     console.log(error);
-    Swal.fire({
-        title: 'Error',
-        text: 'Algo salió mal con la conexión al servidor.',
-        icon: 'error',
-        confirmButtonText: 'Ok'
-    }).then(()=>{
-        return;
-    })
-
 }
-})
+
+});
+
