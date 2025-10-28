@@ -583,8 +583,8 @@
                             </div>
                         </div>
                     </div>
-                </section>
 
+                </section>
                 <!--==================  | DASHBOARD RESERVAS | ==================-->
                 <section class="optContent" id="dashboardReservas">
                     <header class="headerDashboard">
@@ -592,7 +592,9 @@
                             <h2 class="headerDashboard-title">Gestión de Reservas</h2>
                             <h3 class="headerDashboard-subtitle">Gestiona todas las reservas del restaurante.</h3>
                         </div>
-                        <span>Reservas: </span>
+                        <button id="openAddProductWindow">
+                            <i class="fa-solid fa-plus"></i> Añadir Producto
+                        </button>
                     </header>
                     <!-- FILTRO DE ESTADO -->
                     <div class="filterStatus">
@@ -617,12 +619,8 @@
                         </label>
                     </div>
 
-                    <div class="reservas-container">
-                        
-                    </div>
-
-
                 </section>
+
 
 
 
@@ -635,7 +633,6 @@
         <script src="/proyectoFinal/resources/js/dashboardAdmin/producto.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/usuarios.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/util.js"></script>
-        <script src="/proyectoFinal/resources/js/dashboardAdmin/reservations.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/initializer.js"></script>
 
     </body>

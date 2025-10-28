@@ -1266,3 +1266,58 @@ html, body {
     color: black;
     padding-top: 5px;
 }
+
+/*=======================================|DASHBOARD RESERVAS|==========================================================*/
+/*-- Filtros de Estado --*/
+.filterStatus {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: auto;
+    font-size: 14px;
+    gap: 10px;
+    max-width: 25rem;
+    margin: 30px;
+}
+
+.filterStatus .radio {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.filterStatus .radio input {
+  display: none;
+}
+
+.filterStatus .radio .name {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none;
+  padding: .5rem 0;
+  color: rgba(51, 65, 85, 1);
+  transition: all .15s ease-in-out;
+}
+
+.filterStatus .radio input:checked + .name {
+  background-color: #fff;
+  font-weight: 600;
+}
+
+.reservas-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.reservas-default{
+    margin: 30px;
+}

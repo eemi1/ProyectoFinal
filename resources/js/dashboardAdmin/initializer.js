@@ -27,6 +27,7 @@ function checkRol() {
             switchPromotionSelect();
             summeryCardProducts();
             changeImage();
+            getReservations();
         }
     })
     .catch(err => console.error(err));
