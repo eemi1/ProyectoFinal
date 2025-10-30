@@ -35,27 +35,27 @@ try{
                                 return;
                             }
                             switch (data.rol) {
-                                case "1": // Cliente
+                                case 1: // Cliente
                                     window.location.href = "/proyectoFinal/index.html";
                                     break;
                     
-                                case "2": // Admin
+                                case 2: // Admin
                                     window.location.href = "/proyectoFinal/app/View/DashboardAdmin/adminPanel.html";
                                     break;
                     
-                                case "3": // Mozo
+                                case 3: // Mozo
                                     window.location.href = "/proyectoFinal/app/View/DashboardAdmin/mozoPanel.html";
                                     break;
                     
-                                case "4": // Cocinero
+                                case 4: // Cocinero
                                     window.location.href = "/proyectoFinal/app/View/DashboardAdmin/cocineroPanel.html";
                                     break;
                     
-                                case "5": // Gerente
+                                case 5: // Gerente
                                     window.location.href = "/proyectoFinal/app/View/DashboardAdmin/gerentePanel.html";
                                     break;
                                 
-                                case "6": // Delivery
+                                case 6: // Delivery
                                     window.location.href = "/proyectoFinal/app/View/DashboardAdmin/deliveryPanel.html";
                                     break;
                     

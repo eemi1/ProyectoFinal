@@ -129,6 +129,9 @@ function getReservations() {
                     case "Cancelado":
                         estado = `<span class="estadoCancelado">${reserva.estado}</span>`;
                         break;
+                    case "noAsistio":
+                        estado = `<span class="estadoNoAsistio">No Asistió</span>`;
+                        break;
                     default:
                         estado = `<span>${reserva.estado}</span>`;
                 }
@@ -143,13 +146,16 @@ function getReservations() {
             // Texto botones
             let botonDeshabilitado;
             let textoBoton;
+            let title;
 
             if (!puedeCancelar || reserva.estado === 'Cancelado') {
                 botonDeshabilitado = 'disabled';
                 textoBoton = 'Cancelación no disponible';
+                title= "No puedes cancelar esta reserva, falta menos de 2 horas o ya está cancelada.";
             } else {
                 botonDeshabilitado = '';
                 textoBoton = 'Cancelar reserva';
+                title= "Cancelar esta reserva.";
             }
             
             const reservaDiv = document.createElement('div');
@@ -175,7 +181,7 @@ function getReservations() {
                 </div>
                 <div class="reservaButton">
                     <button class="btnCancelarReserva" 
-                        data-codigo="${reserva.codigoReserva}" ${botonDeshabilitado}>
+                        data-codigo="${reserva.codigoReserva}" ${botonDeshabilitado} title="${title}">
                         ${textoBoton}
                     </button>
                 </div>

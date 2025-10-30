@@ -117,13 +117,14 @@ hr{
     display: flex;
     flex-direction: column;
     gap: 20px;
+        height: auto;
+    padding: 20px;
 }
 .reservaItem{
     display: flex;
     flex-direction: column;
     border: 1px solid var(--borderColor);
     background-color: white;
-    min-height: 10rem;
     width: 62.5rem;
     max-width: 62.5em;
     border-radius: 5px;
@@ -170,6 +171,10 @@ hr{
 }
 .estadoCancelado{
     background-color: red;
+    color: white;
+}
+.estadoNoAsistio{
+    background-color: gray;
     color: white;
 }
 .reservaHeader h3{
@@ -232,6 +237,9 @@ hr{
     border-radius: 5px;
     cursor: pointer;
     font-size: var(--font-medium);
+}
+.btnCancelarReserva:hover{
+    background-color: rgb(134, 0, 0);
 }
 
 button:disabled {

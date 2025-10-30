@@ -1,5 +1,24 @@
-function getReservations() {
-    fetch("/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=getReservations", {
+document.addEventListener('DOMContentLoaded', () => {
+    getReservations();
+    changeFilter();
+
+})
+
+function changeFilter() {
+    document.querySelectorAll('.filterStatus input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            const estado = radio.value;
+            getReservations(estado);
+            console.log(estado  );
+        });
+    });
+
+    document.query
+};
+
+
+function getReservations(estado = 'todas') {
+    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=getReservations&estado=${estado}`, {
         method: 'GET',
         credentials: 'same-origin'
     })
@@ -24,66 +43,64 @@ function getReservations() {
             let estado = '';
             reservasSection.innerHTML = '';
             data.reservas.forEach(reserva => {
+                console.log(reserva);
+
+                document.getElementById('countReservations').textContent = `Reservas: ${data.total}`;
                 let estado = '';
                 switch (reserva.estado) {
                     case "Pendiente":
                         estado = `<span class="estadoPendiente">${reserva.estado}</span>`;
+                        buttons = `
+                            <button class="btnConfirmarReserva" onclick="confirmReservation(${reserva.id})">Confirmar</button>
+                            <button class="btnCancelarReserva" onclick="cancelReservation(${reserva.id})">Cancelar</button>
+                            `
                         break;
                     case "Confirmado":
                         estado = `<span class="estadoConfirmado">${reserva.estado}</span>`;
+                        buttons = `
+                            <button class="btnFinalizarReserva" onclick="finalizeReservation(${reserva.id})">Finalizar</button>
+                            <button class="btnCancelarReserva" onclick="cancelReservation(${reserva.id})">Cancelar</button>
+                            `
                         break;
                     case "Cancelado":
                         estado = `<span class="estadoCancelado">${reserva.estado}</span>`;
+                        buttons = ``;
                         break;
+                    case "Finalizado":
+                        estado = `<span class="estadoFinalizado">${reserva.estado}</span>`;
+                        buttons = ``;
+                        break;
+                    
                     default:
                         estado = `<span>${reserva.estado}</span>`;
                 }
-            
-            // === Calcular diferencia de tiempo ===
-            const horaReserva = new Date(`${reserva.fechaReserva}T${reserva.hora}`);
-            const horaActual = new Date();
-            const diferenciaHoras = (horaReserva - horaActual) / (1000 * 60 * 60);
-
-            const puedeCancelar = diferenciaHoras > 2;
-
-            // Texto botones
-            let botonDeshabilitado;
-            let textoBoton;
-
-            if (!puedeCancelar || reserva.estado === 'Cancelado') {
-                botonDeshabilitado = 'disabled';
-                textoBoton = 'Cancelación no disponible';
-            } else {
-                botonDeshabilitado = '';
-                textoBoton = 'Cancelar reserva';
-            }
             
             const reservaDiv = document.createElement('div');
             reservaDiv.classList.add('reservaItem');
             reservaDiv.innerHTML += `
                 <div class="reservaHeader">
-                    <div class="reservaHeaderTitle">
-                        <h3><i class="fa-regular fa-calendar"></i><span>Reserva</span> #${reserva.codigoReserva}</h3>
-                        <p>${reserva.fechaFormateada}</p>
-                    </div>
-                    <div class="reservaHeaderEstado">${estado}</div>
+                    <h3>${reserva.nombreCliente} #${reserva.id} ${estado}</h3>
+                    <p>${reserva.codigoReserva}</p>
                 </div>
-                <div class="reservaDetails">
-                    <p><strong><i class="fa-regular fa-clock"></i>Hora:</strong> ${reserva.hora}</p>
-                    <p><strong><i class="fa-solid fa-phone"></i>Teléfono:</strong> ${reserva.telefonoCliente}</p>
-                    <p><strong><i class="fa-regular fa-user"></i>Número de Personas:</strong> ${reserva.numeroPersonas}</p>
-                    <p><strong><i class="fa-regular fa-envelope"></i>Email:</strong> ${reserva.emailCliente}</p>
-                    <p><strong><i class="fa-solid fa-location-dot"></i>Número de mesa:</strong> ${reserva.id_mesa}</p>
-                    <div>
-                        <p><strong><i class="fa-regular fa-note-sticky"></i>Notas</strong></p>
-                        <small>${reserva.notas || "Sin nota"}</small>
-                    </div>
+                    <div class="reservaContent">
+                        <div class="detailsReservation">
+                            <span><i class="fa-regular fa-calendar"></i>Detalles de la reserva:</span>
+                            <p><strong>Fecha:</strong> ${reserva.fechaReserva}</p>
+                            <p><strong>Fecha de creación:</strong> ${reserva.fechaActual}</p>
+                            <p><strong>Hora:</strong> ${reserva.hora}</p>
+                            <p><strong>Número de personas:</strong> ${reserva.numeroPersonas}</p>
+                            <p><strong>Número de mesa:</strong> ${reserva.id_mesa}</p>
+                        </div>
+                        <div class="detailsClient">
+                            <span><i class="fa-regular fa-user"></i>Detalles de la personales:</span>
+                            <p><strong>Nombre:</strong> ${reserva.nombreCliente}</p>
+                            <p><strong>Teléfono:</strong> ${reserva.telefonoCliente}</p>
+                            <p><strong>Email:</strong> ${reserva.emailCliente}</p>
+                            <p><strong>Notas:</strong> ${reserva.notas || 'Ninguna'}</p>
+                        </div>
                 </div>
-                <div class="reservaButton">
-                    <button class="btnCancelarReserva" 
-                        data-codigo="${reserva.codigoReserva}" ${botonDeshabilitado}>
-                        ${textoBoton}
-                    </button>
+                <div class="reservaActions">
+                    ${buttons}
                 </div>
             `;
             
@@ -92,4 +109,58 @@ function getReservations() {
         }    
     })
     .catch(err => console.error('Error al obtener reservas:', err));
+}
+
+function confirmReservation(id) {
+    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=confirmReservation`, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire("✅ Confirmada", "La reserva fue confirmada y la mesa está reservada.", "success");
+            getReservations();
+        } else {
+            Swal.fire("⚠️ Error", data.message || "No se pudo confirmar.", "error");
+        }
+    });
+}
+
+function cancelReservation(id) {
+    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=cancelReservation`, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire("❌ Cancelada", "Reserva cancelada y mesa disponible.", "info");
+            getReservations();
+        } else {
+            Swal.fire("⚠️ Error", data.message || "No se pudo cancelar.", "error");
+        }
+    });
+}
+
+function finalizeReservation(id) {
+    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=finalizeReservation`, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire("✅ Finalizada", "La reserva fue finalizada. Mesa disponible.", "success");
+            getReservations();
+        } else {
+            Swal.fire("⚠️ Error", data.message || "No se pudo finalizar.", "error");
+        }
+    });
 }

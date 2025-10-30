@@ -17,43 +17,24 @@ function checkRol() {
         }
 
         switch (data.rol) {
-            case "1": // Cliente
+            case 1: // Cliente
                 window.location.href = "/proyectoFinal/index.html";
                 break;
 
-            case "2": // Admin
-                console.log("Acceso gerente detectado");
-                document.getElementById("defaultTab").click();
-                chartVentas();
-                loadUsers();
-                usersTotal();
-                openAddWindow();
-                closeAddWindow();
-                filterCategories();
-                loadIngredients();
-                ingredientsTotal();
-                initSearches();
-                showModalProductsAddIngredients();
-                switchPromotionSelect();
-                summeryCardProducts();
-                changeImage();
-                getReservations();
+            case 2: // Admin
+                accessAdmin();
                 break;
 
-            case "3": // Mozo
-                window.location.href = "/proyectoFinal/app/View/DashboardAdmin/mozoPanel.html";
+            case 3: // Mozo
                 break;
 
-            case "4": // Cocinero
-                window.location.href = "/proyectoFinal/app/View/DashboardAdmin/cocineroPanel.html";
+            case 4: // Cocinero
                 break;
 
-            case "5": // Gerente
-                window.location.href = "/proyectoFinal/app/View/DashboardAdmin/gerentePanel.html";
+            case 5: // Gerente
                 break;
-            
-            case "6": // Delivery
-                window.location.href = "/proyectoFinal/app/View/DashboardAdmin/deliveryPanel.html";
+
+            case 6: // Delivery
                 break;
 
             default:
@@ -63,4 +44,22 @@ function checkRol() {
         }
     })
     .catch(err => console.error("Error verificando rol:", err));
+}
+
+function accessAdmin() {
+    document.getElementById("defaultTab").click();
+    chartVentas();
+    loadUsers();
+    usersTotal();
+    openAddWindow();
+    closeAddWindow();
+    filterCategories();
+    loadIngredients();
+    ingredientsTotal();
+    initSearches();
+    showModalProductsAddIngredients();
+    switchPromotionSelect();
+    summeryCardProducts();
+    changeImage();
+    getReservations();
 }

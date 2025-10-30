@@ -202,7 +202,7 @@ CREATE TABLE `reservas` (
   `id_usuario` INT NOT NULL,
   `id_mesa` INT NOT NULL,
   `fechaReserva` DATE NOT NULL,
-  `hora` varchar(20),
+  `hora` VARCHAR(20),
   `fechaActual` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `numeroPersonas` INT NOT NULL,
   `estado` VARCHAR(50) DEFAULT 'pendiente',
@@ -211,8 +211,12 @@ CREATE TABLE `reservas` (
   `telefonoCliente` VARCHAR(50) NOT NULL,
   `emailCliente` VARCHAR(255) NOT NULL,
   `notas` TEXT DEFAULT NULL,
+  `confirmado_por` INT NULL,
+  `cancelado_por` INT NULL,
   CONSTRAINT `fk_reserva_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario`(`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_reserva_mesa` FOREIGN KEY (`id_mesa`) REFERENCES `mesa`(`id`) ON DELETE CASCADE
+  CONSTRAINT `fk_reserva_mesa` FOREIGN KEY (`id_mesa`) REFERENCES `mesa`(`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_reserva_confirmado_por` FOREIGN KEY (`confirmado_por`) REFERENCES `usuario`(`id`) ON DELETE SET NULL,
+  CONSTRAINT `fk_reserva_cancelado_por` FOREIGN KEY (`cancelado_por`) REFERENCES `usuario`(`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `noshow` (

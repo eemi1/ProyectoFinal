@@ -56,7 +56,7 @@ function setupMesaLoader() {
                         document.querySelectorAll(".mesa-card").forEach(d => d.classList.remove("selected"));
                         mesaDiv.classList.add("selected");
                         selectedMesaId = mesa.id;
-                        document.getElementById("selectedMesa").value = selectedMesaId; // <-- actualiza hidden
+                        document.getElementById("selectedMesa").value = selectedMesaId;
                     });
 
                     mesaContainer.appendChild(mesaDiv);
