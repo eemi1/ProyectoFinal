@@ -390,4 +390,13 @@ INSERT INTO direccion_usuario (id_usuario, alias, calle, numero, ciudad, departa
 (2, 'Amor', 'Av centenario', 1337, 'Montevideo', '', 11300, 'Casa roja', 0),
 (2, '', 'test', 1234, 'test', 'test', 11300, 'test', 0);
 
+-- 5 reservas del cliente (pendientes de confirmar desde el backend)
+INSERT INTO reservas (id_usuario, id_mesa, fechaReserva, hora, fechaActual, numeroPersonas, estado, codigoReserva, nombreCliente, telefonoCliente, emailCliente, notas
+)
+VALUES
+(2, 1, '2025-11-01', '20:00', NOW(), 2, 'Pendiente', 'RES-20251101-1001', 'Cliente', '099123456', 'cliente@foryfactory.com', 'Cena en pareja'),
+(2, 2, '2025-11-03', '21:00', NOW(), 4, 'Pendiente', 'RES-20251103-1002', 'Cliente', '099123456', 'cliente@foryfactory.com', 'Reserva familiar'),
+(2, 3, '2025-11-05', '19:30', NOW(), 3, 'Pendiente', 'RES-20251105-1003', 'Cliente', '099123456', 'cliente@foryfactory.com', 'Amigos del trabajo'),
+(2, 4, '2025-11-06', '22:00', NOW(), 2, 'Pendiente', 'RES-20251106-1004', 'Cliente', '099123456', 'cliente@foryfactory.com', 'Aniversario'),
+(2, 1, '2025-11-08', '20:30', NOW(), 5, 'Pendiente', 'RES-20251108-1005', 'Cliente', '099123456', 'cliente@foryfactory.com', 'Cena grupo de amigos');
 COMMIT;

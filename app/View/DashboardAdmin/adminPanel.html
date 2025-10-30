@@ -592,7 +592,6 @@
                             <h2 class="headerDashboard-title">Gestión de Reservas</h2>
                             <h3 class="headerDashboard-subtitle">Gestiona todas las reservas del restaurante.</h3>
                         </div>
-                        <span id="countReservations">Reservas: </span>
                         <!-- Estado de mesas -->
                         <button id="showTablesStatus">Ver Estado de Mesas</button>
                         <div id="mesasStatusContainer" class="mesas-status-container" style="display:none;"></div>
@@ -603,23 +602,23 @@
                         <!-- Reservas estadísticas-->
                         <div class="reservasStats">
                             <div class="reservasStats-card">
-                                <h3><i class="fa-regular fa-calendar"></i> Total de Reservas </h3>
+                                <h3><i class="fa-regular fa-calendar" style="color: var(--primary-color) ;"></i> Total de Reservas </h3>
                                 <p id="totalReservations">0</p>
                             </div>
                             <div class="reservasStats-card">
-                                <h3><i class="fa-regular fa-clock"></i> Reservas Pendientes</h3>
+                                <h3><i class="fa-regular fa-clock" style="color: #ffe600 ;"></i> Reservas Pendientes</h3>
                                 <p id="pendingReservations">0</p>
                             </div>
                             <div class="reservasStats-card">
-                                <h3><i class="fa-regular fa-circle-check"></i> Reservas Confirmadas</h3>
+                                <h3><i class="fa-regular fa-circle-check" style="color: #00ff00 ;"></i> Reservas Confirmadas</h3>
                                 <p id="confirmedReservations">0</p>
                             </div>
                             <div class="reservasStats-card">
-                                <h3><i class="fa-regular fa-circle-xmark"></i> Reservas Canceladas</h3>
+                                <h3><i class="fa-regular fa-circle-xmark" style="color: #ff0000 ;"></i> Reservas Canceladas</h3>
                                 <p id="canceledReservations">0</p>
                             </div>
                             <div class="reservasStats-card">
-                                <h3><i class="fa-regular fa-thumbs-up"></i> Reservas Finalizadas</h3>
+                                <h3><i class="fa-regular fa-thumbs-up" style="color: #00ffff ;"></i> Reservas Finalizadas</h3>
                                 <p id="finalizedReservations">0</p>
                             </div>
                         </div>

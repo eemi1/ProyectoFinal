@@ -62,10 +62,30 @@ function getReservations($pdo) {
         $stmt2->execute();
         $totalReservas = $stmt2->fetchColumn();
 
+        $stmt3 = $pdo->prepare("SELECT COUNT(id) as total FROM reservas WHERE estado = 'Pendiente'");
+        $stmt3->execute();
+        $totalPendientes = $stmt3->fetchColumn();
+
+        $stmt4 = $pdo->prepare("SELECT COUNT(id) as total FROM reservas WHERE estado = 'Confirmado'");
+        $stmt4->execute();
+        $totalConfirmados = $stmt4->fetchColumn();
+
+        $stmt5 = $pdo->prepare("SELECT COUNT(id) as total FROM reservas WHERE estado = 'Cancelado'");
+        $stmt5->execute();
+        $totalCancelados = $stmt5->fetchColumn();
+
+        $stmt6 = $pdo->prepare("SELECT COUNT(id) as total FROM reservas WHERE estado = 'Finalizado'");
+        $stmt6->execute();
+        $totalFinalizados = $stmt6->fetchColumn();
+
         echo json_encode([
             "success" => true,
             "reservas" => $reservas,
-            "total" => $totalReservas
+            "total" => $totalReservas,
+            "pendingReservations" => $totalPendientes,
+            "confirmedReservations" => $totalConfirmados,
+            "canceledReservations" => $totalCancelados,
+            "finalizedReservations" => $totalFinalizados
         ]);
     } catch (PDOException $e) {
         echo json_encode([

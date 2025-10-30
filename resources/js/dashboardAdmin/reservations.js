@@ -13,9 +13,46 @@ function changeFilter() {
         });
     });
 
-    document.query
-};
+    document.getElementById('searchReservationsInput').addEventListener('input', (e) => {
+        const filtro = e.target.value.toLowerCase();
+        const reservas = document.querySelectorAll('.reservaItem');
 
+        reservas.forEach(reserva => {
+            const texto = reserva.textContent.toLowerCase();
+
+            if (texto.includes(filtro)) {
+                reserva.style.display = '';
+            } else {
+                reserva.style.display = 'none';
+            }
+        });
+    });
+
+    document.getElementById('filterDate').addEventListener('change', (e) => {
+        const selectedDate = e.target.value; // siempre viene como YYYY-MM-DD
+        const reservas = document.querySelectorAll('.reservaItem');
+
+        reservas.forEach(reserva => {
+            const fechaElemento = reserva.querySelector('.fechaReserva');
+            if (!fechaElemento) return;
+
+            const fechaReserva = fechaElemento.dataset.fecha; // usa el data-fecha original
+
+            // Mostrar solo las que coincidan
+            if (!selectedDate || fechaReserva === selectedDate) {
+                reserva.style.display = '';
+            } else {
+                reserva.style.display = 'none';
+            }
+        });
+    });
+
+    document.getElementById('clearFilters').addEventListener('click', () => {
+        document.getElementById('searchReservationsInput').value = '';
+        document.getElementById('filterDate').value = '';
+        getReservations();
+    });
+}
 
 function getReservations(estado = 'todas') {
     fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=getReservations&estado=${estado}`, {
@@ -41,11 +78,24 @@ function getReservations(estado = 'todas') {
 
         if (data.success) {
             let estado = '';
+            
             reservasSection.innerHTML = '';
             data.reservas.forEach(reserva => {
                 console.log(reserva);
+                // 🔹 Formato automático DD/MM/YYYY
+                const fechaReservaFormateada = new Date(reserva.fechaReserva).toLocaleDateString('es-ES');
+                const fechaActualFormateada = new Date(reserva.fechaActual).toLocaleDateString('es-ES');
 
-                document.getElementById('countReservations').textContent = `Reservas: ${data.total}`;
+                try {
+                    document.getElementById('totalReservations').textContent = data.total || 0;
+                    document.getElementById('pendingReservations').textContent = data.pendingReservations || 0;
+                    document.getElementById('confirmedReservations').textContent = data.confirmedReservations || 0;
+                    document.getElementById('canceledReservations').textContent = data.canceledReservations || 0;
+                    document.getElementById('finalizedReservations').textContent = data.finalizedReservations || 0;
+                }catch(e){
+                    console.error('Error al actualizar los contadores de reservas:', e);
+                }
+
                 let estado = '';
                 switch (reserva.estado) {
                     case "Pendiente":
@@ -77,6 +127,7 @@ function getReservations(estado = 'todas') {
             
             const reservaDiv = document.createElement('div');
             reservaDiv.classList.add('reservaItem');
+            reservaDiv.dataset.id = reserva.id;
             reservaDiv.innerHTML += `
                 <div class="reservaHeader">
                     <h3>${reserva.nombreCliente} #${reserva.id} ${estado}</h3>
@@ -85,9 +136,9 @@ function getReservations(estado = 'todas') {
                     <div class="reservaContent">
                         <div class="detailsReservation">
                             <span><i class="fa-regular fa-calendar"></i>Detalles de la reserva:</span>
-                            <p><strong>Fecha:</strong> ${reserva.fechaReserva}</p>
-                            <p><strong>Fecha de creación:</strong> ${reserva.fechaActual}</p>
-                            <p><strong>Hora:</strong> ${reserva.hora}</p>
+                            <p class="fechaReserva" data-fecha="${reserva.fechaReserva}"><strong>Fecha de reserva:</strong> ${fechaReservaFormateada}</p>
+                            <p><strong>Fecha de creación:</strong> ${fechaActualFormateada}</p>
+                            <p><strong>Hora de reserva:</strong> ${reserva.hora}</p>
                             <p><strong>Número de personas:</strong> ${reserva.numeroPersonas}</p>
                             <p><strong>Número de mesa:</strong> ${reserva.id_mesa}</p>
                         </div>
@@ -122,7 +173,16 @@ function confirmReservation(id) {
     .then(data => {
         if (data.success) {
             Swal.fire("✅ Confirmada", "La reserva fue confirmada y la mesa está reservada.", "success");
-            getReservations();
+                const reservaDiv = document.querySelector(`.reservaItem[data-id="${id}"]`);
+                if(reservaDiv){
+                    reservaDiv.classList.add('removing');
+                
+                    reservaDiv.addEventListener('transitionend', () => {
+                        getReservations();
+                    }, { once: true });
+                } else {
+                    getReservations();
+                }
         } else {
             Swal.fire("⚠️ Error", data.message || "No se pudo confirmar.", "error");
         }
