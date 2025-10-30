@@ -63,4 +63,5 @@ function accessAdmin() {
     summeryCardProducts();
     changeImage();
     getReservations();
+    showTablesAvailables();
 }

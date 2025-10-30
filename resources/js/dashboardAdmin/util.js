@@ -277,3 +277,41 @@ function closeAddWindow() {
 
         });
     }
+    ////==================| CERRAR SESIÓN |===================
+
+    function cerrarSesion() {
+    const btn_cerrarSesion = document.getElementById("logout");
+    if (!btn_cerrarSesion) return;
+
+    btn_cerrarSesion.addEventListener("click", () => {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¿Deseas cerrar sesión?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Cerrar sesión',
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: "#d33",
+            customClass: { popup: 'swal-custom-font' }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch("/proyectoFinal/app/Functions/check.php?action=cerrar", { method: 'POST' })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                title: '¡Nos vemos!',
+                                text: 'Cerraste sesión correctamente.',
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                customClass: { popup: 'swal-custom-font' }
+                            }).then(() => {
+                                window.location.replace("/proyectoFinal/index.html");
+                            });
+                        }
+                    });
+            }
+        });
+    });
+}

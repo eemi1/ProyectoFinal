@@ -205,7 +205,7 @@ CREATE TABLE `reservas` (
   `hora` VARCHAR(20),
   `fechaActual` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `numeroPersonas` INT NOT NULL,
-  `estado` VARCHAR(50) DEFAULT 'pendiente',
+  `estado` VARCHAR(50) DEFAULT 'Pendiente',
   `codigoReserva` VARCHAR(20) UNIQUE,
   `nombreCliente` VARCHAR(255) NOT NULL,
   `telefonoCliente` VARCHAR(50) NOT NULL,

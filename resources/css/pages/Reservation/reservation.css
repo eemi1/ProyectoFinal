@@ -189,9 +189,6 @@ main {
     font-size: 14px;
     margin: 2px 0;
 }
-.mesa-estado{
-
-}
 
 .mesa-card.selected {
     border-color: #00bcd4;

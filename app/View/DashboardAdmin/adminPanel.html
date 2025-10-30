@@ -30,9 +30,9 @@
                             <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardReportes')"><i class="fa-solid fa-chart-line"></i> Reportes</a></li>
                             <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardConfiguracion')"><i class="fa-solid fa-cog"></i> Configuración</a></li>
                         </div>
-                        <div class="li-list-logout">
-                            <li class="li-list-logout"><a href="#" id="logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a></li>
-                        </div>
+                        <div class="containerLogout">
+                            <button type="button" id="logout" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</button>
+                        </div>  
                     </ul>
                 </nav>
             </aside>
@@ -656,6 +656,10 @@
                             <label class="radio">
                                 <input type="radio" name="radio" value="Finalizado">
                                 <span class="name">Finalizadas</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="radio" value="En curso">
+                                <span class="name">En curso</span>
                             </label>
                         </div>
                     </div>

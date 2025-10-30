@@ -232,23 +232,22 @@ html, body {
     color: var(--primary-color);
 }
 
-.li-list-logout {
-    background: white;
-}
-
-.li-list-logout:hover {
-    background-color: #B22222;
-}
-
-#logout {
+/*==== | BOTÓN LOGOUT | ====*/
+#logout{
+    width: 100%;
+    height: 40px;
     color: red;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 
-#logout:hover, .li-list-logout:hover {
+#logout:hover{
+    background-color: red;
     color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    
 }
 
 /*======================================*/
@@ -1496,6 +1495,10 @@ html, body {
     background-color: var(--primary-color);
     color: white;
 }
+.estadoEnCurso{
+    background-color: #2563eb;
+    color: white;
+}
 .estadoCancelado{
     background-color: red;
     color: white;
@@ -1583,6 +1586,15 @@ html, body {
 .btnConfirmarReserva:hover {
     background-color: var(--primary-color-hover);
 }
+
+.btnAsistioReserva{
+    background-color: #2563eb;
+    transition: background-color 0.3s ease;
+}
+.btnAsistioReserva:hover {
+    background-color: #1e3a8a;
+}
+
 .btnFinalizarReserva{
     background-color: #16a34a;
     transition: background-color 0.3s ease;
@@ -1591,6 +1603,53 @@ html, body {
     background-color: #138c3b;
 }
 
+/*==== CSS DE MESAS ESTADO DE LAS MESAS ====*/
+.tables-container{
+    display: grid;
+    grid-template-columns:repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    font-style: 'Sans-seriff', Arial;
+}
+
+.tableItem{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    padding: 15px;
+    height: auto;
+  
+}
+
+/*Estilos de estados*/
+.mesa-disponible{
+    border: 1px solid green;
+    background-color: rgba(240, 253, 244, 0.5);
+}
+
+.mesa-ocupada{
+    border: 1px solid red;
+    background-color: rgba(254, 242, 242, 0.5);;
+}
+
+.mesa-reservada{
+    border: 1px solid blue;
+    background-color: rgba(221, 233, 255, 0.5);;
+}
+
+/*Card mesas*/
+
+#numberTable{
+    font-size: var(--font-large);
+    font-weight: bold;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    width: max-content;
+    padding: 2px 7px;
+
+}
 /*=======================================|DASHBOARD PEDIDOS|==========================================================*/
 
 

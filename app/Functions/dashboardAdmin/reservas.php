@@ -193,6 +193,55 @@ function cancelReservation($pdo) {
     }
 }
 
+function assistReservation($pdo) {
+    $userId = getUserId($pdo);
+    if (!$userId) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Usuario no autenticado"
+        ]);
+        exit;
+    }
+    $data = json_decode(file_get_contents("php://input"), true);
+    $id = $data['id'] ?? null;
+
+    if (!$id) {
+        echo json_encode(['success' => false]);
+        return;
+    }
+
+    if (!isset($_SESSION['email'])) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Usuario no autenticado"
+        ]);
+        exit;
+    }
+
+    try {
+        // 🔹 Actualizar el estado de la reserva a "En curso" (cliente asistió)
+        $stmtReserva = $pdo->prepare("UPDATE reservas SET estado = 'En curso' WHERE id = ?");
+        $stmtReserva->execute([$id]);
+
+        // 🔹 Actualizar la mesa asociada a la reserva -> "ocupada"
+        $stmtMesa = $pdo->prepare("UPDATE mesa SET estado = 'ocupada' WHERE id = (SELECT id_mesa FROM reservas WHERE id = ?)");
+        $stmtMesa->execute([$id]);
+
+        // 🔹 Respuesta exitosa
+        echo json_encode([
+            "success" => true,
+            "message" => "Reserva marcada como asistida. Mesa ocupada."
+        ]);
+
+    } catch (Exception $e) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al marcar asistencia: " . $e->getMessage()
+        ]);
+    }
+}
+
+
 function finalizeReservation($pdo) {
     $userId = getUserId($pdo);
     if (!$userId) {
@@ -234,6 +283,26 @@ function finalizeReservation($pdo) {
     }
 }
 
+function showTablesAvailables($pdo) {
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM mesa");
+        $stmt->execute();
+        $mesas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        
+
+        echo json_encode([
+            "success" => true,
+            "mesas" => $mesas
+        ]);
+    } catch (PDOException $e) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al obtener las mesas disponibles: " . $e->getMessage()
+        ]);
+    }
+}
+
 
 $accion = $_GET['action'] ?? null;
 
@@ -249,9 +318,17 @@ switch ($accion) {
     case 'cancelReservation':
         cancelReservation($pdo);
         break;
+    
+    case 'assistReservation':
+        assistReservation($pdo);
+        break;
 
     case 'finalizeReservation':
         finalizeReservation($pdo);
+        break;
+
+    case 'showTablesAvailables':
+        showTablesAvailables($pdo);
         break;
 
     default:

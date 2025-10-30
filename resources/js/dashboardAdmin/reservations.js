@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     getReservations();
     changeFilter();
@@ -108,7 +109,7 @@ function getReservations(estado = 'todas') {
                     case "Confirmado":
                         estado = `<span class="estadoConfirmado">${reserva.estado}</span>`;
                         buttons = `
-                            <button class="btnFinalizarReserva" onclick="finalizeReservation(${reserva.id})">Finalizar</button>
+                            <button class="btnAsistioReserva" onclick="assistReservation(${reserva.id})">Asistió</button>
                             <button class="btnCancelarReserva" onclick="cancelReservation(${reserva.id})">Cancelar</button>
                             `
                         break;
@@ -120,7 +121,14 @@ function getReservations(estado = 'todas') {
                         estado = `<span class="estadoFinalizado">${reserva.estado}</span>`;
                         buttons = ``;
                         break;
-                    
+
+                    case "En curso":
+                        estado = `<span class="estadoEnCurso">${reserva.estado}</span>`;
+                        buttons = `
+                        <button class="btnFinalizarReserva" onclick="finalizeReservation(${reserva.id})">Finalizar</button>
+                        <button class="btnCancelarReserva" onclick="cancelReservation(${reserva.id})">Cancelar</button>
+                        `;
+                        break;
                     default:
                         estado = `<span>${reserva.estado}</span>`;
                 }
@@ -207,6 +215,24 @@ function cancelReservation(id) {
     });
 }
 
+function assistReservation(id) {
+    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=assistReservation`, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire("✅ Asistió", "El cliente asistió a su reserva. Mesa ocupada.", "success");
+            getReservations();
+        } else {
+            Swal.fire("⚠️ Error", data.message || "No se pudo marcar asistencia.", "error");
+        }
+    });
+}
+
 function finalizeReservation(id) {
     fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=finalizeReservation`, {
         method: "POST",
@@ -224,3 +250,90 @@ function finalizeReservation(id) {
         }
     });
 }
+
+function showTablesAvailables() {
+
+    const btnShowTables = document.getElementById('showTablesStatus');
+    const searchFilter = document.querySelector('.reservasFilters');
+    const statusFilter = document.querySelector('.filterStatus');
+
+    if (!btnShowTables) {
+        console.error('No se encontró el botón para mostrar mesas disponibles.');
+        return;
+    }
+
+    btnShowTables.addEventListener('click', () => {
+
+        fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=showTablesAvailables`, {
+            method: "GET",
+            credentials: "same-origin",
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if (data.success) {
+                const reservasSection = document.querySelector('.reservas-container');
+                reservasSection.innerHTML = '';
+
+                try {
+                    if (searchFilter.style.display === 'none' && statusFilter.style.display === 'none') {
+                        searchFilter.style.display = 'flex';
+                        statusFilter.style.display = 'flex';
+                        getReservations();
+                        btnShowTables.textContent = 'Ver Estado de Mesas';
+                    } else {
+                        searchFilter.style.display = 'none';
+                        statusFilter.style.display = 'none';
+                        btnShowTables.textContent = 'Ver Reservas';
+                    }
+                } catch (e) {
+                    console.error('Error al ocultar filtros:', e);
+                }
+
+                const header = document.createElement('h3');
+                header.textContent = 'Estado de Mesas';
+                reservasSection.appendChild(header);
+
+                const tablesContainer = document.createElement('div');
+                tablesContainer.classList.add('tables-container');
+
+                data.mesas.forEach(table => {
+                    const tableDiv = document.createElement('div');
+                    tableDiv.classList.add('tableItem');
+
+                    switch (table.estado) {
+                        case 'disponible':
+                            tableDiv.classList.add('mesa-disponible');
+                            break;
+                        case 'ocupada':
+                            tableDiv.classList.add('mesa-ocupada');
+                            break;
+                        case 'reservada':
+                            tableDiv.classList.add('mesa-reservada');
+                            break;
+                        default:
+                            tableDiv.classList.add('mesa-desconocida');
+                            break;
+                    }
+
+                    tableDiv.innerHTML = `
+                        <h3>Mesa #${table.id}</h3>
+                        <p><strong>Capacidad:</strong> ${table.capacidad} personas</p>
+                        <p><strong>Ubicación:</strong> ${table.ubicacion}</p>
+                        <p><strong>Estado:</strong> ${table.estado}</p>
+                    `;
+
+                    tablesContainer.appendChild(tableDiv);
+
+                });
+
+                reservasSection.appendChild(tablesContainer);
+            }
+        })
+        .catch(err => {
+            console.error('Error al obtener mesas disponibles:', err);
+        });
+    });
+}
+
+
