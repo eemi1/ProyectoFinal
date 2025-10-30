@@ -29,8 +29,8 @@ try {
         $password_hasheada = $usuario['contraseña'];
 
         if (password_verify($password,$password_hasheada )){
-            $rol_usuario = $usuario['id_rol'];
-            switch ($rol_usuario) {
+                $rol_usuario = (int) $usuario['id_rol'];            
+                switch ($rol_usuario) {
                 case 1:
                         $rol = "Rol cliente";
                     break;

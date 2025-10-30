@@ -24,7 +24,7 @@ function getReservations(estado = 'todas') {
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        //console.log(data);
         const reservasSection = document.querySelector('.reservas-container');
         if (!data.success || data.reservas.length === 0) {
             // Si no hay reservas, mostrar el contenido por defecto
@@ -45,8 +45,18 @@ function getReservations(estado = 'todas') {
             data.reservas.forEach(reserva => {
                 console.log(reserva);
 
-                document.getElementById('countReservations').textContent = `Reservas: ${data.total}`;
-                let estado = '';
+                try {
+                document.getElementById('totalReservations').textContent = data.total;
+                document.getElementById('pendingReservations').textContent = data.totalPendientes;
+                document.getElementById('confirmedReservations').textContent = data.totalConfirmadas;
+                document.getElementById('canceledReservations').textContent = data.totalCanceladas;
+                document.getElementById('finalizedReservations').textContent = data.totalFinalizadas;
+                } catch (error) {
+                    console.error('Error al actualizar los contadores de reservas:', error);
+                }
+
+                let buttons = '';
+
                 switch (reserva.estado) {
                     case "Pendiente":
                         estado = `<span class="estadoPendiente">${reserva.estado}</span>`;

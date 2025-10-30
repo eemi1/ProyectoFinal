@@ -1418,6 +1418,10 @@ html, body {
     font-size: 0.9rem;
     color: #555;
     margin-bottom: 10px;
+    display: flex;
+    white-space: nowrap;
+    gap: 10px;
+    justify-content: center;
 }
 
 .reservasStats-card p {

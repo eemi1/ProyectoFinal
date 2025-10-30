@@ -394,3 +394,8 @@ main {
     margin: 0px 20px;
 }
 
+@media (max-height: 600px) {
+    .modalContainer {
+        overflow: auto;
+    }
+}

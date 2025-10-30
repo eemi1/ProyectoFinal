@@ -34,6 +34,8 @@ try{
                                 window.location.href = '/proyectoFinal/index.html';
                                 return;
                             }
+
+                            data.rol = parseInt(data.rol, 10);
                             switch (data.rol) {
                                 case 1: // Cliente
                                     window.location.href = "/proyectoFinal/index.html";
