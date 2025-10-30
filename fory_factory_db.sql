@@ -390,7 +390,6 @@ INSERT INTO direccion_usuario (id_usuario, alias, calle, numero, ciudad, departa
 (2, 'Amor', 'Av centenario', 1337, 'Montevideo', '', 11300, 'Casa roja', 0),
 (2, '', 'test', 1234, 'test', 'test', 11300, 'test', 0);
 
--- 5 reservas del cliente (pendientes de confirmar desde el backend)
 INSERT INTO reservas (id_usuario, id_mesa, fechaReserva, hora, fechaActual, numeroPersonas, estado, codigoReserva, nombreCliente, telefonoCliente, emailCliente, notas
 )
 VALUES

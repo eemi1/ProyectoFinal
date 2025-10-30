@@ -61,7 +61,7 @@ function getReservations(estado = 'todas') {
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        //console.log(data);
         const reservasSection = document.querySelector('.reservas-container');
         if (!data.success || data.reservas.length === 0) {
             // Si no hay reservas, mostrar el contenido por defecto
