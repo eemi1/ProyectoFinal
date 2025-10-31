@@ -1390,7 +1390,7 @@ html, body {
     outline: none;
     border: 1px solid var(--primary-color);
 }
-#clearFilters{
+.clearFilters{
     border: 1px solid var(--borderColor);
     border-radius: 0.5rem;
     height: 40px;
@@ -1399,19 +1399,19 @@ html, body {
     color: white;
     cursor: pointer;
 }
-#clearFilters:hover{
+.clearFilters:hover{
     background-color: var(--primary-color-hover);
 }
 
 /*===== ESTADÍSTICAS RESERVAS ====*/
-.reservasStats {
+.reservasStats, .pedidosStats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 15px;
     margin-top: 20px;
 }
 
-.reservasStats-card {
+.reservasStats-card, .pedidosStats-card {
     background: #fff;
     padding: 20px;
     border-radius: 15px;
@@ -1421,7 +1421,7 @@ html, body {
     border: 1px solid var(--borderColor);
 }
 
-.reservasStats-card h3 {
+.reservasStats-card h3, .pedidosStats-card h3 {
     font-size: 0.9rem;
     color: #555;
     margin-bottom: 10px;
@@ -1431,13 +1431,13 @@ html, body {
     justify-content: center;
 }
 
-.reservasStats-card p {
+.reservasStats-card p, .pedidosStats-card p {
     font-size: 2rem;
     font-weight: bold;
     color: #333;
 }
 
-.reservasStats-card:hover {
+.reservasStats-card:hover, .pedidosStats-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
@@ -1604,6 +1604,29 @@ html, body {
 }
 
 /*==== CSS DE MESAS ESTADO DE LAS MESAS ====*/
+
+/*Filtros para mesas*/
+.filterShowTables{
+    display: flex;
+    padding: 20px;
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    gap: 10px;
+    padding: 0.5rem;
+}
+
+.filterTables{
+    border: 1px solid var(--borderColor);
+    background-color: white;
+    padding: 10px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+
+
+
+
 .tables-container{
     display: grid;
     grid-template-columns:repeat(auto-fill, minmax(400px, 1fr));
@@ -1650,6 +1673,7 @@ html, body {
     padding: 2px 7px;
 
 }
+
 /*=======================================|DASHBOARD PEDIDOS|==========================================================*/
 
 

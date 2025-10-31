@@ -1,13 +1,30 @@
     
 document.addEventListener("DOMContentLoaded", () => {
-    loadAddresses();
     eventButton();
     loadProducts();
     finalizarPedido();
+    deliveryMethod();
 
 })
+
+function deliveryMethod() {
+    const inputs = document.querySelectorAll('input[name="deliveryMethod"]');
+    
+        inputs.forEach(input => {
+            input.addEventListener("change", function() {
+                const valorInput = input.value;
+                if (valorInput === "envio") {
+                    loadAddresses();
+                }else if (valorInput === "retiro") {
+                    document.querySelector('.Address').style.display = "none";
+                }
+            });
+        })
+}
     
 function loadAddresses() {
+    const address = document.querySelector('.Address')
+    address.style.display = "block";
     const addressesContainer = document.getElementById("contentAddress");
         fetch("/proyectoFinal/app/Functions/dashboardUser/addressController.php?action=get", {
             credentials: 'same-origin'
@@ -194,10 +211,19 @@ function finalizarPedido() {
             Swal.fire("Carrito vacío", "Agrega productos antes de finalizar el pedido.", "warning");
             return;
         }
+        const metodoEntrega = document.querySelector('input[name="deliveryMethod"]:checked')?.value;
+        let direccionSeleccionada = document.querySelector('input[name="address"]:checked');
 
-        const direccionSeleccionada = document.querySelector('input[name="address"]:checked');
-        if (!direccionSeleccionada) {
-            Swal.fire("Falta la dirección", "Selecciona una dirección de entrega antes de continuar.", "warning");
+
+        if (metodoEntrega === 'envio'){
+            if (!direccionSeleccionada) {
+                Swal.fire("Falta la dirección", "Selecciona una dirección de entrega antes de continuar.", "warning");
+                return;
+            }
+        }else if (metodoEntrega === 'retiro') {
+            direccionSeleccionada = { dataset: { id: null } }; // No se necesita dirección para retiro
+        }else{
+            Swal.fire("Falta método de entrega", "Selecciona un método de entrega antes de finalizar el pedido.", "warning");
             return;
         }
 
@@ -230,7 +256,7 @@ function finalizarPedido() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "same-origin",
-            body: JSON.stringify({ productos, total, id_direccion: idDireccion })
+            body: JSON.stringify({ productos, total, id_direccion: idDireccion, metodoPago, metodoEntrega})
         })
         .then(res => res.json())
         .then(data => {

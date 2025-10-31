@@ -97,7 +97,7 @@ function getOrders($pdo) {
 
         // 2️⃣ Traer todas las facturas con su dirección
         $stmt = $pdo->prepare("
-            SELECT f.id, f.fecha, f.total, f.estado, f.codigo,
+            SELECT f.id, f.fecha, f.total, f.estado, f.codigo, f.metodoPago, f.metodoEntrega,
                    d.id AS id_direccion, d.calle, d.numero, d.ciudad, d.departamento, d.codigo_postal, d.referencia
             FROM factura f
             LEFT JOIN direccion_usuario d ON f.id_direccion = d.id
@@ -135,6 +135,8 @@ function getOrders($pdo) {
                 "total" => $factura['total'],
                 "estado" => $factura['estado'],
                 "codigo" => $factura['codigo'],
+                "metodoPago" => $factura['metodoPago'],
+                "metodoEntrega" => $factura['metodoEntrega'],
                 "direccion" => [
                     "id_direccion" => $factura['id_direccion'],
                     "calle" => $factura['calle'],

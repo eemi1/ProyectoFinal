@@ -2,10 +2,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     getReservations();
     changeFilter();
-
 })
+/*=========================================*/
+/*====== FILTROS RESERVAS Y MESAS =========*/
+/*=========================================*/
 
 function changeFilter() {
+    /*====== FILTROS PARA VER RESERVAS =========*/
     document.querySelectorAll('.filterStatus input[type="radio"]').forEach(radio => {
         radio.addEventListener('change', () => {
             const estado = radio.value;
@@ -48,12 +51,15 @@ function changeFilter() {
         });
     });
 
-    document.getElementById('clearFilters').addEventListener('click', () => {
+    document.getElementById('clearFiltersReservations').addEventListener('click', () => {
         document.getElementById('searchReservationsInput').value = '';
         document.getElementById('filterDate').value = '';
         getReservations();
     });
 }
+/*===================================*/
+/*===== VER RESERVAS PENDIENTES =====*/
+/*===================================*/
 
 function getReservations(estado = 'todas') {
     fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=getReservations&estado=${estado}`, {
@@ -250,7 +256,9 @@ function finalizeReservation(id) {
         }
     });
 }
-
+/*=================================*/
+/*===== VER MESAS DISPONIBLES =====*/
+/*=================================*/
 function showTablesAvailables() {
 
     const btnShowTables = document.getElementById('showTablesStatus');
@@ -294,6 +302,28 @@ function showTablesAvailables() {
                 header.textContent = 'Estado de Mesas';
                 reservasSection.appendChild(header);
 
+                const filterShowTables = document.createElement('div');
+                filterShowTables.classList.add('filterShowTables');
+                filterShowTables.innerHTML = `
+                    <select class="filterTables" id="showTablasFilterAvailability">
+                        <option value="todas">Todas las mesas</option>
+                        <option value="disponible">Mesas disponibles</option>
+                        <option value="ocupada">Mesas ocupadas</option>
+                        <option value="reservada">Mesas reservadas</option>
+                    </select>
+
+                    <select class="filterTables" id="showTablesFilterCapacity">
+                        <option value="todas">Todas las capacidades</option>
+                        <option value="capacidad2">Capacidad 2</option>
+                        <option value="capacidad4">Capacidad 4</option>
+                        <option value="capacidad6">Capacidad 6</option>
+                        <option value="capacidad8">Capacidad 8</option>
+                    </select>
+
+                    <button id="clearFiltersShowTables" class="clearFilters">Limpiar filtros</button>
+                `;
+                reservasSection.appendChild(filterShowTables);
+
                 const tablesContainer = document.createElement('div');
                 tablesContainer.classList.add('tables-container');
 
@@ -318,12 +348,12 @@ function showTablesAvailables() {
 
                     tableDiv.innerHTML = `
                         <h3>Mesa #${table.id}</h3>
-                        <p><strong>Capacidad:</strong> ${table.capacidad} personas</p>
-                        <p><strong>Ubicación:</strong> ${table.ubicacion}</p>
+                        <p class="tablesAbility" data-capacidad="${table.capacidad}"><strong>Capacidad:</strong> ${table.capacidad} personas</p>
                         <p><strong>Estado:</strong> ${table.estado}</p>
                     `;
 
                     tablesContainer.appendChild(tableDiv);
+                    filtersShowTables();
 
                 });
 
@@ -335,5 +365,80 @@ function showTablesAvailables() {
         });
     });
 }
+
+function filtersShowTables () {
+/*====== FILTROS PARA VER MESAS =========*/
+    /*Filtro para ver por estado */
+    const selectAvailability = document.getElementById('showTablasFilterAvailability');
+
+    selectAvailability.addEventListener('change', (e) => {
+        const selectedAvailability = e.target.value;
+        const tables = document.querySelectorAll('.tableItem');
+        tables.forEach(table => {
+            switch(selectedAvailability) {
+                case 'todas':
+                    table.style.display = '';
+                    break;
+                case 'disponible':
+                    table.style.display = table.classList.contains('mesa-disponible') ? '' : 'none';
+                    break;
+                case 'ocupada':
+                    table.style.display = table.classList.contains('mesa-ocupada') ? '' : 'none';
+                    break;
+                case 'reservada':
+                    table.style.display = table.classList.contains('mesa-reservada') ? '' : 'none';
+                    break;
+                default:
+                    table.style.display = '';
+            }
+        }) 
+    });
+
+    /*Filtro para ver por capacidad*/
+    const tablesAbility = document.getElementById('showTablesFilterCapacity');
+
+    tablesAbility.addEventListener('change', (e) => {
+        const selectedCapacity = e.target.value;
+        const tables = document.querySelectorAll('.tableItem');
+        tables.forEach(table => {
+            const capacidad = table.querySelector('.tablesAbility').dataset.capacidad;            
+            switch(selectedCapacity) {
+                case 'todas':
+                    table.style.display = '';
+                    break;
+                case 'capacidad2':
+                    table.style.display = capacidad == 2 ? '' : 'none';
+                    break;
+                case 'capacidad4':
+                    table.style.display = capacidad == 4 ? '' : 'none';
+                    break;
+                case 'capacidad6':
+                    table.style.display = capacidad == 6 ? '' : 'none';
+                    break;
+                case 'capacidad8':
+                    table.style.display = capacidad == 8 ? '' : 'none';
+                    break;
+                default:
+                    table.style.display = '';
+            }
+        })
+    });
+
+    /*Borrar filtros*/
+    const btnClearFilters = document.getElementById('clearFiltersShowTables');
+
+    btnClearFilters.addEventListener('click', () => {
+        console.log("Borrar filtros mesas");
+        const tables = document.querySelectorAll('.tableItem');
+        tables.forEach(table => {
+            table.style.display = '';
+                document.getElementById('showTablesFilterCapacity').value = 'todas';
+                document.getElementById('showTablasFilterAvailability').value = 'todas';
+        });
+    });
+
+
+}
+
 
 

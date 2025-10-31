@@ -70,6 +70,7 @@ data.pedidos.forEach(pedido => {
                         <span><strong>Pedido:</strong> #${pedido.codigo} ${estado}</span>
                         <p>📅 ${pedido.fechaFormateada}</p>
                         <p>📍 ${pedido.direccion.calle}, ${pedido.direccion.numero}, ${pedido.direccion.ciudad}</p>
+                        <p>🚚 Método de entrega: ${pedido.metodoEntrega}</p>
                     </div>
                 </div>
                 <div class="headerPrice">

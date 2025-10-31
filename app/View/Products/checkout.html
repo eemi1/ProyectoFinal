@@ -18,7 +18,32 @@
     <main>
         <div class="containerMain">
             <h1>Checkout</h1>
-            <div class="Address">
+
+            <div class="deliveryMethod">
+                <div class="header">
+                    <h3><i class="fa-solid fa-truck-fast"></i>Retirar o Envío</h3>
+                    <p>Selecciona cómo quieres recibir tu pedido</p>
+                </div>
+                <div class="content" id="contentDelivery">
+                    <div class="option delivery" id="containerDelivery1">
+                        <input type="radio" id="retiro" name="deliveryMethod" value="retiro">
+                        <label for="retiro" class="addressLabel">
+                            <h4><i class="fa-solid fa-store"></i>Retiro en tienda</h4>
+                            <p>Retirá tu pedido en nuestra tienda física</p>
+                        </label>
+                    </div>
+                    
+                    <div class="option delivery" id="containerDelivery2">
+                        <input type="radio" id="envio" name="deliveryMethod" value="envio">
+                        <label for="envio" class="addressLabel">
+                            <h4><i class="fa-solid fa-truck"></i>Envío a domicilio</h4>
+                            <p>Recibe tu pedido en la dirección que elijas</p>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="Address" style="display: none;">
                 <div class="header">
                     <h3><i class="fa-solid fa-location-dot"></i>Dirección entrega</h3>
                     <p>Selecciona donde quieres recibir tu pedido</p>
@@ -29,6 +54,8 @@
                     <button type="button" class="admDireciones">Administrar direcciones</button>
                 </div>
             </div>
+
+
             <div class="paymentMethod">
                 <div class="header">
                     <h3><i class="fa-solid fa-money-check-dollar"></i>Método de pago</h3>

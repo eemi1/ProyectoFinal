@@ -168,6 +168,8 @@ CREATE TABLE factura (
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2) NOT NULL,
     estado VARCHAR(50) DEFAULT 'pendiente',
+    metodoPago ENUM('efectivo', 'tarjeta', 'transferencia') NOT NULL,
+    metodoEntrega ENUM('retiro', 'envio') NOT NULL, 
     FOREIGN KEY (id_cliente) REFERENCES usuario(id)
 );
 
