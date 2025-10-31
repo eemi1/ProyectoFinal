@@ -1,3 +1,11 @@
+backups/
+logs/
+*.log
+*.bak
+*.tar.gz
+*.zip
+*.tmp
+*~
 node_modules
 /vendor
 /composer.lock
