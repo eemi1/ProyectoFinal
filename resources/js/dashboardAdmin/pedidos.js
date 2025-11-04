@@ -77,14 +77,23 @@ function getOrders(estado = 'todas') {
                     <button class="btnCancelarOrder" onclick="cancelReservation(${pedido.id})">Cancelar</button>
                     `
                 break;
+            case 'Lista':
+                estado = `<span class="estadoLista">${pedido.estado}</span>`;
+                buttons = `
+                <button class="btnEntregadoOrder" onclick="sentOrder(${pedido.id})">Entregada</button>
+                <button class="btnCancelarOrder" onclick="cancelReservation(${pedido.id})">Cancelar</button>
+                `
+                break;
+            case "Entregado":
+                    estado = `<span class="estadoEntregado">${pedido.estado}</span>`;
+                    buttons = ``;
+                    break
+
             case "Cancelado":
                 estado = `<span class="estadoCancelado">${pedido.estado}</span>`;
                 buttons = ``;
                 break;
-            case "Entregado":
-                estado = `<span class="estadoEntregado">${pedido.estado}</span>`;
-                buttons = ``;
-                break
+
             default:
                 estado = `<span>${pedido.estado}</span>`;
         }
@@ -207,4 +216,25 @@ function listOrder(id){
         }
     })
     .catch(err => console.error("Error:", err));
+}
+
+function sentOrder(id){
+    fetch('/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=sentOrder', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire('✅ Entregado', 'El pedido fue marcado como entregado.', 'success');
+            getOrders();
+        } else {
+            Swal.fire('⚠️ Error', data.message || 'No se pudo marcar como entregado.', 'error');
+        }
+    })
+    .catch(err => console.error('Error:', err));
+
 }

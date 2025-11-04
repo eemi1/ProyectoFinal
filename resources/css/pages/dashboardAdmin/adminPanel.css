@@ -1491,11 +1491,11 @@ html, body {
     background-color: rgb(231, 208, 0);
     color: white;
 }
-.estadoConfirmado{
+.estadoConfirmado, .estadoLista{
     background-color: var(--primary-color);
     color: white;
 }
-.estadoEnCurso{
+.estadoEnCurso, .estadoPreparacion{
     background-color: #2563eb;
     color: white;
 }
@@ -1503,6 +1503,7 @@ html, body {
     background-color: red;
     color: white;
 }
+
 
 /*CONTENEDOR DETALLES CARDS*/
 
@@ -1579,19 +1580,19 @@ html, body {
 .btnCancelarReserva:hover, .btnCancelarOrder {
     background-color: darkred;
 }
-.btnConfirmarReserva, .btnConfirmarOrder{
+.btnConfirmarReserva{
     background-color: var(--primary-color);
     transition: background-color 0.3s ease;
 }
-.btnConfirmarReserva:hover, .btnConfirmarOrder:hover {
+.btnConfirmarReserva:hover {
     background-color: var(--primary-color-hover);
 }
 
-.btnAsistioReserva, .btnListaOrder{
+.btnAsistioReserva{
     background-color: #2563eb;
     transition: background-color 0.3s ease;
 }
-.btnAsistioReserva:hover, .btnListaOrder:hover {
+.btnAsistioReserva:hover {
     background-color: #1e3a8a;
 }
 
@@ -1676,6 +1677,35 @@ html, body {
 
 /*=======================================|DASHBOARD PEDIDOS|==========================================================*/
 
+/*Estados botones y span*/
+.estadoPendiente{
+    background-color: rgb(231, 208, 0);
+    color: white;
+
+}
+.estadoPreparacion{
+    background-color: #ff8800;
+    color: white;
+}
+.estadoLista{
+    background-color: #2563eb;
+    color: white;
+}
+.estadoCancelado{
+    background-color: red;
+    color: white;
+
+}
+
+.btnConfirmarOrder{
+    background-color: var(--primary-color);
+    transition: background-color 0.3s ease;
+    color:white;
+}
+.btnConfirmarOrder:hover {
+    background-color: var(--primary-color-hover);
+
+}
 
 /*CONTENEDOR PEDIDOS*/
 .ordersContainer{

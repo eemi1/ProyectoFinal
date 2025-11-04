@@ -118,6 +118,28 @@ function listOrder($pdo) {
             exit;
         }
 
+        $stmt = $pdo->prepare("UPDATE factura SET estado = 'Lista' WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+
+        echo json_encode([
+            "success" => $stmt->rowCount() > 0,
+            "message" => $stmt->rowCount() > 0 ? "Pedido marcado como listo" : "No se encontró el pedido"
+        ]);
+    } catch (Exception $e) {
+        echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
+    }
+}
+
+function sentOrder($pdo) {
+    try {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $id = $data['id'] ?? null;
+
+        if (!$id) {
+            echo json_encode(["success" => false, "message" => "ID no proporcionado"]);
+            exit;
+        }
+
         $stmt = $pdo->prepare("UPDATE factura SET estado = 'Entregado' WHERE id = :id");
         $stmt->execute(['id' => $id]);
 
@@ -129,7 +151,6 @@ function listOrder($pdo) {
         echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
     }
 }
-
 $accion = $_GET['action'] ?? null;
 
 switch ($accion) {
@@ -144,6 +165,9 @@ switch ($accion) {
         break;
     case 'listOrder':
         listOrder($pdo);
+        break;
+    case 'sentOrder':
+        sentOrder($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);
