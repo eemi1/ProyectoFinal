@@ -1278,6 +1278,7 @@ html, body {
     flex-direction: column;
     gap: 20px;
     padding: 20px 30px;
+    padding-top: 0px;
 }
 
 /*Mensaje default cuando no hay reservas*/
@@ -1334,7 +1335,6 @@ html, body {
 .reservaHeader p{
     font-size: var(--font-small);
     color: var(--textMuted);
-    margin-left: 5px;
 }
 /*===== Contenedor Filtros =====*/
 .filters{
@@ -1359,7 +1359,7 @@ html, body {
 }
 
 /*Input buscador*/
-#searchReservationsInput{
+#searchReservationsInput, #searchOrdersInput{
     height: 40px;
     width: 70%;
     padding: 0px 10px;
@@ -1368,7 +1368,7 @@ html, body {
     font-size: var(--font-medium);
 }
 
-#searchReservationsInput:focus{
+#searchReservationsInput:focus, #searchOrdersInput:focus{
     outline: none;
     border: 1px solid var(--primary-color);
 }
@@ -1444,7 +1444,7 @@ html, body {
 
 
 /*==== Filtros de Estado ====*/
-.filterStatus {
+.filterStatusReservations, .filterStatusOrders  {
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -1460,16 +1460,16 @@ html, body {
     justify-content: center;
 }
 
-.filterStatus .radio {
+.filterStatusReservations .radio, .filterStatusOrders .radio {
   flex: 1 1 auto;
   text-align: center;
 }
 
-.filterStatus .radio input {
+.filterStatusReservations .radio input, .filterStatusOrders .radio input {
   display: none;
 }
 
-.filterStatus .radio .name {
+.filterStatusReservations .radio .name, .filterStatusOrders .radio .name {
   display: flex;
   cursor: pointer;
   align-items: center;
@@ -1481,7 +1481,7 @@ html, body {
   transition: all .15s ease-in-out;
 }
 
-.filterStatus .radio input:checked + .name {
+.filterStatusReservations .radio input:checked + .name, .filterStatusOrders .radio input:checked + .name     {
   background-color: #fff;
   font-weight: 600;
 }
@@ -1571,27 +1571,27 @@ html, body {
     color: white;
 }
 
-.btnCancelarReserva{
+.btnCancelarReserva, .btnCancelarOrder{
     background-color: red;
     transition: background-color 0.3s ease;
 }
 
-.btnCancelarReserva:hover {
+.btnCancelarReserva:hover, .btnCancelarOrder {
     background-color: darkred;
 }
-.btnConfirmarReserva{
+.btnConfirmarReserva, .btnConfirmarOrder{
     background-color: var(--primary-color);
     transition: background-color 0.3s ease;
 }
-.btnConfirmarReserva:hover {
+.btnConfirmarReserva:hover, .btnConfirmarOrder:hover {
     background-color: var(--primary-color-hover);
 }
 
-.btnAsistioReserva{
+.btnAsistioReserva, .btnListaOrder{
     background-color: #2563eb;
     transition: background-color 0.3s ease;
 }
-.btnAsistioReserva:hover {
+.btnAsistioReserva:hover, .btnListaOrder:hover {
     background-color: #1e3a8a;
 }
 
@@ -1677,17 +1677,124 @@ html, body {
 /*=======================================|DASHBOARD PEDIDOS|==========================================================*/
 
 
+/*CONTENEDOR PEDIDOS*/
+.ordersContainer{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 30px;
+    padding-top: 0px;
+    display: flex;
+}
+.orderItem{
+    border: 1px solid var(--borderColor);
+    border-radius: 10px;
+    width: auto;
+    max-width: 100rem;
+    min-width: 50rem;
+    transition: transform 0.5s ease, opacity 0.5s ease;
 
+}
 
+.orderContent{
+    display: flex;
+    flex-direction: column;
+}
 
+.orderHeader {
+    font-size: var(--font-medium);
+    font-family: 'Sans seriff', Arial;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    border-bottom: 1px solid var(--borderColor);
+    background-color: #f9f9f9;
+    padding: 10px 15px;
+    justify-content: space-between;
+}
 
+.orderTitle{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 
+.orderHeader h3{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
 
+.orderHeader p{
+    font-size: var(--font-small);
+    color: var(--textMuted);
+}
 
+.orderHeader span{
+    border: 1px solid var(--borderColor);
+    border-radius: 20rem;
+    padding: 5px 10px;
+    font-size: var(--font-mediumSmall);
+    height: max-content;
+    font-weight: bold;
+}
 
+.orderDetails{
+    padding: 10px 15px;
+}
 
+.orderDetails span{
+    color: var(--textMuted);
+    font-weight: bold;
+    display: flex;
 
+}
+.articuloItem p{
+    font-family: 'Sans Seriff', 'Raleway';
+    margin-left: 10px;
+    color: black;
+    font-size: var(--font-mediumSmall);
+}
 
+.articulosContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 5px 0px;
+}
+
+.orderTotal {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.totalOrder{
+    font-family: 'Sans Seriff', 'Arial';
+    color: var(--primary-color);
+    font-size: var(--font-large);
+}
+
+.orderBtns{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 10px 15px;
+}
+
+.orderBtns button{
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: var(--font-mediumSmall);
+    cursor: pointer;
+    color: white;
+}
 
 
 

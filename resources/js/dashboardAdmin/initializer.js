@@ -64,4 +64,5 @@ function accessAdmin() {
     changeImage();
     getReservations();
     showTablesAvailables();
+    getOrders();
 }

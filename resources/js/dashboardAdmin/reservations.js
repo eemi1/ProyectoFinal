@@ -1,62 +1,73 @@
-
 document.addEventListener('DOMContentLoaded', () => {
-    getReservations();
-    changeFilter();
-})
+    changeFilterReservations();
+});
+
 /*=========================================*/
 /*====== FILTROS RESERVAS Y MESAS =========*/
 /*=========================================*/
 
-function changeFilter() {
-    /*====== FILTROS PARA VER RESERVAS =========*/
-    document.querySelectorAll('.filterStatus input[type="radio"]').forEach(radio => {
-        radio.addEventListener('change', () => {
-            const estado = radio.value;
-            getReservations(estado);
-            console.log(estado  );
+function changeFilterReservations() {
+    try{
+        /*====== FILTROS PARA VER RESERVAS =========*/
+        document.querySelectorAll('.filterStatusReservations input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                const estado = radio.value;
+                getReservations(estado);
+                console.log(estado);
+            });
         });
-    });
-
-    document.getElementById('searchReservationsInput').addEventListener('input', (e) => {
-        const filtro = e.target.value.toLowerCase();
-        const reservas = document.querySelectorAll('.reservaItem');
-
-        reservas.forEach(reserva => {
-            const texto = reserva.textContent.toLowerCase();
-
-            if (texto.includes(filtro)) {
-                reserva.style.display = '';
-            } else {
-                reserva.style.display = 'none';
-            }
+    
+        document.getElementById('searchReservationsInput').addEventListener('input', (e) => {
+            const filtro = e.target.value.toLowerCase();
+            const reservas = document.querySelectorAll('.reservaItem');
+        
+            reservas.forEach(reserva => {
+                const texto = reserva.textContent.toLowerCase();
+            
+                if (texto.includes(filtro)) {
+                    reserva.style.display = '';
+                } else {
+                    reserva.style.display = 'none';
+                }
+            });
         });
-    });
+    
+        document.getElementById('filterDate').addEventListener('change', (e) => {
+            const selectedDate = e.target.value; // YYYY-MM-DD
+            const reservas = document.querySelectorAll('.reservaItem');
+            console.log(`selectedDate: ${selectedDate}`);
+            console.log(`reservas: ${reservas}`);
+        
+            reservas.forEach(reserva => {
+                const fechaElemento = reserva.querySelector('.fechaReserva');
+                if (!fechaElemento) return;
+            
+                const fechaReserva = fechaElemento.dataset.fecha;
+                // console.log(`fechaReserva: ${fechaReserva}`);
 
-    document.getElementById('filterDate').addEventListener('change', (e) => {
-        const selectedDate = e.target.value; // siempre viene como YYYY-MM-DD
-        const reservas = document.querySelectorAll('.reservaItem');
-
-        reservas.forEach(reserva => {
-            const fechaElemento = reserva.querySelector('.fechaReserva');
-            if (!fechaElemento) return;
-
-            const fechaReserva = fechaElemento.dataset.fecha; // usa el data-fecha original
-
-            // Mostrar solo las que coincidan
-            if (!selectedDate || fechaReserva === selectedDate) {
-                reserva.style.display = '';
-            } else {
-                reserva.style.display = 'none';
-            }
+                // Mostrar solo las que coincidan
+                if (!selectedDate || fechaReserva === selectedDate) {
+                    reserva.style.display = '';
+                } else {
+                    reserva.style.display = 'none';
+                }
+            });
         });
-    });
+    
+        document.getElementById('clearFiltersReservations').addEventListener('click', () => {
+            document.getElementById('searchReservationsInput').value = '';
+            document.getElementById('filterDate').value = '';
+            getReservations();
+        });
 
-    document.getElementById('clearFiltersReservations').addEventListener('click', () => {
-        document.getElementById('searchReservationsInput').value = '';
-        document.getElementById('filterDate').value = '';
-        getReservations();
-    });
+    }catch(e){
+        console.error("Error en changeFilter:", e);
+    }
 }
+
+
+
+
 /*===================================*/
 /*===== VER RESERVAS PENDIENTES =====*/
 /*===================================*/
@@ -76,7 +87,7 @@ function getReservations(estado = 'todas') {
                 <div class="reservas-default">
                     <div id="container-default-text">
                         <h1 id="default-title">Historial de Reservas</h1>
-                        <p id="default-subtitle">Aquí podrás ver todas las reservas del negocio.</p>
+                        <p id="default-subtitle">No se encuentran reservas con este filtro.</p>
                     </div>
                 </div>
             `;
@@ -86,7 +97,7 @@ function getReservations(estado = 'todas') {
         if (data.success) {
             let estado = '';
             
-            reservasSection.innerHTML = '';
+            reservasSection.replaceChildren(); // más seguro que innerHTML = ''
             data.reservas.forEach(reserva => {
                 console.log(reserva);
                 // 🔹 Formato automático DD/MM/YYYY
@@ -256,6 +267,10 @@ function finalizeReservation(id) {
         }
     });
 }
+
+
+
+
 /*=================================*/
 /*===== VER MESAS DISPONIBLES =====*/
 /*=================================*/
@@ -281,7 +296,7 @@ function showTablesAvailables() {
             console.log(data);
             if (data.success) {
                 const reservasSection = document.querySelector('.reservas-container');
-                reservasSection.innerHTML = '';
+                reservasSection.replaceChildren(); // más seguro que innerHTML = ''
 
                 try {
                     if (searchFilter.style.display === 'none' && statusFilter.style.display === 'none') {

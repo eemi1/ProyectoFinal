@@ -17,6 +17,7 @@ $total = $data['total'] ?? 0;
 $id_direccion = $data['id_direccion'] ?? null;
 $metodoEntrega = $data['metodoEntrega'] ?? 'Sin definir entrega'; // 'envio' o 'retiro'
 $metodoPago = $data['metodoPago'] ?? 'Sin metodo de pago'; // 'efectivo' o 'tarjeta'
+$estado = 'Pendiente';
 
 if (empty($productos)) {
     echo json_encode(['success' => false, 'message' => 'No hay productos en el pedido']);
@@ -30,8 +31,8 @@ try {
     $codigo = 'PED-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(2)));
 
     // 1️⃣ Guardar factura
-    $stmt = $pdo->prepare("INSERT INTO factura (id_cliente, fecha, total, codigo, id_direccion, metodoEntrega, metodoPago) VALUES (?, NOW(), ?, ?, ?, ?, ?)");
-    $stmt->execute([$id_usuario, $total, $codigo, $id_direccion, $metodoEntrega, $metodoPago]);
+    $stmt = $pdo->prepare("INSERT INTO factura (id_cliente, fecha, total, codigo, id_direccion, metodoEntrega, metodoPago, estado) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$id_usuario, $total, $codigo, $id_direccion, $metodoEntrega, $metodoPago, $estado]);
     $id_factura = $pdo->lastInsertId();
 
     // 2️⃣ Guardar detalle de productos

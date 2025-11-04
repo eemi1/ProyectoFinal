@@ -636,29 +636,29 @@
                         </div>
 
                         <!-- FILTRO DE ESTADO -->
-                        <div class="filterStatus">
+                        <div class="filterStatusReservations">
                             <label class="radio">
-                                <input type="radio" name="radio" value="todas" checked>
+                                <input type="radio" name="radioReservations" value="todas" checked>
                                 <span class="name">Todas</span>
                             </label>
                             <label class="radio">
-                                <input type="radio" name="radio" value="Pendiente">
+                                <input type="radio" name="radioReservations" value="Pendiente">
                                 <span class="name">Pendientes</span>
                             </label>
                             <label class="radio">
-                                <input type="radio" name="radio" value="Confirmado">
+                                <input type="radio" name="radioReservations" value="Confirmado">
                                 <span class="name">Confirmadas</span>
                             </label>
                             <label class="radio">
-                                <input type="radio" name="radio" value="Cancelado">
+                                <input type="radio" name="radioReservations" value="Cancelado">
                                 <span class="name">Canceladas</span>
                             </label>
                             <label class="radio">
-                                <input type="radio" name="radio" value="Finalizado">
+                                <input type="radio" name="radioReservations" value="Finalizado">
                                 <span class="name">Finalizadas</span>
                             </label>
                             <label class="radio">
-                                <input type="radio" name="radio" value="En curso">
+                                <input type="radio" name="radioReservations" value="En curso">
                                 <span class="name">En curso</span>
                             </label>
                         </div>
@@ -705,7 +705,7 @@
 
                         <!-- FILTROS DE BUSQUEDA -->
                         <div class="reservasFilters">
-                            <input type="text" id="searchReservationsInput" placeholder="Buscar código de pedido">
+                            <input type="text" id="searchOrdersInput" placeholder="Buscar código de pedido">
 
                             <div class="containerFilterDate">
                                 <label for="filterDate">Filtrar por fecha:</label>
@@ -716,37 +716,35 @@
                         </div>
 
                         <!-- FILTRO DE ESTADO -->
-                        <div class="filterStatus">
+                        <div class="filterStatusOrders">
                             <label class="radio">
-                                <input type="radio" name="radio" value="todas" checked>
+                                <input type="radio" name="radioOrders" value="todas" checked>
                                 <span class="name">Todas</span>
                             </label>
                             <label class="radio">
-                                <input type="radio" name="radio" value="Pendiente">
+                                <input type="radio" name="radioOrders" value="Pendiente">
                                 <span class="name">Pendientes</span>
                             </label>
                             <label class="radio">
-                                <input type="radio" name="radio" value="Confirmado">
-                                <span class="name">Confirmadas</span>
+                                <input type="radio" name="radioOrders" value="En Preparación">
+                                <span class="name">En Preparación</span>
+                                </label>
+                            <label class="radio">
+                                <input type="radio" name="radioOrders" value="Lista">
+                                <span class="name">Listas</span>
                             </label>
                             <label class="radio">
-                                <input type="radio" name="radio" value="Cancelado">
-                                <span class="name">Canceladas</span>
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="radio" value="Finalizado">
-                                <span class="name">Finalizadas</span>
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="radio" value="En curso">
-                                <span class="name">En curso</span>
+                                <input type="radio" name="radioOrders" value="Entregado">
+                                <span class="name">Entregadas</span>
                             </label>
                         </div>
                     </div>
 
-                    <div class="orders-container">
+                    <div class="ordersContainer" id="ordersContainer">
                         <!-- Aquí se cargarán los pedidos dinámicamente -->
                     </div>
+                </section>
+            
 
 
 
@@ -762,6 +760,7 @@
         <script src="/proyectoFinal/resources/js/dashboardAdmin/usuarios.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/util.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/reservations.js"></script>
+        <script src="/proyectoFinal/resources/js/dashboardAdmin/pedidos.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/initializer.js"></script>
 
     </body>
