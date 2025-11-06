@@ -157,35 +157,6 @@ CREATE TABLE `producto_ingrediente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ==========================================
--- Productos página
--- ==========================================
--- Tabla principal de la factura
-CREATE TABLE factura (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_cliente INT NOT NULL,
-    codigo VARCHAR(20) UNIQUE,
-    id_direccion INT NULL,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    total DECIMAL(10,2) NOT NULL,
-    estado VARCHAR(50) DEFAULT 'pendiente',
-    metodoPago ENUM('efectivo', 'tarjeta', 'transferencia') NOT NULL,
-    metodoEntrega ENUM('retiro', 'envio') NOT NULL, 
-    FOREIGN KEY (id_cliente) REFERENCES usuario(id)
-);
-
--- Detalle de cada producto en la factura
-CREATE TABLE detalle_factura (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_factura INT NOT NULL,
-    id_producto INT NOT NULL,
-    cantidad INT NOT NULL,
-    precio_unitario DECIMAL(10,2) NOT NULL,
-    subtotal DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_factura) REFERENCES factura(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_producto) REFERENCES producto(id)
-);
-
--- ==========================================
 -- Mesas, reservas, pedidos y puntos
 -- ==========================================
 
@@ -227,17 +198,48 @@ CREATE TABLE `noshow` (
   `penalizacion` VARCHAR(255) DEFAULT NULL,
   CONSTRAINT `noshow_ibfk_1` FOREIGN KEY (`id_reserva`) REFERENCES `reservas` (`id`) ON DELETE CASCADE
 );
+-- Tabla principal de la factura
+CREATE TABLE factura (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    id_mesa INT NULL,
+    codigo VARCHAR(20) UNIQUE,
+    id_direccion INT NULL,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total DECIMAL(10,2) NOT NULL,
+    estado VARCHAR(50) DEFAULT 'pendiente',
+    metodoPago ENUM('efectivo', 'tarjeta', 'transferencia') NOT NULL,
+    estadoPago ENUM('pendiente','pagado') DEFAULT 'pendiente',
+    metodoEntrega ENUM('retiro', 'envio') NOT NULL, 
+    FOREIGN KEY (id_cliente) REFERENCES usuario(id),
+    FOREIGN KEY (id_mesa) REFERENCES mesa(id)
+);
 
-CREATE TABLE `pedido` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `id_cliente` INT NOT NULL,
-  `id_producto` INT DEFAULT NULL,
-  `id_mesa` INT NOT NULL,
-  `fecha` DATETIME DEFAULT current_timestamp(),
-  `cantidad` INT DEFAULT 1,
-  CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_usuario`),
-  CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`),
-  CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`id_mesa`) REFERENCES `mesa` (`id`)
+-- Detalle de cada producto en la factura
+CREATE TABLE detalle_factura (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_factura INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_factura) REFERENCES factura(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_producto) REFERENCES producto(id)
+);
+
+
+
+CREATE TABLE pedido (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_factura INT NOT NULL,
+  id_mozo INT NULL,
+  id_chef INT NULL,
+  tiempo_estimado TIME DEFAULT NULL,
+  hora_inicio DATETIME DEFAULT CURRENT_TIMESTAMP,
+  hora_fin DATETIME DEFAULT NULL,
+  FOREIGN KEY (id_factura) REFERENCES factura(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_mozo) REFERENCES usuario(id),
+  FOREIGN KEY (id_chef) REFERENCES usuario(id)
 );
 
 CREATE TABLE `puntos` (

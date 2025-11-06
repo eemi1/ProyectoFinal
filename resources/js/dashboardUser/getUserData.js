@@ -25,28 +25,47 @@ function getOrders() {
         let html = '';
 data.pedidos.forEach(pedido => {
     let estadoPedido = pedido.estado;
+    console.log(estadoPedido);
     let svgEstado = "";
     let estado = "";
 
     switch(estadoPedido) {
-        case "pendiente":
+        case "Pendiente":
             svgEstado = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
             <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 
             4.929-11 11-11zm0 11h6v1h-7v-9h1v8z"/>
             </svg>`;
             estado = `<span class="statusOrder pendiente">Pendiente</span>`;
             break;
-        case "entregado":
+        case "Entregado":
             svgEstado = `<i class="fa-solid fa-check fa-lg"></i>`;
             estado = `<span class="statusOrder entregado">Entregado</span>`;
             break;
-        case "cancelado":
+        case "Preparando":
+            svgEstado = `<i class="fa-solid fa-check fa-lg"></i>`;
+            estado = `<span class="statusOrder preparando">Preparando</span>`;
+            break;
+        case "Lista":
+            svgEstado = `<i class="fa-solid fa-check fa-lg"></i>`;
+            estado = `<span class="statusOrder lista">Lista</span>`;
+            break;
+        case "Cancelado":
             svgEstado = `<i class="fa-solid fa-exclamation fa-lg"></i>`;
             estado = `<span class="statusOrder cancelado">Cancelado</span>`;
             break;
         default:
+            svgEstado = 'Error';
+            estado = 'Error';
             console.log("Error, no se ha encontrado el estado del pedido.");
             break;
+    }
+
+    let direccionTexto = "";
+
+    if (!pedido.direccion || (pedido.direccion.calle === null && pedido.direccion.numero === null && pedido.direccion.ciudad === null)) {
+        direccionTexto = "Sin dirección registrada";
+    } else {
+        direccionTexto = `${pedido.direccion.calle}, ${pedido.direccion.numero}, ${pedido.direccion.ciudad}`;
     }
 
     let productosHTML = "";
@@ -69,7 +88,7 @@ data.pedidos.forEach(pedido => {
                     <div class="productInfo">
                         <span><strong>Pedido:</strong> #${pedido.codigo} ${estado}</span>
                         <p>📅 ${pedido.fechaFormateada}</p>
-                        <p>📍 ${pedido.direccion.calle}, ${pedido.direccion.numero}, ${pedido.direccion.ciudad}</p>
+                        <p>📍 ${direccionTexto}</p>
                         <p>🚚 Método de entrega: ${pedido.metodoEntrega}</p>
                     </div>
                 </div>

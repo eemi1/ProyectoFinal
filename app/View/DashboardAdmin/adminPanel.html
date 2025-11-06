@@ -467,64 +467,65 @@
                     </div>
                     <!-- BOTON CATEGORIAS DEL BUSCADOR-->
                     <div class="dashboard-Products">
-                        <div class="search-container">
-                            <div class="search-card">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" placeholder="Buscar ID, nombre o categoría." class="searchInput" id="searchInputProducts">
+                        <div class="filters">
+                            <div class="cardsContainer">
+
+                                <div class="card-summaryProducts cards">
+                                    <div class="card-summaryProducts-info">
+                                        <h3 class="card-summaryProducts-title"><i class="fa-solid fa-star"></i>Total De Productos</h3>
+                                        <p class="card-summaryProducts-content" id="cardSummary-totalProducts"></p>
+                                    </div>
+                                
+
+                                </div>
+                            
+                                <div class="card-summaryProducts cards">
+                                    <div class="card-summaryProducts-info">
+                                        <h3 class="card-summaryProducts-title"><i class="fa-solid fa-bookmark"></i>Productos Destacados</h3>
+                                        <p class="card-summaryProducts-content" id="cardSummary-totalFeatured"></p>
+                                    </div>
+                                </div>
+
+                                <div class="card-summaryProducts cards">
+                                    <div class="card-summaryProducts-info">
+                                        <h3 class="card-summaryProducts-title"><i class="fa-solid fa-box-open"></i>Productos Sin Stock</h3>
+                                        <p class="card-summaryProducts-content"></p>
+                                    </div>
+
+                                </div>
+                                <div class="card-summaryProducts cards">
+                                    <div class="card-summaryProducts-info">
+                                        <h3 class="card-summaryProducts-title">Productos Vendidos</h3>
+                                        <p class="card-summaryProducts-content"></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="searchBTN-card">
-                                <button type="button" id="searchButton-roles" onclick="filterRoles()">Todas las categorías 
-                                    <svg id="searchBTN-card-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
-                                    </svg>
-                                </button>
-                                <div class="container-list-span" >
-                                    <div class="div-list-span">
-                                        <span class="list-span" data-value="0">-</span>
-                                        <span class="list-span" data-value="1">Cliente</span>
-                                        <span class="list-span" data-value="2">Administrador</span>
-                                        <span class="list-span" data-value="3">Mozo</span>
-                                        <span class="list-span" data-value="4">Cocinero</span>
-                                        <span class="list-span" data-value="5">Gerente</span>
-                                        <span class="list-span" data-value="6">Delivery</span>
+
+                            <div class="search-container">
+                                <div class="search-card">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" placeholder="Buscar ID, nombre o categoría." class="searchInput" id="searchInputProducts">
+                                </div>
+                                <div class="searchBTN-card">
+                                    <button type="button" id="searchButton-roles" onclick="filterRoles()">Todas las categorías 
+                                        <svg id="searchBTN-card-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                                        </svg>
+                                    </button>
+                                    <div class="container-list-span" >
+                                        <div class="div-list-span">
+                                            <span class="list-span" data-value="0">-</span>
+                                            <span class="list-span" data-value="1">Cliente</span>
+                                            <span class="list-span" data-value="2">Administrador</span>
+                                            <span class="list-span" data-value="3">Mozo</span>
+                                            <span class="list-span" data-value="4">Cocinero</span>
+                                            <span class="list-span" data-value="5">Gerente</span>
+                                            <span class="list-span" data-value="6">Delivery</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                    <!-- CONTENEDOR DE RESUMEN DE PRODUCTOS -->
-                    <div class="container-summeryProducts">
-                        <div class="card-summaryProducts">
-                            <div class="card-summaryProducts-info">
-                                <div class="card-summaryProducts-title">Total De Productos</div>
-                                <div class="card-summaryProducts-content" id="cardSummary-totalProducts"></div>
-                            </div>
-
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-
-                        <div class="card-summaryProducts">
-                            <div class="card-summaryProducts-info">
-                                <div class="card-summaryProducts-title">Productos Destacados</div>
-                                <div class="card-summaryProducts-content" id="cardSummary-totalFeatured"></div>
-                            </div>
-                            <i class="fa-solid fa-bookmark"></i>
-                        </div>
-                        
-                        <div class="card-summaryProducts">
-                            <div class="card-summaryProducts-info">
-                                <div class="card-summaryProducts-title">Productos Sin Stock</div>
-                                <div class="card-summaryProducts-content"></div>
-                            </div>
-                            <i class="fa-solid fa-box-open"></i>
-                        </div>
-                        <div class="card-summaryProducts">
-                            <div class="card-summaryProducts-info">
-                                <div class="card-summaryProducts-title">Productos Vendidos</div>
-                                <div class="card-summaryProducts-content"></div>
-                            </div>
-                        </div>
-                    </div>
                     <!-- TABLA PRODUCTOS-->
                     <div class="container-table">
                         <div class="table-container-table">
@@ -600,24 +601,24 @@
                     <div class="filters">
 
                         <!-- Reservas estadísticas-->
-                        <div class="reservasStats">
-                            <div class="reservasStats-card">
+                        <div class="reservasStats cardsContainer">
+                            <div class="reservasStats-card cards">
                                 <h3><i class="fa-regular fa-calendar" style="color: var(--primary-color) ;"></i> Total de Reservas </h3>
                                 <p id="totalReservations">0</p>
                             </div>
-                            <div class="reservasStats-card">
+                            <div class="reservasStats-card cards">
                                 <h3><i class="fa-regular fa-clock" style="color: #ffe600 ;"></i> Reservas Pendientes</h3>
                                 <p id="pendingReservations">0</p>
                             </div>
-                            <div class="reservasStats-card">
+                            <div class="reservasStats-card cards">
                                 <h3><i class="fa-regular fa-circle-check" style="color: #00ff00 ;"></i> Reservas Confirmadas</h3>
                                 <p id="confirmedReservations">0</p>
                             </div>
-                            <div class="reservasStats-card">
+                            <div class="reservasStats-card cards">
                                 <h3><i class="fa-regular fa-circle-xmark" style="color: #ff0000 ;"></i> Reservas Canceladas</h3>
                                 <p id="canceledReservations">0</p>
                             </div>
-                            <div class="reservasStats-card">
+                            <div class="reservasStats-card cards">
                                 <h3><i class="fa-regular fa-thumbs-up" style="color: #00ffff ;"></i> Reservas Finalizadas</h3>
                                 <p id="finalizedReservations">0</p>
                             </div>
@@ -680,26 +681,26 @@
                     <div class="filters">
 
                         <!-- Reservas estadísticas-->
-                        <div class="pedidosStats">
-                            <div class="pedidosStats-card">
+                        <div class="pedidosStats cardsContainer">
+                            <div class="pedidosStats-card cards">
                                 <h3><i class="fa-regular fa-calendar" style="color: var(--primary-color) ;"></i> Total de Pedidos </h3>
-                                <p id="totalReservations">0</p>
+                                <p id="totalOrders">0</p>
                             </div>
-                            <div class="pedidosStats-card">
-                                <h3><i class="fa-regular fa-clock" style="color: #ffe600 ;"></i> Pedidos Pendientes</h3>
-                                <p id="pendingReservations">0</p>
+                            <div class="pedidosStats-card cards">
+                                <h3><i class="fa-regular fa-clock" style="color: rgb(231, 208, 0) ;"></i> Pedidos Pendientes</h3>
+                                <p id="totalPending">0</p>
                             </div>
-                            <div class="pedidosStats-card">
-                                <h3><i class="fa-regular fa-circle-check" style="color: #00ff00 ;"></i> Pedidos en Preparación</h3>
-                                <p id="confirmedReservations">0</p>
+                            <div class="pedidosStats-card cards">
+                                <h3><i class="fa-regular fa-circle-check" style="color: #ff8800 ;"></i> Pedidos en Preparación</h3>
+                                <p id="totalPreparing">0</p>
                             </div>
-                            <div class="pedidosStats-card">
-                                <h3><i class="fa-regular fa-circle-xmark" style="color: #ff0000 ;"></i> Pedidos Listas</h3>
-                                <p id="canceledReservations">0</p>
+                            <div class="pedidosStats-card cards">
+                                <h3><i class="fa-regular fa-circle-xmark" style="color: #2563eb ;"></i> Pedidos Listas</h3>
+                                <p id="totalList">0</p>
                             </div>
-                            <div class="pedidosStats-card">
-                                <h3><i class="fa-regular fa-thumbs-up" style="color: #00ffff ;"></i> Pedidos Entregadas</h3>
-                                <p id="finalizedReservations">0</p>
+                            <div class="pedidosStats-card cards">
+                                <h3><i class="fa-regular fa-thumbs-up" style="color: var(--primary-color) ;"></i> Pedidos Entregadas</h3>
+                                <p id="totalSent">0</p>
                             </div>
                         </div>
 
@@ -726,7 +727,7 @@
                                 <span class="name">Pendientes</span>
                             </label>
                             <label class="radio">
-                                <input type="radio" name="radioOrders" value="En Preparación">
+                                <input type="radio" name="radioOrders" value="Preparando">
                                 <span class="name">En Preparación</span>
                                 </label>
                             <label class="radio">
@@ -744,6 +745,56 @@
                         <!-- Aquí se cargarán los pedidos dinámicamente -->
                     </div>
                 </section>
+
+                <!--==================  | DASHBOARD REPORTES | ==================-->
+                <section class="optContent" id="dashboardReportes">
+                    <header class="headerDashboard">
+                        <div>
+                            <h2 class="headerDashboard-title">Reportes</h2>
+                            <h3 class="headerDashboard-subtitle">Visualiza el rendimiento de tu restaurante.</h3>
+                        </div>
+                    </header>
+
+                    <div class="filters">
+                        <div class="reportesStats cardsContainer">
+
+                            <div class="reportesStats-card cards">
+                                <h3><i class="fa-regular fa-calendar" style="color: var(--primary-color) ;"></i> Ingresos Totales </h3>
+                                <p id="totalIncome" class="reportsCards">0</p>
+                                <span class="percentajeCards" id="incomeChange" ></span>
+                            </div>
+
+                            <div class="reportesStats-card cards">
+                                <h3><i class="fa-regular fa-clock" style="color: rgb(231, 208, 0) ;"></i> Pedidos Totales</h3>
+                                <p id="totalOrdersReport" class="reportsCards">0</p>
+                                <span class="percentajeCards" id="ordersChange" ></span>
+                            </div>
+
+                            <div class="reportesStats-card cards">
+                                <h3><i class="fa-regular fa-circle-check" style="color: #ff8800 ;"></i> Clientes Totales</h3>
+                                <p class="percentajeCards" id="totalClients" class="reportsCards">0</p>
+                            </div>
+
+                            <div class="reportesStats-card cards">
+                                <h3><i class="fa-regular fa-circle-xmark" style="color: #2563eb ;"></i> Reservas Totales</h3>
+                                <p class="percentajeCards" id="totalReservationsReport" class="reportsCards">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráficas -->
+                    <div class="charts">
+                        <div class="chartsItems" id="incomeChart">
+                            <h3>Ventas Totales</h3>
+                            <canvas id="chartVentas"></canvas>
+                        </div>
+                        <div class="chartsItems" id="orderChart">
+                            <h3>Ventas Diarias</h3>
+                            <canvas id="chartPedidos"></canvas>
+                        </div>
+                    </div>
+                    
+                </section>
             
 
 
@@ -753,7 +804,7 @@
                 
             </main>
         </div>
-        <script src="https://cdn.canvasjs.com/canvasjs.min.js"> </script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/dashboard.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/ingredientes.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/producto.js"></script>
@@ -761,6 +812,7 @@
         <script src="/proyectoFinal/resources/js/dashboardAdmin/util.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/reservations.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/pedidos.js"></script>
+        <script src="/proyectoFinal/resources/js/dashboardAdmin/reportes.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/initializer.js"></script>
 
     </body>

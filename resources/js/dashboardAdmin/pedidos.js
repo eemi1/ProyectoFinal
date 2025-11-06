@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     changeFilterOrders();
+    
 })
 /*=========================================*/
 /*====== FILTROS RESERVAS Y MESAS =========*/
@@ -32,7 +33,7 @@ function changeFilterOrders() {
     });
 
     document.getElementById('clearFiltersOrders').addEventListener('click', () => {
-        document.getElementById('searchReservationsInput').value = '';
+        document.getElementById('searchOrdersInput').value = '';
         getOrders();
     });
 }
@@ -52,50 +53,65 @@ function getOrders(estado = 'todas') {
         if (!containerPedidos) return;
         containerPedidos.innerHTML = '';
 
-        if (!data || data.length === 0) {
-            containerPedidos.innerHTML = '<p class="noOrdersMessage">No hay pedidos que mostrar.</p>';
+        if (!data || !data.data || data.data.length === 0) {
+            containerPedidos.innerHTML = `<p class="noOrdersMessage">No hay pedidos que mostrar.</p>`;
+            console.log("Sin pedidos activos");
             return;
+        }
+
+        try {
+            document.getElementById('totalOrders').textContent = data.totalOrders || 0;
+            document.getElementById('totalPending').textContent = data.totalPending || 0;
+            document.getElementById('totalPreparing').textContent = data.totalPreparing || 0;
+            document.getElementById('totalList').textContent = data.totalList || 0;
+            document.getElementById('totalSent').textContent = data.totalSent || 0;
+        }catch(e){
+            console.error('Error al actualizar los contadores de reservas:', e);
         }
         
 
         data.data.forEach(pedido => {
 
-        let estado = '';
+        let estadoHTML = '';
         let buttons = '';
         switch (pedido.estado) {
             case "Pendiente":
-                estado = `<span class="estadoPendiente">${pedido.estado}</span>`;
+                estadoHTML = `<span class="estadoPendiente">${pedido.estado}</span>`;
                 buttons = `
-                    <button class="btnConfirmarOrder" onclick="confirmOrder(${pedido.id})">Confirmar</button>
+                    <button class="btnPreparandoOrder" onclick="preparingOrder(${pedido.id})">Preparando</button>
                     <button class="btnCancelarOrder" onclick="cancelOrder(${pedido.id})">Cancelar</button>
                     `
                 break;
             case "Preparando":
-                estado = `<span class="estadoPreparacion">${pedido.estado}</span>`;
+                estadoHTML = `<span class="estadoPreparacion">${pedido.estado}</span>`;
                 buttons = `
                     <button class="btnListaOrder" onclick="listOrder(${pedido.id})">Orden Lista</button>
-                    <button class="btnCancelarOrder" onclick="cancelReservation(${pedido.id})">Cancelar</button>
+                    <button class="btnCancelarOrder" onclick="cancelOrder(${pedido.id})">Cancelar</button>
+                    ${pedido.estadoPago !== 'pagado' ? `<button class="btnPagoOrder" onclick="markAsPaid(${pedido.id})">Marcar Pagado</button>` : ''}
+
                     `
                 break;
             case 'Lista':
-                estado = `<span class="estadoLista">${pedido.estado}</span>`;
+                estadoHTML = `<span class="estadoLista">${pedido.estado}`;
                 buttons = `
                 <button class="btnEntregadoOrder" onclick="sentOrder(${pedido.id})">Entregada</button>
-                <button class="btnCancelarOrder" onclick="cancelReservation(${pedido.id})">Cancelar</button>
+                <button class="btnCancelarOrder" onclick="cancelOrder(${pedido.id})">Cancelar</button>
+                ${pedido.estadoPago !== 'pagado' ? `<button class="btnPagoOrder" onclick="markAsPaid(${pedido.id})">Marcar Pagado</button>` : ''}
+
                 `
                 break;
             case "Entregado":
-                    estado = `<span class="estadoEntregado">${pedido.estado}</span>`;
+                    estadoHTML = `<span class="estadoEntregado">${pedido.estado}</span>`;
                     buttons = ``;
                     break
 
             case "Cancelado":
-                estado = `<span class="estadoCancelado">${pedido.estado}</span>`;
+                estadoHTML = `<span class="estadoCancelado">${pedido.estado}</span>`;
                 buttons = ``;
                 break;
 
             default:
-                estado = `<span>${pedido.estado}</span>`;
+                estadoHTML = `<span>${pedido.estado}</span>`;
         }
         // Calcular total
         let total = 0;
@@ -113,7 +129,11 @@ function getOrders(estado = 'todas') {
                             <h3>${pedido.nombreCliente} #${pedido.id}</h3>
                             <p>${pedido.codigo}</p>
                         </div>
-                        ${estado}
+                        <div class="orderStatus">
+                        ${estadoHTML}
+                        <p><strong>Estado Pago:</strong> ${pedido.estadoPago || `Sin estado de pago`}   </p>                   
+                        </div>
+                        
                     </div>
 
                     <div class="orderDetails">
@@ -134,9 +154,7 @@ function getOrders(estado = 'todas') {
                 const articulo = document.createElement('div');
                 articulo.classList.add('articuloItem');
 
-                articulo.innerHTML = `
-                    <p>${detalle.cantidad}x ${detalle.nombre_producto}</p>
-                `;
+                articulo.textContent = `${detalle.cantidad}x ${detalle.nombre_producto}`;
 
                 articulosContainer.appendChild(articulo);
             });
@@ -155,8 +173,9 @@ function getOrders(estado = 'todas') {
     .catch(error => console.error('Error fetching orders:', error));
 }
 
-function confirmOrder(id){
-    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=confirmOrder`, {
+
+function preparingOrder(id){
+    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=preparingOrder`, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
@@ -165,7 +184,7 @@ function confirmOrder(id){
     .then(res => res.json())
     .then(data => {
         if (data.success) {
-            Swal.fire("✅ Confirmado", "El pedido fue confirmado.", "success");
+            Swal.fire("Confirmado", "El pedido fue confirmado.", "success");
                 const orderDiv = document.querySelector(`.orderItem[data-id="${id}"]`);
 if (orderDiv) {
     orderDiv.classList.add('removing');
@@ -176,28 +195,10 @@ if (orderDiv) {
     getOrders();
 }
         } else {
-            Swal.fire("⚠️ Error", data.message || "No se pudo confirmar.", "error");
+            Swal.fire("Error", data.message || "No se pudo confirmar.", "error");
         }
     });
 
-}
-
-function cancelOrder(id){
-    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=cancelOrder`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire("❌ Cancelado", "El pedido fue cancelado.", "success");
-            getOrders();
-        } else {
-            Swal.fire("⚠️ Error", data.message || "No se pudo cancelar.", "error");
-        }
-    })
-    .catch(err => console.error("Error:", err));
 }
 
 function listOrder(id){
@@ -209,10 +210,10 @@ function listOrder(id){
     .then(res => res.json())
     .then(data => {
         if (data.success) {
-            Swal.fire("✅ Entregado", "El pedido fue marcado como entregado.", "success");
+            Swal.fire("Entregado", "El pedido fue marcado como entregado.", "success");
             getOrders();
         } else {
-            Swal.fire("⚠️ Error", data.message || "No se pudo marcar como entregado.", "error");
+            Swal.fire("Error", data.message || "No se pudo marcar como entregado.", "error");
         }
     })
     .catch(err => console.error("Error:", err));
@@ -229,12 +230,47 @@ function sentOrder(id){
     .then(res => res.json())
     .then(data => {
         if (data.success) {
-            Swal.fire('✅ Entregado', 'El pedido fue marcado como entregado.', 'success');
+            Swal.fire('Entregado', 'El pedido fue marcado como entregado.', 'success');
             getOrders();
         } else {
-            Swal.fire('⚠️ Error', data.message || 'No se pudo marcar como entregado.', 'error');
+            Swal.fire('Error', data.message || 'No se pudo marcar como entregado.', 'error');
         }
     })
     .catch(err => console.error('Error:', err));
 
+}
+function cancelOrder(id){
+    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=cancelOrder`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire("Cancelado", "El pedido fue cancelado.", "success");
+            getOrders();
+        } else {
+            Swal.fire("Error", data.message || "No se pudo cancelar.", "error");
+        }
+    })
+    .catch(err => console.error("Error:", err));
+}
+
+function markAsPaid(id) {
+    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=markAsPaid`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire("Pago confirmado", data.message, "success");
+            getOrders();
+        } else {
+            Swal.fire("Error", data.message || "No se pudo marcar como pagado.", "error");
+        }
+    })
+    .catch(err => console.error("Error:", err));
 }

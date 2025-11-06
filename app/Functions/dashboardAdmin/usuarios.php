@@ -10,7 +10,14 @@ function mostrarUsuarios($pdo) {
         $search = isset($input['search']) ? trim($input['search']) : "";
         $valueRol = isset($input['valueRol']) ? trim($input['valueRol']) : "";
 
-        $query = "SELECT * FROM usuario WHERE 1=1";
+        $query = "
+                SELECT u.id, u.nombreCompleto, u.mail, u.id_rol, u.fechaRegistro, u.fechaNacimiento,
+                COUNT(f.id) AS totalPedidos
+            FROM usuario u
+            LEFT JOIN factura f ON f.id_cliente = u.id
+            WHERE 1=1
+        
+        ";
         $params = [];
 
         if ($search !== "") {
@@ -27,6 +34,8 @@ function mostrarUsuarios($pdo) {
             $query = "SELECT * FROM usuario WHERE 1=1";
             $params = [];
         }
+
+        $query .= " GROUP BY u.id";
 
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);

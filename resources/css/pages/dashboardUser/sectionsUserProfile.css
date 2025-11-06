@@ -48,8 +48,13 @@ body, html{height: 100%; font-family: sans-serif, 'Raleway';}
     padding: 5px 5px;
     font-size: var(--font-small);
     color: white;
-    background: red;
 }
+
+.statusOrder.pendiente{background: rgb(231, 208, 0);;     font-size: var(--font-mediumSmall);}
+.statusOrder.preparando{background: #ff8800;;    font-size: var(--font-mediumSmall);}
+.statusOrder.entregado{background: blue;    font-size: var(--font-mediumSmall);}
+.statusOrder.lista{background: var(--primary-color);    font-size: var(--font-mediumSmall);}
+.statusOrder.cancelada{background: red;    font-size: var(--font-mediumSmall);}
 
 /*CONTENEDOR CONTENIDO*/
 .content{
@@ -81,9 +86,7 @@ body, html{height: 100%; font-family: sans-serif, 'Raleway';}
     flex-direction: column;
     gap:5px;
 }
-.statusOrder.pendiente{
-    font-size: var(--font-mediumSmall);
-}
+
 
 .headerPrice span{
     font-weight: bold;

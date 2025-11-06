@@ -31,7 +31,43 @@ html, body {
     min-height: 30px;
     padding: 5px 0px 0px 10px;
 }
+/* ====| DISEÑO CARDS ESTADÍSTICAS |==== */
+.cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
 
+.cards{
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid var(--borderColor);
+}
+
+.cards h3{
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 10px;
+    display: flex;
+    white-space: nowrap;
+    gap: 10px;
+    justify-content: center;
+}
+.cards p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.cards:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
 /*======================================*/
 /*           ESTRUCTURA BASE            */
 /*======================================*/
@@ -1123,50 +1159,6 @@ html, body {
     background-color: #DAB200;
 }
 
-/*----CARD RESUMEN PRODUCTOS----*/
-.container-summeryProducts{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    margin: 20px;
-    height: auto;
-    gap: 20px;
-}
-
-
-.card-summaryProducts{
-    height: 100px;
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e2e8f0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-}
-.card-summaryProducts-info{
-    display: flex;
-    flex-direction: column;
-}
-.card-summaryProducts-title{
-    font-size: var(--font-mediumSmall);
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #64748b;
-}
-
-.card-summaryProducts-content{
-    font-size: var(--font-large);
-    font-weight: bold;
-    color: #000000;
-}
-
-.card-summaryProducts i{
-    font-size: 1.2rem;
-    height: max-content;
-    color: #f1e205;
-}
 
 /*------ Modal Editar Producto -------*/
 #modalViewProduct{
@@ -1401,45 +1393,6 @@ html, body {
 }
 .clearFilters:hover{
     background-color: var(--primary-color-hover);
-}
-
-/*===== ESTADÍSTICAS RESERVAS ====*/
-.reservasStats, .pedidosStats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.reservasStats-card, .pedidosStats-card {
-    background: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: all 0.3s ease;
-    border: 1px solid var(--borderColor);
-}
-
-.reservasStats-card h3, .pedidosStats-card h3 {
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 10px;
-    display: flex;
-    white-space: nowrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.reservasStats-card p, .pedidosStats-card p {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-}
-
-.reservasStats-card:hover, .pedidosStats-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
 
@@ -1677,35 +1630,69 @@ html, body {
 
 /*=======================================|DASHBOARD PEDIDOS|==========================================================*/
 
-/*Estados botones y span*/
+/* == Estados botones y span == */
+
+/*Pendiente*/
 .estadoPendiente{
     background-color: rgb(231, 208, 0);
     color: white;
 
 }
+
+/*Preparando*/
 .estadoPreparacion{
     background-color: #ff8800;
     color: white;
 }
+.btnPreparandoOrder{
+    background-color: #ff8800;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+.btnPreparandoOrder:hover{
+    background-color: #ad5d02;
+}
+
+/*Lista*/
 .estadoLista{
     background-color: #2563eb;
     color: white;
+    transition: background-color 0.2s ease;
 }
+.btnListaOrder{
+    background-color: #1944a0;
+    transition: background-color 0.2s ease;
+
+}
+.btnListaOrder:hover {
+    background-color: #102b66;
+
+}
+
+/*Entregado*/
+.btnEntregadoOrder{
+    background-color: var(--primary-color);
+    transition: background-color 0.2s ease;
+    color:white;
+}
+.btnEntregadoOrder:hover {
+    background-color: var(--primary-color-hover);
+}
+
+/*Cancelado*/
 .estadoCancelado{
     background-color: red;
     color: white;
-
+}
+.btnCancelarOrder{
+    background-color: red;
+    transition: background-color 0.2s ease;
+}
+.btnCancelarOrder:hover{
+    background-color: darkred;
 }
 
-.btnConfirmarOrder{
-    background-color: var(--primary-color);
-    transition: background-color 0.3s ease;
-    color:white;
-}
-.btnConfirmarOrder:hover {
-    background-color: var(--primary-color-hover);
 
-}
 
 /*CONTENEDOR PEDIDOS*/
 .ordersContainer{
@@ -1764,6 +1751,12 @@ html, body {
     color: var(--textMuted);
 }
 
+.orderStatus{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
 .orderHeader span{
     border: 1px solid var(--borderColor);
     border-radius: 20rem;
@@ -1825,12 +1818,40 @@ html, body {
     cursor: pointer;
     color: white;
 }
+/*=======================================|DASHBOARD REPORTES|==========================================================*/
 
+/**Cards */
+.reportsCards {
+    font-family: 'Sans seriff', Arial;
+}
 
+/*Porcentaje*/
+.percentajeCards{
+    font-size: 0.9rem;
+    font-family: 'Sans Seriff', Arial;
+}
 
+/*Contendor Gráficas*/
+.charts{
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    width: 100%;
+    height: auto;
+    min-height: 50vh;
+    padding: 0px 30px;
+}
 
+/*Item Gráfica*/
+.chartsItems{
+    height: 50vh;
+    width: auto;
+}
 
-
+/*Gráfica*/
+.chartsItems canvas{
+    max-width: 50vw;
+    width: auto;
+}
 
 
 

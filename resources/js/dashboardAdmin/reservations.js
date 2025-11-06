@@ -114,40 +114,41 @@ function getReservations(estado = 'todas') {
                     console.error('Error al actualizar los contadores de reservas:', e);
                 }
 
-                let estado = '';
+                let estadoHTML = '';
+                let buttons = '';
                 switch (reserva.estado) {
                     case "Pendiente":
-                        estado = `<span class="estadoPendiente">${reserva.estado}</span>`;
+                        estadoHTML = `<span class="estadoPendiente">${reserva.estado}</span>`;
                         buttons = `
                             <button class="btnConfirmarReserva" onclick="confirmReservation(${reserva.id})">Confirmar</button>
                             <button class="btnCancelarReserva" onclick="cancelReservation(${reserva.id})">Cancelar</button>
                             `
                         break;
                     case "Confirmado":
-                        estado = `<span class="estadoConfirmado">${reserva.estado}</span>`;
+                        estadoHTML = `<span class="estadoConfirmado">${reserva.estado}</span>`;
                         buttons = `
                             <button class="btnAsistioReserva" onclick="assistReservation(${reserva.id})">Asistió</button>
                             <button class="btnCancelarReserva" onclick="cancelReservation(${reserva.id})">Cancelar</button>
                             `
                         break;
                     case "Cancelado":
-                        estado = `<span class="estadoCancelado">${reserva.estado}</span>`;
+                        estadoHTML = `<span class="estadoCancelado">${reserva.estado}</span>`;
                         buttons = ``;
                         break;
                     case "Finalizado":
-                        estado = `<span class="estadoFinalizado">${reserva.estado}</span>`;
+                        estadoHTML = `<span class="estadoFinalizado">${reserva.estado}</span>`;
                         buttons = ``;
                         break;
 
                     case "En curso":
-                        estado = `<span class="estadoEnCurso">${reserva.estado}</span>`;
+                        estadoHTML = `<span class="estadoEnCurso">${reserva.estado}</span>`;
                         buttons = `
                         <button class="btnFinalizarReserva" onclick="finalizeReservation(${reserva.id})">Finalizar</button>
                         <button class="btnCancelarReserva" onclick="cancelReservation(${reserva.id})">Cancelar</button>
                         `;
                         break;
                     default:
-                        estado = `<span>${reserva.estado}</span>`;
+                        estadoHTML = `<span>${reserva.estadoHTML}</span>`;
                 }
             
             const reservaDiv = document.createElement('div');
@@ -155,7 +156,7 @@ function getReservations(estado = 'todas') {
             reservaDiv.dataset.id = reserva.id;
             reservaDiv.innerHTML += `
                 <div class="reservaHeader">
-                    <h3>${reserva.nombreCliente} #${reserva.id} ${estado}</h3>
+                    <h3>${reserva.nombreCliente} #${reserva.id} ${estadoHTML}</h3>
                     <p>${reserva.codigoReserva}</p>
                 </div>
                     <div class="reservaContent">
@@ -278,7 +279,8 @@ function showTablesAvailables() {
 
     const btnShowTables = document.getElementById('showTablesStatus');
     const searchFilter = document.querySelector('.reservasFilters');
-    const statusFilter = document.querySelector('.filterStatus');
+    const statusFilter = document.querySelector('.filters');
+    const reservasSection = document.querySelector('.reservas-container');
 
     if (!btnShowTables) {
         console.error('No se encontró el botón para mostrar mesas disponibles.');
@@ -286,6 +288,7 @@ function showTablesAvailables() {
     }
 
     btnShowTables.addEventListener('click', () => {
+        let mostrandoMesas = false;
 
         fetch(`/proyectoFinal/app/Functions/dashboardAdmin/reservas.php?action=showTablesAvailables`, {
             method: "GET",
@@ -295,9 +298,7 @@ function showTablesAvailables() {
         .then(data => {
             console.log(data);
             if (data.success) {
-                const reservasSection = document.querySelector('.reservas-container');
                 reservasSection.replaceChildren(); // más seguro que innerHTML = ''
-
                 try {
                     if (searchFilter.style.display === 'none' && statusFilter.style.display === 'none') {
                         searchFilter.style.display = 'flex';
@@ -368,11 +369,11 @@ function showTablesAvailables() {
                     `;
 
                     tablesContainer.appendChild(tableDiv);
-                    filtersShowTables();
 
                 });
 
                 reservasSection.appendChild(tablesContainer);
+                filtersShowTables();
             }
         })
         .catch(err => {

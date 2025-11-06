@@ -11,6 +11,7 @@ function loadUsers(inputSearchUsers = '', rolValue = '') {
     })
     .then(res => res.json())
     .then(data => {
+        console.log(data);
         const userTableBody = document.querySelector("#table-users tbody");
         if (!data.success) {
             userTableBody.innerHTML = `<tr><td>${data.message}</td></tr>`;
@@ -54,7 +55,7 @@ function loadUsers(inputSearchUsers = '', rolValue = '') {
                         ${icon} ${user.rol}
                     </div>
                 </td>
-                <td>0</td>
+                <td>${user.totalPedidos}</td>
                 <td><i class="fa-solid fa-calendar" style="color: #969696;"></i> ${user.fechaRegistro}</td>
                 <td style="position: relative;">
                     <button class="btnOptions" onclick="btnActionsUser(event)">

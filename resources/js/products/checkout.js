@@ -248,15 +248,25 @@ function finalizarPedido() {
             else if (tipoPromocion === 'porcentaje' && valorPromocion > 0) subTotal = cantidad * precio * (1 - valorPromocion);
             else subTotal = cantidad * precio;
             total += subTotal;
-            productos.push({ id_producto: id, cantidad, precio, tipoPromocion, valorPromocion });
-
+            productos.push({ id_producto: id, cantidad, precio, tipoPromocion, valorPromocion, subtotal: subTotal });
         }
+
+
+        let estadoPago = '';
+        if (metodoPago === 'tarjeta') {
+            estadoPago = 'pagado';
+            console.log('pagado');
+        } else {
+            estadoPago = 'pendiente';
+            console.log('pedneiten')
+        }
+
         // Enviar pedido al backend
         fetch("/proyectoFinal/app/Functions/products/guardarPedido.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "same-origin",
-            body: JSON.stringify({ productos, total, id_direccion: idDireccion, metodoPago, metodoEntrega})
+            body: JSON.stringify({ productos, total, id_direccion: idDireccion, metodoPago, estadoPago, metodoEntrega})
         })
         .then(res => res.json())
         .then(data => {
