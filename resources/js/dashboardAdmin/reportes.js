@@ -27,8 +27,8 @@ function percentage() {
             .then(res => res.json())
             .then(data => {
                 renderChart('chartVentas', 'line', 'Ventas Diarias', data.labels, data.values);
-                let totalChange = document.getElementById('incomeChange'); 
 
+                let totalChange = document.getElementById('incomeChange'); 
                 if (totalChange) {
                     const cambio = data.porcentajeCambio;
                     if (cambio > 0) {
@@ -53,8 +53,8 @@ function percentage() {
             .then(data => {
                 console.log(data);
                 renderChart('chartPedidos', 'line', 'Ventas Diarias', data.labels, data.values);
-                let totalChange = document.getElementById('incomeChange'); 
-                
+
+                let totalChange = document.getElementById('ordersChange'); 
                 if (totalChange) {
                     const cambio = data.porcentajeCambio;
                     if (cambio > 0) {
