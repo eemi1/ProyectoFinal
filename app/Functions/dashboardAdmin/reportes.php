@@ -42,7 +42,7 @@ function chartTotalSales($pdo) {
     }
 }
 
-function ordersDay($pdo) {
+function orders($pdo) {
     try {
         // Obtenemos la cantidad vendida por producto por día
         $stmt = $pdo->query("
@@ -52,14 +52,54 @@ function ordersDay($pdo) {
             GROUP BY DATE(f.fecha)
             ORDER BY fecha ASC
         ");
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $labels = [];
         $values = [];
 
-        foreach ($data as $row) {
-            $labels[] = $row['fecha'];
-            $values[] = (int)$row['total'];
+        foreach ($pedidos as $pedido) {
+            $labels[] = $pedido['fecha'];
+            $values[] = (int)$pedido['total'];
+        }
+
+        $stmtPedidosHoy = $pdo->query("
+            SELECT 
+                DATE_FORMAT(fecha, '%H:00') AS hora,
+                SUM(total) AS totalVentas
+            FROM factura
+            WHERE estadoPago = 'pagado'
+            AND DATE(fecha) = CURDATE()
+            GROUP BY HOUR(fecha)
+            ORDER BY HOUR(fecha);
+        ");
+        $pedidosHoy = $stmtPedidosHoy->fetchAll(PDO::FETCH_ASSOC);
+
+        $labels2 = [];
+        $values2 = [];
+
+        foreach ($pedidosHoy as $pedidoHoy) {
+            $labels2[] = $pedidoHoy['hora'];
+            $values2[] = (int)$pedidoHoy['totalVentas'];
+        }
+
+        $stmtProductosDestacados = $pdo->query("
+            SELECT 
+            p.nombre AS producto,
+            SUM(df.cantidad) AS total_vendido
+            FROM detalle_factura df
+            JOIN producto p ON p.id = df.id_producto
+            GROUP BY df.id_producto
+            ORDER BY total_vendido DESC
+            LIMIT 5;
+        ");
+        $productosDestacados = $stmtProductosDestacados->fetchAll(PDO::FETCH_ASSOC);
+
+        $labels3 = [];
+        $values3 = [];
+
+        foreach ($productosDestacados as $prodDestacado) {
+            $labels3[] = $prodDestacado['producto'];
+            $values3[] = (int)$prodDestacado['total_vendido'];
         }
 
         // Calculamos porcentaje de cambio entre el último día y el anterior
@@ -76,6 +116,10 @@ function ordersDay($pdo) {
             "success" => true,
             "labels" => $labels,
             "values" => $values,
+            "labels2" => $labels2,
+            "values2" => $values2,
+            "labels3" => $labels3,
+            "values3" => $values3,
             "porcentajeCambio" => round($porcentajeCambio, 2)
         ]);
 
@@ -97,11 +141,31 @@ function reportReservas($pdo) {
         ");
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $labels = [];
+        $values = [];
+
+        foreach ($data as $row) {
+            $labels[] = $row['fecha'];
+            $values[] = (int)$row['total'];
+        }
+
+        // Calcular el porcentaje de cambio entre el último y el anterior período
+        $porcentajeCambio = 0;
+        if (count($values) >= 2) {
+            $ultimo = end($values);
+            $anterior = prev($values);
+            if ($anterior > 0) {
+                $porcentajeCambio = (($ultimo - $anterior) / $anterior) * 100;
+            }
+        }
+
         echo json_encode([
             "success" => true,
-            "labels" => array_column($data, 'fecha'),
-            "values" => array_column($data, 'total')
+            "labels" => $labels,
+            "values" => $values,
+            "porcentajeCambio" => round($porcentajeCambio, 2)
         ]);
+
     } catch (Exception $e) {
         echo json_encode([
             "success" => false,
@@ -110,29 +174,56 @@ function reportReservas($pdo) {
     }
 }
 
-function reportInventario($pdo) {
+
+function reportClients($pdo) {
     try {
+        // DATE(f.fecha, '%Y-%m') para agrupar por mes)
         $stmt = $pdo->query("
-            SELECT nombre, stock_actual, stock_minimo
-            FROM ingrediente
-            WHERE stock_actual <= stock_minimo
-            ORDER BY stock_actual ASC
+            SELECT DATE(f.fecha) AS fecha, COUNT(DISTINCT f.id_cliente) AS total
+            FROM factura f
+            WHERE f.estadoPago = 'pagado'
+            GROUP BY DATE(f.fecha)
+            ORDER BY fecha ASC
         ");
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $labels = [];
+        $values = [];
+
+        foreach ($data as $row) {
+            $labels[] = $row['fecha'];
+            $values[] = (int)$row['total'];
+        }
+
+        // Calcular porcentaje de cambio entre el último período y el anterior
+        $porcentajeCambio = 0;
+        if (count($values) >= 2) {
+            $ultimo = end($values);
+            $anterior = prev($values);
+            if ($anterior > 0) {
+                $porcentajeCambio = (($ultimo - $anterior) / $anterior) * 100;
+            }
+        }
+
         echo json_encode([
             "success" => true,
-            "data" => $data
+            "labels" => $labels,
+            "values" => $values,
+            "porcentajeCambio" => round($porcentajeCambio, 2)
         ]);
+
     } catch (Exception $e) {
         echo json_encode([
             "success" => false,
-            "message" => "Error al obtener inventario: " . $e->getMessage()
+            "message" => "Error al obtener clientes: " . $e->getMessage()
         ]);
     }
 }
 
-function statsCardsReports($pdo) {
+
+
+
+function cardsStatsGeneral($pdo) {
     try {
         // Ingresos totales
         $stmtVentas = $pdo->query("
@@ -152,9 +243,9 @@ function statsCardsReports($pdo) {
 
         // Clientes únicos totales
         $stmtClientes = $pdo->query("
-            SELECT COUNT(DISTINCT id_cliente) AS clientesUnicos
-            FROM factura
-            WHERE estadoPago = 'pagado'
+        SELECT COUNT(DISTINCT u.id) AS clientesUnicos
+        FROM usuario u
+        JOIN factura f ON f.id_cliente = u.id
         ");
         $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
         
@@ -190,16 +281,16 @@ switch ($accion) {
         chartTotalSales($pdo);
         break;
     case 'pedidos':
-        ordersDay($pdo);
+        orders($pdo);
         break;
     case 'reservas':
         reportReservas($pdo);
         break;
-    case 'inventario':
-        reportInventario($pdo);
+    case 'clientes':
+        reportClients($pdo);
         break;
     case 'statsCardsReports':
-        statsCardsReports($pdo);
+        cardsStatsGeneral($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);

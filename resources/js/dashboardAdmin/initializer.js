@@ -65,6 +65,7 @@ function accessAdmin() {
     getReservations();
     showTablesAvailables();
     getOrders();
+    changeFilter();
     statsCardsReports();
-    percentage();
+    cardsPorcentageGeneral();
 }

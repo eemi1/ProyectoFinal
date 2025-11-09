@@ -71,6 +71,8 @@ function getOrders(estado = 'todas') {
         
 
         data.data.forEach(pedido => {
+            
+        if (!pedido.detalles || pedido.detalles.length === 0) return;
 
         let estadoHTML = '';
         let buttons = '';

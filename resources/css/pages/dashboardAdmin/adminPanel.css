@@ -1821,6 +1821,9 @@ html, body {
 /*=======================================|DASHBOARD REPORTES|==========================================================*/
 
 /**Cards */
+.reportStats{
+    padding: 30px;
+}
 .reportsCards {
     font-family: 'Sans seriff', Arial;
 }
@@ -1829,6 +1832,13 @@ html, body {
 .percentajeCards{
     font-size: 0.9rem;
     font-family: 'Sans Seriff', Arial;
+}
+
+/*Filtros*/
+#filtersReports{
+    width: 100%;
+    max-width: 100%;
+    min-width: auto;
 }
 
 /*Contendor Gráficas*/
@@ -1845,6 +1855,7 @@ html, body {
 .chartsItems{
     height: 50vh;
     width: auto;
+    margin-top: 30px;
 }
 
 /*Gráfica*/
