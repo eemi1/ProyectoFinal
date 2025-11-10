@@ -44,7 +44,6 @@ function chartTotalSales($pdo) {
 
 function orders($pdo) {
     try {
-        // Obtenemos la cantidad vendida por producto por día
         $stmt = $pdo->query("
             SELECT DATE(f.fecha) AS fecha, SUM(df.cantidad) AS total
             FROM detalle_factura df
@@ -149,6 +148,22 @@ function reportReservas($pdo) {
             $values[] = (int)$row['total'];
         }
 
+        $stmt2 = $pdo->query("
+            SELECT estado, COUNT(id) AS totalEstado
+            FROM reservas
+            GROUP BY estado
+            ORDER BY totalEstado DESC
+        ");
+        $data2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+        $labels2 = [];
+        $values2 = [];
+
+        foreach ($data2 as $row) {
+            $labels2[] = ucfirst($row['estado']); // primera letra mayúscula
+            $values2[] = (int)$row['totalEstado'];
+        }
+
         // Calcular el porcentaje de cambio entre el último y el anterior período
         $porcentajeCambio = 0;
         if (count($values) >= 2) {
@@ -163,6 +178,8 @@ function reportReservas($pdo) {
             "success" => true,
             "labels" => $labels,
             "values" => $values,
+            "labels2" => $labels2,
+            "values2" => $values2,
             "porcentajeCambio" => round($porcentajeCambio, 2)
         ]);
 
@@ -205,10 +222,52 @@ function reportClients($pdo) {
             }
         }
 
+        // Clientes nuevos por mes
+        $stmtNuevos = $pdo->query("
+        SELECT 
+            DATE_FORMAT(DATE(fechaRegistro), '%Y-%m') AS mes,
+            COUNT(*) AS nuevos
+        FROM usuario
+        WHERE fechaRegistro IS NOT NULL
+        GROUP BY mes
+        ORDER BY mes ASC;
+        ");
+
+        $dataNuevos = $stmtNuevos->fetchAll(PDO::FETCH_ASSOC);
+
+        $labelsNuevos = [];
+        $valuesNuevos = [];
+
+        foreach ($dataNuevos as $row) {
+            $labelsNuevos[] = $row['mes'];
+            $valuesNuevos[] = (int)$row['nuevos'];
+        }
+
+        $stmtClientesActivos = $pdo->query("
+        SELECT DATE(fecha) AS dia, COUNT(DISTINCT id_cliente) AS clientesActivos
+        FROM factura
+        WHERE estadoPago = 'pagado'
+        GROUP BY dia;
+        ");
+
+        $clientesActivos = $stmtClientesActivos->fetchAll(PDO::FETCH_ASSOC);
+
+        $labelsActivos = [];
+        $valuesActivos = [];
+
+        foreach ($clientesActivos as $row) {
+            $labelsActivos[] = $row['dia'];
+            $valuesActivos[] = (int)$row['clientesActivos'];
+        }
+
         echo json_encode([
             "success" => true,
             "labels" => $labels,
             "values" => $values,
+            "labels2" => $labelsNuevos,
+            "values2" => $valuesNuevos,
+            "labels3" => $labelsActivos,
+            "values3" => $valuesActivos,
             "porcentajeCambio" => round($porcentajeCambio, 2)
         ]);
 

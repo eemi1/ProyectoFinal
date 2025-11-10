@@ -1,3 +1,5 @@
+ 
+    
     //==================| VARIABLES |===================
 
     //-------Varible Ventanas-------------
@@ -58,6 +60,11 @@ function options(event, tabOption){
     });
 
     event.currentTarget.classList.add('active');
+
+    localStorage.setItem("pestañaActiva", tabOption);
+
+
+    
 }
 
 ////==================| EVENTOS DE ABRIR FORMULARIO |===================
@@ -308,6 +315,7 @@ function closeAddWindow() {
                                 customClass: { popup: 'swal-custom-font' }
                             }).then(() => {
                                 window.location.replace("/proyectoFinal/index.html");
+                                localStorage.removeItem("pestañaActiva");
                             });
                         }
                     });
@@ -315,3 +323,33 @@ function closeAddWindow() {
         });
     });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    let savedTab = localStorage.getItem("pestañaActiva");
+
+    // Si aún no hay pestaña guardada, detecta cuál está activa por defecto
+    if (!savedTab) {
+        const activeLink = document.querySelector(".sidebar-options.active");
+        if (activeLink) {
+            const onclickValue = activeLink.getAttribute("onclick");
+            if (onclickValue) {
+                const match = onclickValue.match(/'([^']+)'/);
+                if (match) savedTab = match[1];
+                localStorage.setItem("pestañaActiva", savedTab);
+            }
+        }
+    }
+
+    const defaultTab = savedTab || "dashboardMain";
+    const defaultButton = document.querySelector(`[onclick*="${defaultTab}"]`);
+    const defaultSection = document.getElementById(defaultTab);
+
+    // Ocultar todas las secciones
+    document.querySelectorAll('.optContent').forEach(tab => {
+        tab.style.display = 'none';
+    });
+
+    // Mostrar la pestaña guardada o la principal
+    if (defaultSection) defaultSection.style.display = "flex";
+    if (defaultButton) defaultButton.classList.add("active");
+});

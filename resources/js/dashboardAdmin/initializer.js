@@ -48,8 +48,14 @@ function checkRol() {
 }
 
 function accessAdmin() {
-    document.getElementById("defaultTab").click();
-    chartVentas();
+    // Verificar si hay pestaña guardada
+    const savedTab = localStorage.getItem("pestañaActiva");
+
+    // Solo hacer clic en Dashboard si no hay pestaña previa
+    if (!savedTab) {
+        document.getElementById("defaultTab").click();
+    }
+    chartsDashboard();
     loadUsers();
     usersTotal();
     openAddWindow();

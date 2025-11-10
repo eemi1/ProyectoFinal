@@ -26,8 +26,8 @@ function statsCardsReports() {
                 let valueTotalIncome = parseFloat(data.ventas[0].total);
                 if (totalIncome) {totalIncome.textContent = `$ ${valueTotalIncome.toLocaleString("es-ES", {minimumFractionDigits: 2 })}`;}
                 if (totalOrders) {totalOrders.textContent = `${data.pedidos[0].pedidosTotales}`}
-                if (totalClients) {totalClients.textContent = `${data.clientes[0].clientesUnicos}`}
-                if (totalReservations) {totalReservations.textContent = `${data.reservas[0].reservasTotales}`}
+                if (totalClients) {totalClients.textContent = `${data.clientes[0].clientesUnicos}` || 0}
+                if (totalReservations) {totalReservations.textContent = `${data.reservas[0].reservasTotales}` || 0}
             }
         })
 }
@@ -90,8 +90,9 @@ function cardsPorcentageGeneral() {
             fetch('/proyectoFinal/app/Functions/dashboardAdmin/reportes.php?action=clientes')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                // renderChart('chartPedidos', 'line', 'Ventas Diarias', data.labels, data.values);
+                console.log('Clientes', data);
+                renderChart('chartClientsMonth', 'bar', 'Clientes x mes', data.labels2, data.values2);
+                renderChart('chartClientsActive', 'line', 'Clientes Activos', data.labels3, data.values3);
 
                 let totalChange = document.getElementById('clientsChange'); 
                 if (totalChange) {
@@ -111,13 +112,15 @@ function cardsPorcentageGeneral() {
             console.log('Error al cargar el porcentaje de los clientes', $e);
         }
 
-        //Porcentaje de Clientes Unicos
+        //Porcentaje de Reservas
         try{
             fetch('/proyectoFinal/app/Functions/dashboardAdmin/reportes.php?action=reservas')
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                // renderChart('chartPedidos', 'line', 'Ventas Diarias', data.labels, data.values);
+                renderChart('chartReservationTotal', 'line', 'Reservas totales', data.labels, data.values);
+                renderChart('chartReservationStatus', 'doughnut', 'Estado de reservas', data.labels2, data.values2);
+
 
                 let totalChange = document.getElementById('reservationsChange'); 
                 if (totalChange) {
@@ -136,9 +139,6 @@ function cardsPorcentageGeneral() {
             console.log('Error al cargar el porcentaje de los clientes', $e);
         }
 }
-
-
-function 
 
 
 

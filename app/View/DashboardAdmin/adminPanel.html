@@ -102,9 +102,7 @@
                                 <i class="fa-solid fa-chart-simple" style="color:#16a34a;"></i>
                                 Ventas Últimos 7 Días
                             </h3>
-                            <div id="ventasChart">
-
-                            </div>
+                            <canvas id="ventasChart"></canvas>
                         </div>
 
                         <div class="chart-card">
@@ -756,27 +754,36 @@
                     </header>
 
                     <div class="filters" >
-                        <div class="filterStatusReservations" id="filtersReports">
-                            <label class="radio">
-                                <input type="radio" name="radioReports" value="General" checked>
-                                <span class="name">General</span>
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="radioReports" value="Ventas">
-                                <span class="name">Pedidos</span>
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="radioReports" value="Productos">
-                                <span class="name">Productos</span>
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="radioReports" value="Reservas">
-                                <span class="name">Reservas</span>
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="radioReports" value="Clientes">
-                                <span class="name">Clientes</span>
-                            </label>
+                        <div class="filterSectionReports" id="filtersReports">
+                          <label class="radio">
+                            <a href="#generalReport" data-value="General" class="active">
+                              <span class="name">General</span>
+                            </a>
+                          </label>
+                      
+                          <label class="radio">
+                            <a href="#pedidosReport" data-value="Ventas">
+                              <span class="name">Pedidos</span>
+                            </a>
+                          </label>
+                      
+                          <label class="radio">
+                            <a href="#productosReport" data-value="Productos">
+                              <span class="name">Productos</span>
+                            </a>
+                          </label>
+                      
+                          <label class="radio">
+                            <a href="#reservasReport" data-value="Reservas">
+                              <span class="name">Reservas</span>
+                            </a>
+                          </label>
+                      
+                          <label class="radio">
+                            <a href="#clientesReport" data-value="Clientes">
+                              <span class="name">Clientes</span>
+                            </a>
+                          </label>
                         </div>
                     </div>
 
@@ -784,71 +791,222 @@
                         <h3>Sección General</h3>
                         <div class="reportesStatsGeneral cardsContainer">
                             <div class="reportesStats-card cards">
-                                <h3><i class="fa-regular fa-calendar" style="color: var(--primary-color) ;"></i> Ingresos Totales </h3>
+                                <h2><i class="fa-regular fa-calendar" style="color: var(--primary-color) ;"></i> Ingresos Totales </h2>
                                 <p class="reportsCards" id="totalIncome">0</p>
                                 <span class="percentajeCards" id="incomeChange" ></span>
                             </div>
 
                             <div class="reportesStats-card cards">
-                                <h3><i class="fa-regular fa-clock" style="color: rgb(231, 208, 0) ;"></i> Pedidos Totales</h3>
+                                <h2><i class="fa-regular fa-clock" style="color: rgb(231, 208, 0) ;"></i> Pedidos Totales Entregados/Listos</h2>
                                 <p class="reportsCards" id="totalOrdersReport">0</p>
                                 <span class="percentajeCards" id="ordersChange" ></span>
                             </div>
 
                             <div class="reportesStats-card cards">
-                                <h3><i class="fa-regular fa-circle-check" style="color: #ff8800 ;"></i> Clientes Totales</h3>
+                                <h2><i class="fa-regular fa-circle-check" style="color: #ff8800 ;"></i> Clientes Totales</h2>
                                 <p class="percentajeCards" id="totalClients">0</p>
                                 <span class="percentajeCards" id="clientsChange"></span>
                             </div>
 
                             <div class="reportesStats-card cards">
-                                <h3><i class="fa-regular fa-circle-xmark" style="color: #2563eb ;"></i> Reservas Totales</h3>
+                                <h2><i class="fa-regular fa-circle-xmark" style="color: #2563eb ;"></i> Reservas Totales</h2>
                                 <p class="percentajeCards" id="totalReservationsReport">0</p>
                                 <span class="percentajeCards" id="reservationsChange"></span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="reportStats pedidos">
+                    <div class="reportStats pedidos" id="pedidosReport">
                         <h3>Análisis de Pedidos</h3>
                     
                         <!-- Gráficas -->
                         <div class="charts">
                             <div class="chartsItems" id="incomeChart">
-                                <h3>Pedidos Totales</h3>
+                                <h2>Pedidos Totales</h2>
                                 <canvas id="chartPedidos"></canvas>
                             </div>
                             <div class="chartsItems" id="orderChart">
-                                <h3>Pedidos Diarios por hora</h3>
+                                <h2>Pedidos Diarios por hora</h2>
                                 <canvas id="chartPedidosHoy"></canvas>
                             </div>
                         </div>
                     </div>
 
-                    <div class="reportStats productos">
+                    <div class="reportStats productos" id="productosReport">
                         <h3>Análisis de Productos</h3>
                     
                         <!-- Gráficas -->
                         <div class="charts">
                             <div class="chartsItems" id="productFeatured">
-                                <h3>Productos destacados</h3>
+                                <h2>Productos destacados</h2>
                                 <canvas id="chartProductFeatured"></canvas>
                             </div>
                         </div>
                     </div>
 
-                    <div class="reportStats reservas">
+                    <div class="reportStats reservas" id="reservasReport">
                         <h3>Análisis de Reservas</h3>
                     
                         <!-- Gráficas -->
                         <div class="charts">
+                            <div class="chartsItems" id="reservationTotal">
+                                <h2>Todas las reservas</h2>
+                                <canvas id="chartReservationTotal"></canvas>
+                            </div>
                             <div class="chartsItems" id="reservationStatus">
-                                <h3>Estado de las Reservas</h3>
+                                <h2>Estado de las Reservas</h2>
                                 <canvas id="chartReservationStatus"></canvas>
                             </div>
                         </div>
                     </div>
+
+                    <div class="reportStats clientes" id="clientesReport">
+                        <h3>Análisis de Clientes</h3>
                     
+                        <!-- Gráficas -->
+                        <div class="charts">
+                            <div class="chartsItems" id="clientesMonth">
+                                <h2>Clientes nuevos por mes</h2>
+                                <canvas id="chartClientsMonth"></canvas>
+                            </div>
+
+                            <div class="chartsItems" id="clientsActive">
+                                <h2>Clientes Activos</h2>
+                                <canvas id="chartClientsActive"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                
+                </section>
+                <!--==================  | DASHBOARD CONFIGURACIÓN | ==================-->
+                <section class="optContent" id="dashboardConfiguracion">
+                    <header class="headerDashboard">
+                        <div>
+                            <h2 class="headerDashboard-title">Configuración</h2>
+                            <h3 class="headerDashboard-subtitle">Gestiona la configuración de tu restaurante.</h3>
+                        </div>
+                    </header>
+
+                    <div class="filters">
+                        <div class="filtersConfig">
+                            <a href="#resturanteConfig"><i class="fa-solid fa-store"></i>Restaurante</a>
+                            <a href="#resturanteMesas">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Mesa lateral" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                  <!-- Tablero -->
+                                  <rect x="3" y="6" width="18" height="3" rx="0.8"/>
+                                  <!-- Patas -->
+                                  <path d="M6 9v9M18 9v9"/>
+                                  <!-- Travesaño opcional -->
+                                  <path d="M6 15h12"/>
+                                </svg>
+                                Mesas
+                            </a>
+                            <a href="#restauranteReservas"><i class="fa-solid fa-calendar"></i> Reservas</a>
+                            <a href="#restauranteNotificaciones"><i class="fa-solid fa-bell"></i> Notificaciones</a>
+                        </div>
+                    </div>
+
+                    <!--Restaurante-->
+                    <div class="optConfig" id="resturanteConfig">
+                        <h3>Restaurante</h3>
+
+                         <form class="restaurante-config">
+                          <h2>Configuración del Restaurante</h2>
+                        
+                          <div class="restaurante-grid">
+                            
+                            <!-- Nombre -->
+                            <div>
+                              <label for="nombre">Nombre del Restaurante</label>
+                              <input type="text" id="nombre" value="Fory Factory">
+                            </div>
+                        
+                            <!-- Capacidad -->
+                            <div>
+                              <label for="capacidad">Capacidad Total</label>
+                              <input type="number" id="capacidad" value="150">
+                            </div>
+                        
+                            <!-- Descripción -->
+                            <div class="restaurante-full">
+                              <label for="descripcion">Descripción</label>
+                              <textarea id="descripcion">El mejor restaurante de la ciudad</textarea>
+                            </div>
+                        
+                            <!-- Teléfono -->
+                            <div class="restaurante-field-icon">
+                              <label for="telefono">Teléfono</label>
+                              <i class="bi bi-telephone"></i>
+                              <input type="tel" id="telefono" value="+598 99 123 456">
+                            </div>
+                        
+                            <!-- Email -->
+                            <div class="restaurante-field-icon">
+                              <label for="email">Email</label>
+                              <i class="bi bi-envelope"></i>
+                              <input type="email" id="email" value="admin@foryfactory.com">
+                            </div>
+                        
+                            <!-- Dirección -->
+                            <div class="restaurante-field-icon">
+                              <label for="direccion">Dirección</label>
+                              <i class="bi bi-geo-alt"></i>
+                              <input type="text" id="direccion" value="Av. Principal 1234">
+                            </div>
+                        
+                            <!-- Idioma -->
+                            <div class="restaurante-field-icon">
+                              <label for="idioma">Idioma</label>
+                              <i class="bi bi-globe"></i>
+                              <select id="idioma">
+                                <option>Español</option>
+                                <option>Inglés</option>
+                              </select>
+                            </div>
+                        
+                            <!-- Moneda -->
+                            <div class="restaurante-field-icon">
+                              <label for="moneda">Moneda</label>
+                              <i class="bi bi-currency-dollar"></i>
+                              <select id="moneda">
+                                <option>USD - Dólar</option>
+                                <option>UYU - Peso uruguayo</option>
+                              </select>
+                            </div>
+                        
+                            <!-- Zona Horaria -->
+                            <div class="restaurante-field-icon">
+                              <label for="zona">Zona Horaria</label>
+                              <i class="bi bi-clock"></i>
+                              <select id="zona">
+                                <option>Montevideo (GMT-3)</option>
+                                <option>Buenos Aires (GMT-3)</option>
+                              </select>
+                            </div>
+                        
+                            <!-- Botón -->
+                            <div class="restaurante-save">
+                              <button type="submit"><i class="bi bi-save"></i> Guardar Cambios</button>
+                            </div>
+                        
+                          </div>
+                        </form>
+                                          </div>
+
+                    <!--Mesa-->
+                    <div class="optConfig" id="resturanteMesas">
+                        <h3>Mesas</h3>
+                    </div>
+
+                    <!--Reserva-->
+                    <div class="optConfig" id="restauranteReservas">
+                        <h3>Reservas</h3>
+                    </div>
+
+                    <!--Notificaciones-->
+                    <div class="optConfig" id="restauranteNotificaciones">
+                        <h3>Notificaciones</h3>
+                    </div>
                 </section>
             
 
@@ -868,6 +1026,7 @@
         <script src="/proyectoFinal/resources/js/dashboardAdmin/reservations.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/pedidos.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/reportes.js"></script>
+        <script src="/proyectoFinal/resources/js/dashboardAdmin/configuracion.js"></script>
         <script src="/proyectoFinal/resources/js/dashboardAdmin/initializer.js"></script>
 
     </body>

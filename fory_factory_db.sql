@@ -10,6 +10,17 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS fory_factory_db;
 USE fory_factory_db;
 
+CREATE TABLE `configuracion` (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  capacidad_total INT NOT NULL,
+  descripcion TEXT,
+  telefono VARCHAR(30),
+  email VARCHAR(100),
+  direccion VARCHAR(200),
+  imagenes VARCHAR(255),
+  ultima_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- ==========================================
 -- Tablas de usuarios y roles
 -- ==========================================
@@ -34,7 +45,7 @@ CREATE TABLE `usuario` (
   `telefono` INT NOT NULL,
   `id_rol` INT NOT NULL DEFAULT 1,
   `fechaNacimiento` DATE,
-  `fechaRegistro` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `fechaRegistro` DATE DEFAULT (CURRENT_DATE),
   CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`id_rol`) REFERENCES `rol`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -403,3 +414,44 @@ VALUES
 (2, 4, '2025-11-06', '22:00', NOW(), 2, 'Pendiente', 'RES-20251106-1004', 'Cliente', '099123456', 'cliente@foryfactory.com', 'Aniversario'),
 (2, 1, '2025-11-08', '20:30', NOW(), 5, 'Pendiente', 'RES-20251108-1005', 'Cliente', '099123456', 'cliente@foryfactory.com', 'Cena grupo de amigos');
 COMMIT;
+
+
+-- ==============================================
+-- FACTURA 1 - cliente@foryfactory.com
+-- ==============================================
+
+INSERT INTO factura (id_cliente, id_mesa, codigo, fecha, total, estado, metodoPago, estadoPago, metodoEntrega)
+VALUES
+(1, 1, 'FAC001', NOW(), 1850.00, 'Pendiente', 'Tarjeta', 'Pagado', 'Retiro');
+
+-- Detalles de factura FAC001
+INSERT INTO detalle_factura (id_factura, id_producto, cantidad, precio_unitario, subtotal)
+VALUES
+(LAST_INSERT_ID(), 1, 1, 1200.00, 1200.00),  -- Hamburguesa
+(LAST_INSERT_ID(), 2, 1, 400.00, 400.00),   -- Papas fritas
+(LAST_INSERT_ID(), 3, 1, 250.00, 250.00);   -- Coca-Cola
+
+-- Pedido asociado a la factura FAC001
+INSERT INTO pedido (id_factura, id_mozo, id_chef, tiempo_estimado, hora_inicio)
+VALUES
+((SELECT id FROM factura WHERE codigo='FAC001'), NULL, NULL, '00:20:00', NOW());
+
+
+-- ==============================================
+-- FACTURA 2 - juan.perez@example.com (otro cliente)
+-- ==============================================
+
+INSERT INTO factura (id_cliente, id_mesa, codigo, fecha, total, estado, metodoPago, estadoPago, metodoEntrega)
+VALUES
+(2, 1, 'FAC002', NOW(), 1350.00, 'Pendiente', 'Efectivo', 'Pendiente', 'Retiro');
+
+-- Detalles de factura FAC002
+INSERT INTO detalle_factura (id_factura, id_producto, cantidad, precio_unitario, subtotal)
+VALUES
+(LAST_INSERT_ID(), 2, 2, 400.00, 800.00),   -- Papas fritas x2
+(LAST_INSERT_ID(), 3, 2, 275.00, 550.00);   -- Coca-Cola x2
+
+-- Pedido asociado a la factura FAC002
+INSERT INTO pedido (id_factura, id_mozo, id_chef, tiempo_estimado, hora_inicio)
+VALUES
+((SELECT id FROM factura WHERE codigo='FAC002'), NULL, NULL, '00:15:00', NOW());
