@@ -10,7 +10,7 @@ export function initUsuarios() {
 ////==================| PESTAÑA DASHBOARD USUARIOS |===================
 function loadUsers(inputSearchUsers = '', rolValue = '') {
 
-    fetch("app/Functions/dashboardAdmin/usuarios.php?action=mostrarUsuarios", {
+    fetch("/app/Functions/dashboardAdmin/usuarios.php?action=mostrarUsuarios", {
         method: 'POST',
         credentials: 'same-origin',
         headers: { "Content-Type": "application/json" },
@@ -131,7 +131,7 @@ function filterRoles() {
     });
 }
 function usersTotal() {
-    fetch("app/Functions/dashboardAdmin/usuarios.php?action=CantidadUsuarios", {
+    fetch("/app/Functions/dashboardAdmin/usuarios.php?action=CantidadUsuarios", {
         method: 'POST',
         credentials: 'same-origin'
     })
@@ -182,7 +182,7 @@ function deleteUser() {
                 cancelButtonColor: "#d33",
             }).then((result) => {
                 if (result.isConfirmed) {  
-                    fetch("app/Functions/dashboardAdmin/usuarios.php?action=deleteUser", {
+                    fetch("/app/Functions/dashboardAdmin/usuarios.php?action=deleteUser", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -246,7 +246,7 @@ document.getElementById("editUserForm").addEventListener("submit", function(e) {
     e.preventDefault();
     const formData = new FormData(this);
 
-    fetch("app/Functions/dashboardAdmin/usuarios.php?action=editUser", {
+    fetch("/app/Functions/dashboardAdmin/usuarios.php?action=editUser", {
         method: "POST",
         body: formData,
         credentials: "same-origin"

@@ -22,7 +22,7 @@
 async function initSearches() {
     const inputSearchIngredients = document.getElementById("searchInputIngredients");
     if (inputSearchIngredients) {
-        const { loadIngredients } = await import(`resources/js/dashboardAdmin/ingredientes.js`);
+        const { loadIngredients } = await import(`/resources/js/dashboardAdmin/ingredientes.js`);
         inputSearchIngredients.addEventListener("input", () => {
             loadIngredients(inputSearchIngredients.value);
         });
@@ -31,7 +31,7 @@ async function initSearches() {
 
     const inputSearchUsers = document.getElementById("searchInputUsers");
     if (inputSearchUsers) {
-        const { loadUsers } = await import(`resources/js/dashboardAdmin/usuarios.js`);
+        const { loadUsers } = await import(`/resources/js/dashboardAdmin/usuarios.js`);
         inputSearchUsers.addEventListener("input", () => {
             loadUsers(inputSearchUsers.value); 
         });
@@ -40,7 +40,7 @@ async function initSearches() {
 
     const inputSearchProducts = document.getElementById("searchInputProducts");
     if (inputSearchProducts) {
-        const { loadProducts } = await import(`resources/js/dashboardAdmin/producto.js`);
+        const { loadProducts } = await import(`/resources/js/dashboardAdmin/producto.js`);
         inputSearchProducts.addEventListener("input", () => {
             loadProducts(inputSearchProducts.value); 
         });
@@ -75,43 +75,43 @@ async function options(event, tabOption){
     try {
         switch(tabOption) {
             case 'dashboardMain': {
-                const moduleDashboard = await import(`resources/js/dashboardAdmin/dashboard.js?${Date.now()}`);
+                const moduleDashboard = await import(`/resources/js/dashboardAdmin/dashboard.js?${Date.now()}`);
                 moduleDashboard.initDashboard();
                 break;
             }
             case 'dashboardUsuarios': {
-                const moduleUser = await import(`resources/js/dashboardAdmin/usuarios.js?${Date.now()}`);
+                const moduleUser = await import(`/resources/js/dashboardAdmin/usuarios.js?${Date.now()}`);
                 moduleUser.initUsuarios();
                 break;
             }
             case 'dashboardIngredientes': {
-                const moduleIng = await import(`resources/js/dashboardAdmin/ingredientes.js?${Date.now()}`);
+                const moduleIng = await import(`/resources/js/dashboardAdmin/ingredientes.js?${Date.now()}`);
                 moduleIng.initIngredientes();
                 break;
             }
             case 'dashboardProductos': {
-                const modulePro = await import(`resources/js/dashboardAdmin/producto.js?${Date.now()}`);
+                const modulePro = await import(`/resources/js/dashboardAdmin/producto.js?${Date.now()}`);
                 modulePro.initProductos();
                 break;
             }
             case 'dashboardReservas': {
-                const moduleRes = await import(`resources/js/dashboardAdmin/reservations.js?${Date.now()}`);
+                const moduleRes = await import(`/resources/js/dashboardAdmin/reservations.js?${Date.now()}`);
                 moduleRes.initReservas();
                 break;
             }
             case 'dashboardPedidos': {
-                const modulePed = await import(`resources/js/dashboardAdmin/pedidos.js?${Date.now()}`);
+                const modulePed = await import(`/resources/js/dashboardAdmin/pedidos.js?${Date.now()}`);
                 modulePed.initPedidos();
                 break;
             }
                 
             case 'dashboardReportes': {
-                const { initReportes } = await import('resources/js/dashboardAdmin/reportes.js');
+                const { initReportes } = await import('/resources/js/dashboardAdmin/reportes.js');
                 initReportes();
                 break;
             }
             case 'dashboardConfiguracion': {
-                const moduleConfig = await import(`resources/js/dashboardAdmin/configuracion.js?${Date.now()}`);
+                const moduleConfig = await import(`/resources/js/dashboardAdmin/configuracion.js?${Date.now()}`);
                 moduleConfig.initConfiguracion();
                 break;
             }
@@ -191,7 +191,7 @@ function closeAddWindow() {
                 if (result.isConfirmed) {
                     const formData = new FormData(formUser);
 
-                    fetch("app/Functions/dashboardAdmin/usuarios.php?action=addUsers", {
+                    fetch("/app/Functions/dashboardAdmin/usuarios.php?action=addUsers", {
                         method: 'POST',
                         body: formData,
                         credentials: 'same-origin'
@@ -241,7 +241,7 @@ function closeAddWindow() {
                 if (result.isConfirmed) {
                     const formData = new FormData(formIngredients);
 
-                    fetch("app/Functions/dashboardAdmin/ingredientes.php?action=addIngredient", {
+                    fetch("/app/Functions/dashboardAdmin/ingredientes.php?action=addIngredient", {
                         method: 'POST',
                         body: formData,
                         credentials: 'same-origin'
@@ -305,7 +305,7 @@ function closeAddWindow() {
                     input.value = promotionValue;
                     const formData = new FormData(formProducts);
 
-                    fetch("app/Functions/dashboardAdmin/productos.php?action=addProduct", {
+                    fetch("/app/Functions/dashboardAdmin/productos.php?action=addProduct", {
                         method: 'POST',
                         body: formData,
                         credentials: 'same-origin'
@@ -356,7 +356,7 @@ function closeAddWindow() {
             customClass: { popup: 'swal-custom-font' }
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch("app/Functions/check.php?action=cerrar", { method: 'POST' })
+                fetch("/app/Functions/check.php?action=cerrar", { method: 'POST' })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {

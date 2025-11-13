@@ -29,7 +29,7 @@ function setupMesaLoader() {
 
         if (!fecha || !hora || personas === "default") return;
 
-        fetch("app/Functions/reservations/getAvailableTables.php", {
+        fetch("/app/Functions/reservations/getAvailableTables.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ date: fecha, time: hora, numberPeople: personas }),
@@ -109,7 +109,7 @@ function addReservation() {
                 
                 const formData = new FormData(form);
                 try{
-                    fetch("app/Functions/reservations/addReservation.php", {
+                    fetch("/app/Functions/reservations/addReservation.php", {
                         method: 'POST',
                         body: formData,
                         credentials: 'same-origin'

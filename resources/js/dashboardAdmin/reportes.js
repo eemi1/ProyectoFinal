@@ -12,7 +12,7 @@ export function initReportes() {
 /*======  STATS CARDS PRINCIPALES  ========*/
 /*=========================================*/
 function statsCardsReports() {
-    fetch('app/Functions/dashboardAdmin/reportes.php?action=statsCardsReports')
+    fetch('/app/Functions/dashboardAdmin/reportes.php?action=statsCardsReports')
         .then(res => res.json())
         .then(data => {
             const totalIncome = document.getElementById('totalIncome');
@@ -36,7 +36,7 @@ function statsCardsReports() {
 /*=========================================*/
 function cardsPorcentageGeneral() {
     // Ventas
-    fetch('app/Functions/dashboardAdmin/reportes.php?action=ventas')
+    fetch('/app/Functions/dashboardAdmin/reportes.php?action=ventas')
         .then(res => res.json())
         .then(data => {
             updatePercentage('incomeChange', data.porcentajeCambio, 'vs ayer');
@@ -44,7 +44,7 @@ function cardsPorcentageGeneral() {
         .catch(error => console.error("Error en ventas:", error));
 
     // Pedidos
-    fetch('app/Functions/dashboardAdmin/reportes.php?action=pedidos')
+    fetch('/app/Functions/dashboardAdmin/reportes.php?action=pedidos')
         .then(res => res.json())
         .then(data => {
             renderChart('chartPedidos', 'line', 'Pedidos Totales', data.labels, data.values);
@@ -55,7 +55,7 @@ function cardsPorcentageGeneral() {
         .catch(error => console.error("Error en pedidos:", error));
 
     // Clientes
-    fetch('app/Functions/dashboardAdmin/reportes.php?action=clientes')
+    fetch('/app/Functions/dashboardAdmin/reportes.php?action=clientes')
         .then(res => res.json())
         .then(data => {
             renderChart('chartClientsMonth', 'bar', 'Clientes x Mes', data.labels2, data.values2);
@@ -65,7 +65,7 @@ function cardsPorcentageGeneral() {
         .catch(error => console.error("Error en clientes:", error));
 
     // Reservas
-    fetch('app/Functions/dashboardAdmin/reportes.php?action=reservas')
+    fetch('/app/Functions/dashboardAdmin/reportes.php?action=reservas')
         .then(res => res.json())
         .then(data => {
             renderChart('chartReservationTotal', 'line', 'Reservas Totales', data.labels, data.values);

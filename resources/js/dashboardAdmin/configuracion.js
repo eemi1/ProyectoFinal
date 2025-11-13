@@ -42,7 +42,7 @@ function changeOpt() {
 
 async function getConfigurationRestaurant() {
   try {
-    const res = await fetch('app/Functions/dashboardAdmin/configuracion.php?action=getConfigurationRestaurant');
+    const res = await fetch('/app/Functions/dashboardAdmin/configuracion.php?action=getConfigurationRestaurant');
     const data = await res.json();
     console.log('GET', data);
 
@@ -55,7 +55,7 @@ async function getConfigurationRestaurant() {
     document.getElementById('telefonoRestaurante').value = data.configuration.telefono || '';
     document.getElementById('emailRestaurante').value = data.configuration.email || '';
     document.getElementById('direccionRestaurante').value = data.configuration.direccion || '';
-    document.getElementById('restauranteImageTag').src = 'uploads/logo/logo.jpg?' + new Date().getTime(); // Evitar caché
+    document.getElementById('restauranteImageTag').src = '/uploads/logo/logo.jpg?' + new Date().getTime(); // Evitar caché
     
   }catch($e){
   console.log("Error al obtener la configuración del restaurante", $e);
@@ -83,7 +83,7 @@ async function sentConfigurationRestaurant() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await fetch('app/Functions/dashboardAdmin/configuracion.php?action=sentConfigurationRestaurant', {
+          const res = await fetch('/app/Functions/dashboardAdmin/configuracion.php?action=sentConfigurationRestaurant', {
             method: 'POST',
             credentials: 'same-origin',
             body: formDataRestaurant

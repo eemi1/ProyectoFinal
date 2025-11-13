@@ -3,7 +3,7 @@
 // =====================
 document.addEventListener("DOMContentLoaded", () => {
     // Cargar Header y Footer
-    loadHTMLComponent('header', 'app/View/Parts/navbar.html')
+    loadHTMLComponent('header', '/app/View/Parts/navbar.html')
         .then(() => {
             // Inicializar funciones del header solo después de cargarlo
             navLoggeado();
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error(err));
 
-    loadHTMLComponent('footer', 'app/View/Parts/footer.html');
+    loadHTMLComponent('footer', '/app/View/Parts/footer.html');
 });
 
 // ===================================================
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function loadGlobalConfiguration() {
     try {
         // GET: Obtener los datos de la configuración predeterminada de la página.
-        const res = await fetch('app/Functions/dashboardAdmin/configuracion.php?action=getConfigurationRestaurant');
+        const res = await fetch('/app/Functions/dashboardAdmin/configuracion.php?action=getConfigurationRestaurant');
         const data = await res.json();
         console.log("GET Global Configuration", data);
 
@@ -44,7 +44,7 @@ async function loadGlobalConfiguration() {
 
         //Actualizar Título y Logo del NAV
         try{
-            document.querySelector('.navbar-logo').src = 'uploads/logo/logo.jpg?' + new Date().getTime();;
+            document.querySelector('.navbar-logo').src = '/uploads/logo/logo.jpg?' + new Date().getTime();;
             document.querySelector('.navbar-title').textContent = data.configuration.nombre;
         }catch(error){
             console.log("Error al obtener la configuración global del Nav.");
@@ -88,7 +88,7 @@ function loadHTMLComponent(selector, url) {
 // GESTIÓN DE SESIÓN
 // =====================
 function navLoggeado() {
-    fetch("app/Functions/check.php?action=verificar")
+    fetch("/app/Functions/check.php?action=verificar")
         .then(res => res.json())
         .then(data => {
             const guestBtns = document.querySelector(".navbar-buttons");
@@ -172,7 +172,7 @@ function cerrarSesion() {
             customClass: { popup: 'swal-custom-font' }
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch("app/Functions/check.php?action=cerrar", { method: 'POST' })
+                fetch("/app/Functions/check.php?action=cerrar", { method: 'POST' })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {

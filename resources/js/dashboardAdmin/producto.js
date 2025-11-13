@@ -35,7 +35,7 @@ function deleteProduct() {
             }).then((result) => {
                 if (result.isConfirmed) {
                         const productId = item.dataset.id;
-                    fetch("app/Functions/dashboardAdmin/productos.php?action=deleteProduct", {
+                    fetch("/app/Functions/dashboardAdmin/productos.php?action=deleteProduct", {
                         method: "POST",
                         credentials: "same-origin",
                         headers: { "Content-Type": "application/json" },
@@ -63,7 +63,7 @@ function deleteProduct() {
 
 function loadProducts(inputSearchProducts = '') {
 
-    fetch("app/Functions/dashboardAdmin/productos.php?action=showProducts", {
+    fetch("/app/Functions/dashboardAdmin/productos.php?action=showProducts", {
         method: 'POST',
         credentials: 'same-origin',
         headers: { "Content-Type": "application/json" },
@@ -93,7 +93,7 @@ function loadProducts(inputSearchProducts = '') {
             }
 
             const row = document.createElement("tr");
-            let imagePath = `uploads/${producto.id}.jpg`;
+            let imagePath = `/uploads/${producto.id}.jpg`;
             row.innerHTML = `
                 <td>${producto.id}</td>
                 <td id="productsTable-td">
@@ -177,7 +177,7 @@ function switchPromotionSelect() {
 
 function summeryCardProducts() {
     try{
-        fetch("app/Functions/dashboardAdmin/productos.php?action=countProducts", {
+        fetch("/app/Functions/dashboardAdmin/productos.php?action=countProducts", {
             method: 'POST',
             credentials: 'same-origin'
         })
@@ -197,7 +197,7 @@ function summeryCardProducts() {
     }
 
     try{
-        fetch("app/Functions/dashboardAdmin/productos.php?action=countFeatured", {
+        fetch("/app/Functions/dashboardAdmin/productos.php?action=countFeatured", {
             method: 'POST',
             credentials: 'same-origin'      
         })
@@ -217,7 +217,7 @@ function summeryCardProducts() {
     }
 
     try{
-        fetch("app/Functions/dashboardAdmin/productos.php?action=countProducts", {
+        fetch("/app/Functions/dashboardAdmin/productos.php?action=countProducts", {
             method: 'POST',
             credentials: 'same-origin'
         })
@@ -246,7 +246,7 @@ function viewProduct() {
             modalView.style.display = "flex";
             console.log("Producto ID para ver:", productId);
 
-            fetch("app/Functions/dashboardAdmin/productos.php?action=showProductsModal", {
+            fetch("/app/Functions/dashboardAdmin/productos.php?action=showProductsModal", {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: { "Content-Type": "application/json" },
@@ -265,7 +265,7 @@ function viewProduct() {
                     const viewProductIngredientes = document.getElementById("modalViewProduct-ingredientsList");
                     const viewProductPromotion = document.getElementById("modalViewProduct-promotionValue");
                     const viewProductImage = document.getElementById("modalViewProduct-img");
-                    let imagePath = `uploads/${data.data.id}.jpg`;
+                    let imagePath = `/uploads/${data.data.id}.jpg`;
                 
                     viewProductImage.src = imagePath;
                     viewProductName.textContent = data.data.nombre;

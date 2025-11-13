@@ -77,7 +77,7 @@ function changeFilterReservations() {
 /*===================================*/
 
 function getReservations(estado = 'todas') {
-    fetch(`app/Functions/dashboardAdmin/reservas.php?action=getReservations&estado=${estado}`, {
+    fetch(`/app/Functions/dashboardAdmin/reservas.php?action=getReservations&estado=${estado}`, {
         method: 'GET',
         credentials: 'same-origin'
     })
@@ -193,7 +193,7 @@ function getReservations(estado = 'todas') {
 }
 
 function confirmReservation(id) {
-    fetch(`app/Functions/dashboardAdmin/reservas.php?action=confirmReservation`, {
+    fetch(`/app/Functions/dashboardAdmin/reservas.php?action=confirmReservation`, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
@@ -220,7 +220,7 @@ function confirmReservation(id) {
 }
 
 function cancelReservation(id) {
-    fetch(`app/Functions/dashboardAdmin/reservas.php?action=cancelReservation`, {
+    fetch(`/app/Functions/dashboardAdmin/reservas.php?action=cancelReservation`, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
@@ -238,7 +238,7 @@ function cancelReservation(id) {
 }
 
 function assistReservation(id) {
-    fetch(`app/Functions/dashboardAdmin/reservas.php?action=assistReservation`, {
+    fetch(`/app/Functions/dashboardAdmin/reservas.php?action=assistReservation`, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
@@ -256,7 +256,7 @@ function assistReservation(id) {
 }
 
 function finalizeReservation(id) {
-    fetch(`app/Functions/dashboardAdmin/reservas.php?action=finalizeReservation`, {
+    fetch(`/app/Functions/dashboardAdmin/reservas.php?action=finalizeReservation`, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
@@ -294,7 +294,7 @@ function showTablesAvailables() {
     btnShowTables.addEventListener('click', () => {
         let mostrandoMesas = false;
 
-        fetch(`app/Functions/dashboardAdmin/reservas.php?action=showTablesAvailables`, {
+        fetch(`/app/Functions/dashboardAdmin/reservas.php?action=showTablesAvailables`, {
             method: "GET",
             credentials: "same-origin",
         })

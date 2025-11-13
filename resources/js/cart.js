@@ -96,8 +96,8 @@ function renderCart(cartData) {
         productDiv.className = "cart-item";
         productDiv.innerHTML = `
             <div class="cart-item-img-container">
-                <img src="uploads/products/${id}.jpg" alt="${item.nombre}" class="cart-item-img"
-                    onerror="this.onerror=null;this.src='uploads/products/imagen-default.png';">
+                <img src="/uploads/products/${id}.jpg" alt="${item.nombre}" class="cart-item-img"
+                    onerror="this.onerror=null;this.src='/uploads/products/imagen-default.png';">
                 ${item.promocion && item.promocion !== 'Sin promoción' ? `<span class="cart-item-badge">${item.promocion}</span>` : ''}
             </div>
             <div class="cart-item-info">
@@ -133,7 +133,7 @@ function addProductsToCart() {
 
     btnAddCart.forEach(btn => {
         btn.addEventListener("click", () => {
-            fetch("app/Functions/check.php?action=verificar")
+            fetch("/app/Functions/check.php?action=verificar")
                 .then(res => res.json())
                 .then(data => {
                     if (!data.success) {
@@ -143,7 +143,7 @@ function addProductsToCart() {
                             icon: "warning",
                             confirmButtonText: "Iniciar sesión"
                         }).then(() => {
-                            window.location.href = "app/View/Auth/login.html";
+                            window.location.href = "/app/View/Auth/login.html";
                         });
                         return;
                     }
@@ -185,7 +185,7 @@ function checkout() {
 
     btnFinalizar.addEventListener("click", (e) => {
         e.preventDefault();
-        window.location.href = "app/View/Products/checkout.html";
+        window.location.href = "/app/View/Products/checkout.html";
     });
     
 }

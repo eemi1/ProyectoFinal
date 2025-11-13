@@ -1,9 +1,9 @@
 // /resources/js/Auth/checkRol.js
-import { checkRol } from "resources/js/Auth/checkRol.js";
+import { checkRol } from "/resources/js/Auth/checkRol.js";
 
 // /resources/js/dashboardAdmin/util.js
 import { openAddWindow, closeAddWindow, cerrarSesion, initSearches, savedTabF } 
-    from "resources/js/dashboardAdmin/util.js";
+    from "/resources/js/dashboardAdmin/util.js";
 
 
 window.addEventListener("DOMContentLoaded", async () => {

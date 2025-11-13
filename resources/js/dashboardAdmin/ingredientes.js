@@ -11,7 +11,7 @@ export function initIngredientes() {
 //============================== PESTAÑA DASHBOARD INGREDIENTES ==============================
 function loadIngredients(inputSearchIngredients = '') {
 
-    fetch("app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
+    fetch("/app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
         method: 'POST',
         credentials: 'same-origin',
         headers: { "Content-Type": "application/json" },
@@ -75,7 +75,7 @@ function initSearchIngredientes() {
     loadIngredients();
 }
 function ingredientsTotal() {
-    fetch("app/Functions/dashboardAdmin/ingredientes.php?action=ingredientsAmount", {
+    fetch("/app/Functions/dashboardAdmin/ingredientes.php?action=ingredientsAmount", {
         method: 'POST',
         credentials: 'same-origin'
     })
@@ -89,7 +89,7 @@ function ingredientsTotal() {
 }
 
 function getIngredients(){
-        fetch("app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
+        fetch("/app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
         method: "GET",
         credentials: "same-origin"
     })
