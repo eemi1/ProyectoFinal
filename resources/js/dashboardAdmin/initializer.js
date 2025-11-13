@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     const rol = await checkRol();
 
     if (rol !== 2) {
-        window.location.href = "index.html";
+        window.location.href = "/index.html";
         return;
     }
 

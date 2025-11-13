@@ -31,14 +31,14 @@ try{
                     
                             if (!data.success) {
                                 // No logueado
-                                window.location.href = 'index.html';
+                                window.location.href = '/index.html';
                                 return;
                             }
 
                             data.rol = parseInt(data.rol, 10);
                             switch (data.rol) {
                                 case 1: // Cliente
-                                    window.location.href = "index.html";
+                                    window.location.href = "/index.html";
                                     break;
                     
                                 case 2: // Admin

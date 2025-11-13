@@ -5,7 +5,7 @@ export async function checkRol() {
     const data = await res.json();
 
     if (!data.success) {
-        window.location.href = 'index.html';
+        window.location.href = '/index.html';
         return null;
     }
 

@@ -368,7 +368,7 @@ function closeAddWindow() {
                                 timer: 1500,
                                 customClass: { popup: 'swal-custom-font' }
                             }).then(() => {
-                                window.location.replace("index.html");
+                                window.location.replace("/index.html");
                                 localStorage.removeItem("pestañaActiva");
                             });
                         }
