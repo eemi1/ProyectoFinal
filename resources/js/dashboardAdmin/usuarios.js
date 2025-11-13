@@ -1,9 +1,16 @@
-
+// usuarios.js
+export function initUsuarios() {
+    console.log("initUsuarios ejecutado");
+    loadUsers();
+    filterRoles();
+    usersTotal();
+    initSearchUsuarios();
+}
 
 ////==================| PESTAÑA DASHBOARD USUARIOS |===================
 function loadUsers(inputSearchUsers = '', rolValue = '') {
 
-    fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=mostrarUsuarios", {
+    fetch("app/Functions/dashboardAdmin/usuarios.php?action=mostrarUsuarios", {
         method: 'POST',
         credentials: 'same-origin',
         headers: { "Content-Type": "application/json" },
@@ -25,7 +32,7 @@ function loadUsers(inputSearchUsers = '', rolValue = '') {
 
         data.data.usuarios.forEach(user => {
             let rolClass = "";
-            icon = "";
+            let icon = "";
             switch(user.id_rol){
                 case 1: icon=`<i class="fa-solid fa-user"></i>`; rolClass="rol-cliente"; break;
                 case 2: icon=`<i class="fa-solid fa-crown"></i>`; rolClass="rol-admin"; break;
@@ -76,6 +83,18 @@ function loadUsers(inputSearchUsers = '', rolValue = '') {
     });
 }
 
+function initSearchUsuarios() {
+    const inputSearchUsers = document.getElementById("searchInputUsers");
+    if (!inputSearchUsers) return;
+
+    inputSearchUsers.addEventListener("input", () => {
+        loadUsers(inputSearchUsers.value);
+    });
+
+    // Cargar lista inicial
+    loadUsers();
+}
+
 function filterRoles() {
     const btnFilterRoles = document.getElementById("searchButton-roles");
     const containerListSpan = document.querySelector(".container-list-span");
@@ -112,7 +131,7 @@ function filterRoles() {
     });
 }
 function usersTotal() {
-    fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=CantidadUsuarios", {
+    fetch("app/Functions/dashboardAdmin/usuarios.php?action=CantidadUsuarios", {
         method: 'POST',
         credentials: 'same-origin'
     })
@@ -163,7 +182,7 @@ function deleteUser() {
                 cancelButtonColor: "#d33",
             }).then((result) => {
                 if (result.isConfirmed) {  
-                    fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=deleteUser", {
+                    fetch("app/Functions/dashboardAdmin/usuarios.php?action=deleteUser", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -227,7 +246,7 @@ document.getElementById("editUserForm").addEventListener("submit", function(e) {
     e.preventDefault();
     const formData = new FormData(this);
 
-    fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=editUser", {
+    fetch("app/Functions/dashboardAdmin/usuarios.php?action=editUser", {
         method: "POST",
         body: formData,
         credentials: "same-origin"

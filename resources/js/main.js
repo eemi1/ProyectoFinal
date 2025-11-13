@@ -3,7 +3,7 @@
 // =====================
 document.addEventListener("DOMContentLoaded", () => {
     // Cargar Header y Footer
-    loadHTMLComponent('header', '/proyectoFinal/app/View/Parts/navbar.html')
+    loadHTMLComponent('header', 'app/View/Parts/navbar.html')
         .then(() => {
             // Inicializar funciones del header solo después de cargarlo
             navLoggeado();
@@ -14,15 +14,67 @@ document.addEventListener("DOMContentLoaded", () => {
             addProductsToCart();
             checkout();
             listenerScroll();
+
+            // Renderizar nuevamente el logo y titulo del nav cada 15 segundos
+            loadGlobalConfiguration();
+            setInterval(loadGlobalConfiguration, 15000);
         })
         .catch(err => console.error(err));
 
-    loadHTMLComponent('footer', '/proyectoFinal/app/View/Parts/footer.html');
+    loadHTMLComponent('footer', 'app/View/Parts/footer.html');
 });
 
-// =====================
+// ===================================================
+// CARGAR CONFIGURACIÓN GLOBAL DEL RESTAURANTE
+// ===================================================
+
+async function loadGlobalConfiguration() {
+    try {
+        // GET: Obtener los datos de la configuración predeterminada de la página.
+        const res = await fetch('app/Functions/dashboardAdmin/configuracion.php?action=getConfigurationRestaurant');
+        const data = await res.json();
+        console.log("GET Global Configuration", data);
+
+        
+        // Validación
+        if (!data || !data.configuration) {
+            console.warn("Configuración no encontrada o inválida:", data);
+            return;
+        }
+
+        //Actualizar Título y Logo del NAV
+        try{
+            document.querySelector('.navbar-logo').src = 'uploads/logo/logo.jpg?' + new Date().getTime();;
+            document.querySelector('.navbar-title').textContent = data.configuration.nombre;
+        }catch(error){
+            console.log("Error al obtener la configuración global del Nav.");
+        }
+        
+        // Actualizar descripción (index.html)
+        try{
+            document.querySelector('.page1-description').textContent = data.configuration.descripcion;
+        }catch(error){
+            console.log("Error al actualizar la descripción del index.")
+        }
+
+        try{
+            // Teléfono
+            document.getElementById('footerPhone').textContent = data.configuration.telefono;
+            // Dirección
+            document.getElementById('footerLocation').textContent = data.configuration.direccion;
+            // Email
+            document.getElementById('footerEmail').textContent = data.configuration.email;
+        }catch(error){
+            console.log("Error al al obtener la configuración global del footer.")
+        }
+    }catch(error){
+        console.log('Error al cargar la Configuración Global.', error)
+    }
+}
+
+// =============================
 // CARGA DE COMPONENTES HTML
-// =====================
+// =============================
 function loadHTMLComponent(selector, url) {
     return fetch(url)
         .then(response => response.text())
@@ -36,7 +88,7 @@ function loadHTMLComponent(selector, url) {
 // GESTIÓN DE SESIÓN
 // =====================
 function navLoggeado() {
-    fetch("/proyectoFinal/app/Functions/check.php?action=verificar")
+    fetch("app/Functions/check.php?action=verificar")
         .then(res => res.json())
         .then(data => {
             const guestBtns = document.querySelector(".navbar-buttons");
@@ -120,7 +172,7 @@ function cerrarSesion() {
             customClass: { popup: 'swal-custom-font' }
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch("/proyectoFinal/app/Functions/check.php?action=cerrar", { method: 'POST' })
+                fetch("app/Functions/check.php?action=cerrar", { method: 'POST' })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
@@ -132,7 +184,7 @@ function cerrarSesion() {
                                 timer: 1500,
                                 customClass: { popup: 'swal-custom-font' }
                             }).then(() => {
-                                window.location.replace("/proyectoFinal/index.html");
+                                window.location.replace("index.html");
                             });
                         }
                     });

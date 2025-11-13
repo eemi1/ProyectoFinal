@@ -1,8 +1,11 @@
-
-document.addEventListener('DOMContentLoaded', () => {
+// pedidos.js
+export function initPedidos() {
+    console.log("✅ initPedidos ejecutado");
+    getOrders();
     changeFilterOrders();
-    
-})
+}
+
+
 /*=========================================*/
 /*====== FILTROS RESERVAS Y MESAS =========*/
 /*=========================================*/
@@ -42,7 +45,7 @@ function changeFilterOrders() {
 /*===================================*/
 
 function getOrders(estado = 'todas') {
-    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=getOrders&estado=${estado}`, {
+    fetch(`app/Functions/dashboardAdmin/pedidos.php?action=getOrders&estado=${estado}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -177,7 +180,7 @@ function getOrders(estado = 'todas') {
 
 
 function preparingOrder(id){
-    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=preparingOrder`, {
+    fetch(`app/Functions/dashboardAdmin/pedidos.php?action=preparingOrder`, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
@@ -204,7 +207,7 @@ if (orderDiv) {
 }
 
 function listOrder(id){
-    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=listOrder`, {
+    fetch(`app/Functions/dashboardAdmin/pedidos.php?action=listOrder`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
@@ -222,7 +225,7 @@ function listOrder(id){
 }
 
 function sentOrder(id){
-    fetch('/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=sentOrder', {
+    fetch('app/Functions/dashboardAdmin/pedidos.php?action=sentOrder', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -242,7 +245,7 @@ function sentOrder(id){
 
 }
 function cancelOrder(id){
-    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=cancelOrder`, {
+    fetch(`app/Functions/dashboardAdmin/pedidos.php?action=cancelOrder`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
@@ -260,7 +263,7 @@ function cancelOrder(id){
 }
 
 function markAsPaid(id) {
-    fetch(`/proyectoFinal/app/Functions/dashboardAdmin/pedidos.php?action=markAsPaid`, {
+    fetch(`app/Functions/dashboardAdmin/pedidos.php?action=markAsPaid`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),

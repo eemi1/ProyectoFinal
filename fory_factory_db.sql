@@ -15,10 +15,10 @@ CREATE TABLE `configuracion` (
   nombre VARCHAR(100) NOT NULL,
   capacidad_total INT NOT NULL,
   descripcion TEXT,
+  seccion varchar(50) NOT NULL,
   telefono VARCHAR(30),
   email VARCHAR(100),
   direccion VARCHAR(200),
-  imagenes VARCHAR(255),
   ultima_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- ==========================================
@@ -455,3 +455,11 @@ VALUES
 INSERT INTO pedido (id_factura, id_mozo, id_chef, tiempo_estimado, hora_inicio)
 VALUES
 ((SELECT id FROM factura WHERE codigo='FAC002'), NULL, NULL, '00:15:00', NOW());
+
+
+INSERT INTO configuracion (id,nombre,capacidad_total,descripcion,telefono,email,direccion,ultima_actualizacion)
+VALUES
+(1,'Fory Factory', 120, 'No podemos cambiar el mundo, ni las injusticias, pero sí podemos hacer que tu día tenga un final feliz con nuestras hamburguesas. ¡Este es nuestro propósito!', 
+'+598 99 999 999', 'foryfactory@foryfactory.com','Av. Rio negro, 1337', NOW());
+
+COMMIT;

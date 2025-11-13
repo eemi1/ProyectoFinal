@@ -14,7 +14,7 @@ Antes de comenzar asegúrate de tener instalado:
 ## Instalación
 
 1. **Clona este repositorio:**
-git clone https://github.com/eemi1/proyectoFinal.git
+git clone https://github.com/eemi1.git
 cd tu-repo
 
 2. **Dependencias necesarias:**

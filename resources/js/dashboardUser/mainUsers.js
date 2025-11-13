@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("defaultTab").click();
 
     // Verificar sesión
-    fetch("/proyectoFinal/app/Functions/check.php?action=verificar")
+    fetch("app/Functions/check.php?action=verificar")
     .then(res => res.json())
     .then(data => {
         console.log(data);
         if(!data.success){
             console.log(data.message);
-            window.location.href = "/proyectoFinal/app/View/Auth/Login.html";
+            window.location.href = "app/View/Auth/Login.html";
         } else {
             console.log(data.message);
         }

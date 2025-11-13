@@ -47,7 +47,7 @@ function initButtons() {
             if(result.isConfirmed){
                 const formData = new FormData(form);
 
-                fetch("/proyectoFinal/app/Functions/dashboardUser/myProfile.php?action=saveController", {
+                fetch("app/Functions/dashboardUser/myProfile.php?action=saveController", {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin'
@@ -126,7 +126,7 @@ function initButtons() {
 }
 
 function FechaMiembro(){
-    fetch("/proyectoFinal/app/Functions/dashboardUser/myProfile.php?action=fechaMiembro", {
+    fetch("app/Functions/dashboardUser/myProfile.php?action=fechaMiembro", {
     })
     .then(res => res.json())
     .then(data => {
@@ -142,7 +142,7 @@ function currentDateUser() {
     const tel = document.getElementsByName('telefono')[0];
     const fechaNacimiento = document.getElementsByName('fechaNacimiento')[0];
     
-    fetch("/proyectoFinal/app/Functions/Auth/getSessionData.php", {
+    fetch("app/Functions/Auth/getSessionData.php", {
         method: 'GET',
         credentials: 'same-origin'
     })
@@ -219,7 +219,7 @@ function initDireccionForm() {
 
     // Función para cargar las direcciones
     function loadAddresses() {
-        fetch("/proyectoFinal/app/Functions/dashboardUser/addressController.php?action=get", {
+        fetch("app/Functions/dashboardUser/addressController.php?action=get", {
             credentials: 'same-origin'
         })
         .then(res => res.json())
@@ -270,7 +270,7 @@ function initDireccionForm() {
                             cancelButtonColor: "#d33",
                         }).then(result => {
                             if(result.isConfirmed){
-                                fetch("/proyectoFinal/app/Functions/dashboardUser/addressController.php?action=delete", {
+                                fetch("app/Functions/dashboardUser/addressController.php?action=delete", {
                                     method: "POST",
                                     credentials: 'same-origin',
                                     headers: {"Content-Type":"application/x-www-form-urlencoded"},
@@ -292,7 +292,7 @@ function initDireccionForm() {
                 document.querySelectorAll(".predeterminado").forEach(cb => {
                     cb.addEventListener("change", () => {
                         const id = cb.dataset.id;
-                        fetch("/proyectoFinal/app/Functions/dashboardUser/addressController.php?action=setPredetermined", {
+                        fetch("app/Functions/dashboardUser/addressController.php?action=setPredetermined", {
                             method: "POST",
                             credentials: 'same-origin',
                             headers: {"Content-Type":"application/x-www-form-urlencoded"},
@@ -310,7 +310,7 @@ function initDireccionForm() {
         .catch(error => console.error("Error al cargar direcciones:", error));
     }
     function getCountAddresses(){
-        fetch("/proyectoFinal/app/Functions/dashboardUser/addressController.php?action=getCount", {
+        fetch("app/Functions/dashboardUser/addressController.php?action=getCount", {
             method: "GET",
             credentials: "same-origin",
         })
@@ -337,7 +337,7 @@ function initDireccionForm() {
         const data = Object.fromEntries(formData.entries());
         data.predeterminado = formData.get("predeterminado") ? 1 : 0;
 
-        fetch("/proyectoFinal/app/Functions/dashboardUser/addressController.php?action=save", {
+        fetch("app/Functions/dashboardUser/addressController.php?action=save", {
             method: "POST",
             credentials: 'same-origin',
             headers: {"Content-Type":"application/json"},

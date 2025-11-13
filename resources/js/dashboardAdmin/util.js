@@ -19,52 +19,106 @@
     const formProducts = document.getElementById("addProductForm");
     //==================| --------- |===================
 
-function initSearches() {
-    // --- Ingredientes ---
+async function initSearches() {
     const inputSearchIngredients = document.getElementById("searchInputIngredients");
-    inputSearchIngredients.addEventListener("input", () => {
-        loadIngredients(inputSearchIngredients.value);
-    });
-    loadIngredients(); 
+    if (inputSearchIngredients) {
+        const { loadIngredients } = await import(`resources/js/dashboardAdmin/ingredientes.js`);
+        inputSearchIngredients.addEventListener("input", () => {
+            loadIngredients(inputSearchIngredients.value);
+        });
+        loadIngredients();
+    }
 
-    // --- Usuarios ---
     const inputSearchUsers = document.getElementById("searchInputUsers");
-    inputSearchUsers.addEventListener("input", () => {
-        loadUsers(inputSearchUsers.value); 
-    });
-    loadUsers(); 
+    if (inputSearchUsers) {
+        const { loadUsers } = await import(`resources/js/dashboardAdmin/usuarios.js`);
+        inputSearchUsers.addEventListener("input", () => {
+            loadUsers(inputSearchUsers.value); 
+        });
+        loadUsers();
+    }
 
-    // --- Productos ---
     const inputSearchProducts = document.getElementById("searchInputProducts");
-    inputSearchProducts.addEventListener("input", () => {
-        loadProducts(inputSearchProducts.value); 
-    });
-    loadProducts(); 
+    if (inputSearchProducts) {
+        const { loadProducts } = await import(`resources/js/dashboardAdmin/producto.js`);
+        inputSearchProducts.addEventListener("input", () => {
+            loadProducts(inputSearchProducts.value); 
+        });
+        loadProducts();
+    }
 }
 
 //============================== FUNCION PARA CAMBIAR DE PESTAÑAS ==============================
-function options(event, tabOption){
+async function options(event, tabOption){
     event.preventDefault();
 
-    document.querySelectorAll('.optContent').forEach(tab => {
-        tab.style.display = 'none';
-    });
-
+    document.querySelectorAll('.optContent').forEach(tab => tab.style.display = 'none');
     const selectedTab = document.getElementById(tabOption);
-    if(selectedTab){
-        selectedTab.style.display = 'flex';
+    if(selectedTab) selectedTab.style.display = 'flex';
+
+    // Verificar si hay pestaña guardada
+    const savedTab = localStorage.getItem("pestañaActiva");
+    console.log(savedTab);
+
+    // Solo hacer clic en Dashboard si no hay pestaña previa
+    if (!savedTab) {
+        document.getElementById("defaultTab").click();
     }
 
-    document.querySelectorAll('.sidebar-options').forEach(link => {
-        link.classList.remove('active');
-    });
 
+    document.querySelectorAll('.sidebar-options').forEach(link => link.classList.remove('active'));
     event.currentTarget.classList.add('active');
-
     localStorage.setItem("pestañaActiva", tabOption);
 
 
-    
+
+    try {
+        switch(tabOption) {
+            case 'dashboardMain': {
+                const moduleDashboard = await import(`resources/js/dashboardAdmin/dashboard.js?${Date.now()}`);
+                moduleDashboard.initDashboard();
+                break;
+            }
+            case 'dashboardUsuarios': {
+                const moduleUser = await import(`resources/js/dashboardAdmin/usuarios.js?${Date.now()}`);
+                moduleUser.initUsuarios();
+                break;
+            }
+            case 'dashboardIngredientes': {
+                const moduleIng = await import(`resources/js/dashboardAdmin/ingredientes.js?${Date.now()}`);
+                moduleIng.initIngredientes();
+                break;
+            }
+            case 'dashboardProductos': {
+                const modulePro = await import(`resources/js/dashboardAdmin/producto.js?${Date.now()}`);
+                modulePro.initProductos();
+                break;
+            }
+            case 'dashboardReservas': {
+                const moduleRes = await import(`resources/js/dashboardAdmin/reservations.js?${Date.now()}`);
+                moduleRes.initReservas();
+                break;
+            }
+            case 'dashboardPedidos': {
+                const modulePed = await import(`resources/js/dashboardAdmin/pedidos.js?${Date.now()}`);
+                modulePed.initPedidos();
+                break;
+            }
+                
+            case 'dashboardReportes': {
+                const { initReportes } = await import('resources/js/dashboardAdmin/reportes.js');
+                initReportes();
+                break;
+            }
+            case 'dashboardConfiguracion': {
+                const moduleConfig = await import(`resources/js/dashboardAdmin/configuracion.js?${Date.now()}`);
+                moduleConfig.initConfiguracion();
+                break;
+            }
+        }
+    } catch (error) {
+        console.error("Error al cargar la sección:", error);
+    }
 }
 
 ////==================| EVENTOS DE ABRIR FORMULARIO |===================
@@ -137,7 +191,7 @@ function closeAddWindow() {
                 if (result.isConfirmed) {
                     const formData = new FormData(formUser);
 
-                    fetch("/proyectoFinal/app/Functions/dashboardAdmin/usuarios.php?action=addUsers", {
+                    fetch("app/Functions/dashboardAdmin/usuarios.php?action=addUsers", {
                         method: 'POST',
                         body: formData,
                         credentials: 'same-origin'
@@ -187,7 +241,7 @@ function closeAddWindow() {
                 if (result.isConfirmed) {
                     const formData = new FormData(formIngredients);
 
-                    fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=addIngredient", {
+                    fetch("app/Functions/dashboardAdmin/ingredientes.php?action=addIngredient", {
                         method: 'POST',
                         body: formData,
                         credentials: 'same-origin'
@@ -251,7 +305,7 @@ function closeAddWindow() {
                     input.value = promotionValue;
                     const formData = new FormData(formProducts);
 
-                    fetch("/proyectoFinal/app/Functions/dashboardAdmin/productos.php?action=addProduct", {
+                    fetch("app/Functions/dashboardAdmin/productos.php?action=addProduct", {
                         method: 'POST',
                         body: formData,
                         credentials: 'same-origin'
@@ -302,7 +356,7 @@ function closeAddWindow() {
             customClass: { popup: 'swal-custom-font' }
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch("/proyectoFinal/app/Functions/check.php?action=cerrar", { method: 'POST' })
+                fetch("app/Functions/check.php?action=cerrar", { method: 'POST' })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
@@ -314,7 +368,7 @@ function closeAddWindow() {
                                 timer: 1500,
                                 customClass: { popup: 'swal-custom-font' }
                             }).then(() => {
-                                window.location.replace("/proyectoFinal/index.html");
+                                window.location.replace("index.html");
                                 localStorage.removeItem("pestañaActiva");
                             });
                         }
@@ -324,7 +378,7 @@ function closeAddWindow() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+async function savedTabF() {
     let savedTab = localStorage.getItem("pestañaActiva");
 
     // Si aún no hay pestaña guardada, detecta cuál está activa por defecto
@@ -349,7 +403,19 @@ document.addEventListener("DOMContentLoaded", () => {
         tab.style.display = 'none';
     });
 
-    // Mostrar la pestaña guardada o la principal
+    // Mostrar la pestaña guardada o principal
     if (defaultSection) defaultSection.style.display = "flex";
     if (defaultButton) defaultButton.classList.add("active");
-});
+
+    // 👉 Ejecutar la función principal para cargar el módulo JS dinámicamente
+    if (defaultButton) {
+        const fakeEvent = { preventDefault: () => {}, currentTarget: defaultButton };
+        await options(fakeEvent, defaultTab);
+    }
+}
+
+
+export { openAddWindow, closeAddWindow, cerrarSesion, savedTabF, initSearches };
+
+// Globalizar la funcion options, para poder usarla en el HTML
+window.options = options;

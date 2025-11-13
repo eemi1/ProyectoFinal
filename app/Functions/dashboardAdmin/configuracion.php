@@ -1,35 +1,98 @@
 <?php
-include 'conexion.php';
+session_start();
+header("Content-Type: application/json"); // Indica que la respuesta que va a devolver el servidor será en formato JSON.
+$pdo = require "../../../db.php";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+function getConfigurationRestaurant($pdo) {
 
-    // --- Subir imagen si existe ---
-    $rutaImagen = $_POST['imagen_actual'] ?? null; // por si ya hay una guardada
-    if (!empty($_FILES['imagen']['name'])) {
-        $carpeta = "uploads/";
-        if (!is_dir($carpeta)) mkdir($carpeta, 0777, true);
+    try{
+        $stmt = $pdo->query("SELECT c.id, c.nombre, c.capacidad_total, c.descripcion, c.telefono, c.email, c.direccion, c.ultima_actualizacion
+        FROM configuracion c 
+        WHERE c.id = 1
+        ");
+        $getConfiguration = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $nombreArchivo = time() . "_" . basename($_FILES['imagen']['name']);
-        $rutaImagen = $carpeta . $nombreArchivo;
-        move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaImagen);
+        echo json_encode([
+            "success" => true,
+            "configuration" => $getConfiguration
+        ]);
+    }catch(PDOException $e){
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al obtener la configuración:" . $e->getMessage()
+        ]);
     }
 
-    // --- Datos del formulario ---
-    $nombre = $_POST['nombre'];
-    $capacidad = $_POST['capacidad_total'];
-    $descripcion = $_POST['descripcion'];
-    $telefono = $_POST['telefono'];
-    $email = $_POST['email'];
-    $direccion = $_POST['direccion'];
-
-    // --- Actualizar el registro (único id = 1) ---
-    $sql = "UPDATE configuracion SET 
-                nombre=?, capacidad_total=?, descripcion=?, telefono=?, 
-                email=?, direccion=?, imagenes=?, ultima_actualizacion=NOW() 
-            WHERE id=1";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$nombre, $capacidad, $descripcion, $telefono, $email, $direccion, $rutaImagen]);
-
-    echo "✅ Configuración actualizada correctamente.";
 }
-?>
+
+function sentConfigurationRestaurant($pdo) {
+    $rutaImagen = null;
+    try{
+        // Verificar si se envió un archivo
+        if (!empty($_FILES['logoRestaurante']['name'])) {
+            // Carpeta donde guardar la imagen
+            $carpeta = $_SERVER['DOCUMENT_ROOT'] . "uploads/logo/";
+            if (!is_dir($carpeta)) {
+                mkdir($carpeta, 0777, true); // crear carpeta si no existe
+            }
+
+            // Nombre fijo para la imagen
+            $nombreArchivo = "logo.jpg";
+            $rutaImagen = $carpeta . $nombreArchivo;
+
+            // Mover archivo subido a la carpeta destino
+            move_uploaded_file($_FILES['logoRestaurante']['tmp_name'], $rutaImagen);
+        } else {
+            error_log("No se envió ninguna imagen");
+        }
+        
+
+        // --- Datos del formulario ---
+        $nombre = $_POST['nombreRestaurante'];
+        $capacidad = $_POST['capacidadRestaurante'];
+        $descripcion = $_POST['descripcionRestaurante'];
+        $telefono = $_POST['telefonoRestaurante'];
+        $email = $_POST['emailRestaurante'];
+        $direccion = $_POST['direccionRestaurante'];
+        $seccion = 'index';
+
+        // --- Actualizar el registro (único id = 1) ---
+        $sql = "UPDATE configuracion SET 
+                    nombre=?, capacidad_total=?, descripcion=?, telefono=?, 
+                    email=?, direccion=?, seccion=?, ultima_actualizacion=NOW() 
+                WHERE id=1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$nombre, $capacidad, $descripcion, $telefono, $email, $direccion, $seccion]);
+
+        echo json_encode([
+            "success" => true,
+            "message" => "Configuración del restaurante actualizada correctamente: "
+        ]);
+
+    }catch(PDOException $e){
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al actualizar la configuración: " . $e->getMessage()
+        ]);
+    }
+}
+
+
+if (!isset($_SESSION['usuario']) || !isset($_SESSION['id_rol'])) {
+    echo json_encode(["success" => false, "message" => "Sesión no iniciada o inválida"]);
+    exit;
+}
+
+$accion = $_GET['action'] ?? null;
+
+switch ($accion) {
+    case 'getConfigurationRestaurant':
+        getConfigurationRestaurant($pdo);
+        break;
+    case 'sentConfigurationRestaurant':
+        sentConfigurationRestaurant($pdo);
+        break;
+    default:
+        echo json_encode(["success" => false, "message" => "Acción no válida"]);
+        break;
+}

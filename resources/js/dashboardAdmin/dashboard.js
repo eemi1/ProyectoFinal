@@ -1,4 +1,8 @@
-
+// dashboard.js
+export function initDashboard() {
+    console.log("initDashboard ejecutado");
+    chartsDashboard();
+}
 
 
 

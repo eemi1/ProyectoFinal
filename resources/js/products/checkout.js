@@ -26,7 +26,7 @@ function loadAddresses() {
     const address = document.querySelector('.Address')
     address.style.display = "block";
     const addressesContainer = document.getElementById("contentAddress");
-        fetch("/proyectoFinal/app/Functions/dashboardUser/addressController.php?action=get", {
+        fetch("app/Functions/dashboardUser/addressController.php?action=get", {
             credentials: 'same-origin'
         })
         .then(res => res.json())
@@ -98,7 +98,7 @@ function eventButton() {
         })
         .then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "/proyectoFinal/app/View/dashboardUser/ClientProfile.html"
+                window.location.href = "app/View/dashboardUser/ClientProfile.html"
             }
         })
     })
@@ -161,8 +161,8 @@ function loadProducts() {
         productDiv.className = "cart-item";
         productDiv.innerHTML = `
             <div class="cart-item-img-container" id="imageProductCheckout">
-                <img src="/proyectoFinal/uploads/products/${id}.jpg" alt="${item.nombre}" class="cart-item-img"
-                    onerror="this.onerror=null;this.src='/proyectoFinal/uploads/products/imagen-default.png';">
+                <img src="uploads/products/${id}.jpg" alt="${item.nombre}" class="cart-item-img"
+                    onerror="this.onerror=null;this.src='uploads/products/imagen-default.png';">
             </div>
             <div class="cart-item-info">
                 <span>${item.nombre}</span>
@@ -262,7 +262,7 @@ function finalizarPedido() {
         }
 
         // Enviar pedido al backend
-        fetch("/proyectoFinal/app/Functions/products/guardarPedido.php", {
+        fetch("app/Functions/products/guardarPedido.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "same-origin",

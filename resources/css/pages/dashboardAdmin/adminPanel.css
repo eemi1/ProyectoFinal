@@ -1982,145 +1982,127 @@ img {
 }
 
 .optConfig.activo{
-      background-color: #007bff;     /* azul principal */
-  color: white;
-  border-color: #0056b3;         /* borde más oscuro */
-  box-shadow: 0 0 6px rgba(0, 123, 255, 0.6);
-  transform: scale(1.03); 
-  display: flex;
+    background-color: #007bff;     /* azul principal */
+    color: white;
+    border-color: #0056b3;         /* borde más oscuro */
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.6);
+    transform: scale(1.03); 
+    display: flex;
 
 }
 
 
-    .restaurante-config {
-      width: 900px;
-      margin: 40px auto;
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-      padding: 30px 40px;
-      font-family: "Poppins", Arial, sans-serif;
+    .restauranteForm {
+        width: 900px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        padding: 30px 40px;
+        font-family: "Poppins", Arial, sans-serif;
     }
 
     /* === TITULO === */
-    .restaurante-config h2 {
-      text-align: center;
-      color: #222;
-      margin-bottom: 25px;
-      font-size: 22px;
-      font-weight: 600;
+    .restauranteForm h2 {
+        text-align: center;
+        color: #222;
+        margin-bottom: 25px;
+        font-size: 22px;
+        font-weight: 600;
     }
 
     /* === GRID === */
     .restaurante-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px 25px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px 25px;
     }
 
     /* === LABELS === */
-    .restaurante-config label {
-      display: block;
-      font-weight: 600;
-      color: #333;
-      font-size: 15px;
-      margin-bottom: 6px;
+    .restauranteForm label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        font-size: 15px;
+        margin-bottom: 6px;
     }
 
     /* === CAMPOS DE TEXTO === */
-    .restaurante-config input[type="text"],
-    .restaurante-config input[type="number"],
-    .restaurante-config input[type="tel"],
-    .restaurante-config input[type="email"],
-    .restaurante-config select,
-    .restaurante-config textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #cfd2d4;
-      border-radius: 8px;
-      background-color: #fafafa;
-      font-size: 15px;
-      color: #333;
-      outline: none;
-      transition: all 0.2s ease;
+    .restauranteForm input[type="text"],
+    .restauranteForm input[type="number"],
+    .restauranteForm input[type="tel"],
+    .restauranteForm input[type="email"],
+    .restauranteForm select,
+    .restauranteForm textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #cfd2d4;
+        border-radius: 8px;
+        background-color: #fafafa;
+        font-size: 15px;
+        color: #333;
+        outline: none;
+        transition: all 0.2s ease;
     }
 
     /* Hover y focus */
-    .restaurante-config input:focus,
-    .restaurante-config select:focus,
-    .restaurante-config textarea:focus {
-      border-color: #4c8bf5;
-      background-color: #fff;
-      box-shadow: 0 0 0 3px rgba(76, 139, 245, 0.15);
+    .restauranteForm input:focus,
+    .restauranteForm select:focus,
+    .restauranteForm textarea:focus {
+        border-color: #4c8bf5;
+        background-color: #fff;
+        box-shadow: 0 0 0 3px rgba(76, 139, 245, 0.15);
     }
 
     /* Textarea */
-    .restaurante-config textarea {
-      resize: vertical;
-      min-height: 80px;
+    .restauranteForm textarea {
+        resize: vertical;
+        min-height: 80px;
     }
 
     /* === CAMPOS COMPLETOS (que ocupan las 2 columnas) === */
     .restaurante-full {
-      grid-column: span 2;
-    }
-
-    /* === CAMPOS CON ICONOS === */
-    .restaurante-field-icon {
-      position: relative;
-    }
-
-    .restaurante-field-icon i {
-      position: absolute;
-      top: 38px;
-      left: 10px;
-      color: #666;
-      font-size: 17px;
-    }
-
-    .restaurante-field-icon input,
-    .restaurante-field-icon select {
-      padding-left: 34px;
+        grid-column: span 2;
     }
 
     /* === BOTON === */
     .restaurante-save {
-      grid-column: span 2;
-      margin-top: 10px;
+        grid-column: span 2;
+        margin-top: 10px;
     }
 
     .restaurante-save button {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #28a745;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 22px;
-      font-size: 16px;
-      color: #fff;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #28a745;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 22px;
+        font-size: 16px;
+        color: #fff;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
     }
 
     .restaurante-save button:hover {
-      background: #218838;
+        background: #218838;
     }
 
     .restaurante-save i {
-      font-size: 18px;
+        font-size: 18px;
     }
 
     /* === RESPONSIVE === */
     @media (max-width: 720px) {
-      .restaurante-grid {
-        grid-template-columns: 1fr;
-      }
-      .restaurante-save {
-        justify-content: center;
-        display: flex;
-      }
+        .restaurante-grid {
+            grid-template-columns: 1fr;
+        }
+        .restaurante-save {
+            justify-content: center;
+            display: flex;
+        }
     }
 
 

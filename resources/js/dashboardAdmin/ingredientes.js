@@ -1,7 +1,17 @@
+// ingredientes.js
+export function initIngredientes() {
+    console.log("initIngredientes ejecutado");
+    loadIngredients();
+    ingredientsTotal();
+    getIngredients();
+    showModalProductsAddIngredients();
+    initSearchIngredientes();
+}
+
 //============================== PESTAÑA DASHBOARD INGREDIENTES ==============================
 function loadIngredients(inputSearchIngredients = '') {
 
-    fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
+    fetch("app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
         method: 'POST',
         credentials: 'same-origin',
         headers: { "Content-Type": "application/json" },
@@ -54,9 +64,18 @@ function loadIngredients(inputSearchIngredients = '') {
     })
     .catch(err => console.error(err));
 }
+function initSearchIngredientes() {
+    const inputSearchIngredients = document.getElementById("searchInputIngredients");
+    if (!inputSearchIngredients) return;
 
+    inputSearchIngredients.addEventListener("input", () => {
+        loadIngredients(inputSearchIngredients.value);
+    });
+
+    loadIngredients();
+}
 function ingredientsTotal() {
-    fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=ingredientsAmount", {
+    fetch("app/Functions/dashboardAdmin/ingredientes.php?action=ingredientsAmount", {
         method: 'POST',
         credentials: 'same-origin'
     })
@@ -70,7 +89,7 @@ function ingredientsTotal() {
 }
 
 function getIngredients(){
-        fetch("/proyectoFinal/app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
+        fetch("app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients", {
         method: "GET",
         credentials: "same-origin"
     })

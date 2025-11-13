@@ -32,7 +32,7 @@ if ($id_token) {
         // y guardarlo si es nuevo.
 
         // Luego redirigir al dashboard
-        header('Location: /proyectoFinal/app/View/dashboard.php');
+        header('Location: app/View/dashboard.php');
         exit;
     } else {
         echo "⚠️ Token inválido o expirado.";

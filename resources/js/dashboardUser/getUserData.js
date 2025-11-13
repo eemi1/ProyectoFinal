@@ -1,5 +1,5 @@
 function getOrders() {
-    fetch("/proyectoFinal/app/Functions/dashboardUser/myProfile.php?action=getOrders", {
+    fetch("app/Functions/dashboardUser/myProfile.php?action=getOrders", {
         method: 'GET',
         credentials: 'same-origin'
     })
@@ -113,7 +113,7 @@ data.pedidos.forEach(pedido => {
 }
 
 function getReservations() {
-    fetch("/proyectoFinal/app/Functions/dashboardUser/myProfile.php?action=getReservations", {
+    fetch("app/Functions/dashboardUser/myProfile.php?action=getReservations", {
         method: 'GET',
         credentials: 'same-origin'
     })
@@ -232,7 +232,7 @@ function cancelarReserva() {
                 if (result.isConfirmed) {
                     const codigoReserva = e.target.dataset.codigo;
                     // console.log(`Cancelar reserva: ${codigoReserva}`);
-                    fetch(`/proyectoFinal/app/Functions/dashboardUser/myProfile.php?action=cancelReservation`, {
+                    fetch(`app/Functions/dashboardUser/myProfile.php?action=cancelReservation`, {
                         method: 'POST',
                         credentials: 'same-origin',
                         headers: {'Content-Type': 'application/json'},

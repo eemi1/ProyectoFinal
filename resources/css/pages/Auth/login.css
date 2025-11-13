@@ -164,6 +164,11 @@ main{
 /*===================================*/
 /*=       FORMULARIO FOOTER         =*/
 /*===================================*/
+.noRegister a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+}
 .formFooter{
     width: 100%;
     height: 20%;
