@@ -147,7 +147,7 @@ function usersTotal() {
 
 
 
-function btnActionsUser(event) {
+export function btnActionsUser(event) {
 
     const btn = event.currentTarget;
     const optionsList = btn.parentElement.querySelector(".optionsTableUsers-list");

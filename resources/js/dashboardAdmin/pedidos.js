@@ -179,7 +179,7 @@ function getOrders(estado = 'todas') {
 }
 
 
-function preparingOrder(id){
+export function preparingOrder(id){
     fetch(`/app/Functions/dashboardAdmin/pedidos.php?action=preparingOrder`, {
         method: "POST",
         credentials: "same-origin",
@@ -206,7 +206,7 @@ if (orderDiv) {
 
 }
 
-function listOrder(id){
+export function listOrder(id){
     fetch(`/app/Functions/dashboardAdmin/pedidos.php?action=listOrder`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -224,7 +224,7 @@ function listOrder(id){
     .catch(err => console.error("Error:", err));
 }
 
-function sentOrder(id){
+export function sentOrder(id){
     fetch('/app/Functions/dashboardAdmin/pedidos.php?action=sentOrder', {
         method: 'POST',
         headers: {
@@ -244,7 +244,7 @@ function sentOrder(id){
     .catch(err => console.error('Error:', err));
 
 }
-function cancelOrder(id){
+export function cancelOrder(id){
     fetch(`/app/Functions/dashboardAdmin/pedidos.php?action=cancelOrder`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -262,7 +262,7 @@ function cancelOrder(id){
     .catch(err => console.error("Error:", err));
 }
 
-function markAsPaid(id) {
+export function markAsPaid(id) {
     fetch(`/app/Functions/dashboardAdmin/pedidos.php?action=markAsPaid`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

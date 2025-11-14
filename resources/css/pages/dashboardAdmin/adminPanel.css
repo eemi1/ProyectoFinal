@@ -1494,6 +1494,10 @@ img {
     background-color: red;
     color: white;
 }
+.estadoNoShow{
+    background-color: black;
+    color: white;
+}
 
 
 /*CONTENEDOR DETALLES CARDS*/

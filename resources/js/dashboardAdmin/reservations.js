@@ -143,7 +143,6 @@ function getReservations(estado = 'todas') {
                         estadoHTML = `<span class="estadoFinalizado">${reserva.estado}</span>`;
                         buttons = ``;
                         break;
-
                     case "En curso":
                         estadoHTML = `<span class="estadoEnCurso">${reserva.estado}</span>`;
                         buttons = `
@@ -151,6 +150,9 @@ function getReservations(estado = 'todas') {
                         <button class="btnCancelarReserva" onclick="cancelReservation(${reserva.id})">Cancelar</button>
                         `;
                         break;
+                    case "no_show":
+                        estadoHTML = `<span class="estadoNoShow">${reserva.estado}</span>`;
+                        buttons = ``;
                     default:
                         estadoHTML = `<span>${reserva.estadoHTML}</span>`;
                 }
@@ -192,7 +194,7 @@ function getReservations(estado = 'todas') {
     .catch(err => console.error('Error al obtener reservas:', err));
 }
 
-function confirmReservation(id) {
+export function confirmReservation(id) {
     fetch(`/app/Functions/dashboardAdmin/reservas.php?action=confirmReservation`, {
         method: "POST",
         credentials: "same-origin",
@@ -219,7 +221,7 @@ function confirmReservation(id) {
     });
 }
 
-function cancelReservation(id) {
+export function cancelReservation(id) {
     fetch(`/app/Functions/dashboardAdmin/reservas.php?action=cancelReservation`, {
         method: "POST",
         credentials: "same-origin",
@@ -237,7 +239,7 @@ function cancelReservation(id) {
     });
 }
 
-function assistReservation(id) {
+export function assistReservation(id) {
     fetch(`/app/Functions/dashboardAdmin/reservas.php?action=assistReservation`, {
         method: "POST",
         credentials: "same-origin",
@@ -255,7 +257,7 @@ function assistReservation(id) {
     });
 }
 
-function finalizeReservation(id) {
+export function finalizeReservation(id) {
     fetch(`/app/Functions/dashboardAdmin/reservas.php?action=finalizeReservation`, {
         method: "POST",
         credentials: "same-origin",
@@ -279,7 +281,7 @@ function finalizeReservation(id) {
 /*=================================*/
 /*===== VER MESAS DISPONIBLES =====*/
 /*=================================*/
-function showTablesAvailables() {
+export function showTablesAvailables() {
 
     const btnShowTables = document.getElementById('showTablesStatus');
     const searchFilter = document.querySelector('.reservasFilters');
