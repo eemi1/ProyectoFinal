@@ -254,6 +254,7 @@ document.getElementById("editUserForm").addEventListener("submit", function(e) {
     .then(res => res.json())
     .then(data => {
         if (data.success) {
+            console.log(data);
             Swal.fire({
                 title: "Editado!",
                 text: data.message,

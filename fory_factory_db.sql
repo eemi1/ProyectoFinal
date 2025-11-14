@@ -42,7 +42,7 @@ CREATE TABLE `usuario` (
   `nombreCompleto` VARCHAR(255) NOT NULL,
   `mail` VARCHAR(255) NOT NULL UNIQUE,
   `contraseña` VARCHAR(255) NOT NULL,
-  `telefono` INT NOT NULL,
+  `telefono` INT,
   `id_rol` INT NOT NULL DEFAULT 1,
   `fechaNacimiento` DATE,
   `fechaRegistro` DATE DEFAULT (CURRENT_DATE),

@@ -166,7 +166,10 @@ function deleteUser($pdo) {
 function editUser($pdo){
     $userId = $_POST['userId'] ?? null;
     $name = $_POST['username'] ?? '';
-    $telefono = $_POST['tel'] ?? '';
+    $telefono = $_POST['tel'] ?? null;
+    if ($telefono === "" || $telefono === " ") {
+        $telefono = null;
+    }
     $rol_id = $_POST['role'] ?? 1;
     $int_rol_id = (int)$rol_id;
 
@@ -189,9 +192,6 @@ function editUser($pdo){
 
 }
 
-function searchInput() {
-
-}
 
 // RUTEO
 $accion = $_GET['action'] ?? null;
