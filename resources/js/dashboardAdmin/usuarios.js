@@ -43,6 +43,8 @@ function loadUsers(inputSearchUsers = '', rolValue = '') {
             }
 
             const row = document.createElement("tr");
+            row.setAttribute("data-rol", user.id_rol);
+            row.setAttribute("data-tel", user.telefono || "");
             row.innerHTML = `
                 <td>
                     <div class="container-user">
@@ -224,15 +226,17 @@ document.querySelectorAll(".edit-user").forEach(btn => {
         const row = btn.closest("tr");
         const userId = btn.dataset.id;
         const nombre = row.querySelector(".user-name").textContent;
+        const rol = row.getAttribute("data-rol");
+        const tel = row.getAttribute("data-tel");
 
 
         const modal = document.querySelector(".modalEditUser");
         modal.style.display = "block";
 
-        document.getElementById("editUsername").value = nombre;
-
-        // Guardar el userId en un input hidden
         document.getElementById("editUserId").value = userId;
+        document.getElementById("editUsername").value = nombre;
+        document.getElementById("editRole").value = rol;
+        document.getElementById("editTel").value = tel;;
     });
 });
 

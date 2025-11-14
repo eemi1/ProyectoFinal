@@ -170,8 +170,22 @@ function editUser($pdo){
     if ($telefono === "" || $telefono === " ") {
         $telefono = null;
     }
-    $rol_id = $_POST['role'] ?? 1;
+    $rol_id = $_POST['role'] ?? null;
+    
+    if ($rol_id === "" || $rol_id === null) {
+        $rol_id = 1; // Rol por defecto
+    }
+    
     $int_rol_id = (int)$rol_id;
+    
+    // Si el rol no existe en la tabla `rol`, cortamos
+    $stmt = $pdo->prepare("SELECT id FROM rol WHERE id = ?");
+    $stmt->execute([$int_rol_id]);
+    if (!$stmt->fetch()) {
+        echo json_encode(["success" => false, "message" => "El rol seleccionado no existe."]);
+        exit;
+    }
+
 
     if (!$userId) {
         echo json_encode(["success" => false, "message" => "ID de usuario no proporcionado."]);
