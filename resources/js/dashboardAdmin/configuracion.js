@@ -77,7 +77,7 @@ async function sentConfigurationRestaurant() {
       text: "¡No podrás revertir esto!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
+      confirmButtonColor: 'var(--primary-color)',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, guardar cambios!'
     }).then(async (result) => {
