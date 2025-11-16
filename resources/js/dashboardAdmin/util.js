@@ -76,51 +76,51 @@ async function options(event, tabOption){
         switch(tabOption) {
             case 'dashboardMain': {
                 const module = await import(`/resources/js/dashboardAdmin/dashboard.js?${Date.now()}`);
-                module.initDashboard();
                 Object.assign(window, module);
+                module.initDashboard();
                 break;
             }
             case 'dashboardUsuarios': {
                 const module = await import(`/resources/js/dashboardAdmin/usuarios.js?${Date.now()}`);
-                module.initUsuarios();
                 Object.assign(window, module);
+                module.initUsuarios();
                 break;
             }
             case 'dashboardIngredientes': {
                 const module = await import(`/resources/js/dashboardAdmin/ingredientes.js?${Date.now()}`);
-                module.initIngredientes();
                 Object.assign(window, module);
+                module.initIngredientes();
                 break;
             }
             case 'dashboardProductos': {
                 const module = await import(`/resources/js/dashboardAdmin/producto.js?${Date.now()}`);
-                module.initProductos();
                 Object.assign(window, module);
+                module.initProductos();
                 break;
             }
             case 'dashboardReservas': {
                 const module = await import(`/resources/js/dashboardAdmin/reservations.js?${Date.now()}`);
-                module.initReservas();
                 Object.assign(window, module);
+                module.initReservas();
                 break;
             }
             case 'dashboardPedidos': {
                 const module = await import(`/resources/js/dashboardAdmin/pedidos.js?${Date.now()}`);
-                module.initPedidos();
                 Object.assign(window, module);
+                module.initPedidos();
                 break;
             }
                 
             case 'dashboardReportes': {
                 const module = await import(`/resources/js/dashboardAdmin/reportes.js?${Date.now()}`);
-                module.initReportes();
                 Object.assign(window, module);
+                module.initReportes();
                 break;
             }
             case 'dashboardConfiguracion': {
                 const module = await import(`/resources/js/dashboardAdmin/configuracion.js?${Date.now()}`);
-                module.initConfiguracion();
                 Object.assign(window, module);
+                module.initConfiguracion();
                 break;
             }
         }

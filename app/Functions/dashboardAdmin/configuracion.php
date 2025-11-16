@@ -77,6 +77,122 @@ function sentConfigurationRestaurant($pdo) {
     }
 }
 
+function loadTables($pdo){
+    try{
+        $stmt = $pdo->query('SELECT id, capacidad, estado, descripcion FROM mesa ORDER BY fecha_actualizacion DESC, id ASC');
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode([
+        "success" => true,
+        "data" => $data
+        ]);
+
+    }catch(PDOException $e){
+        echo json_encode([
+        "success" => false,
+        "message" => "Error al cargar las mesas: " . $e->getMessage()
+        ]);
+    }
+}
+
+if (!isset($_SESSION['usuario']) || !isset($_SESSION['id_rol'])) {
+    echo json_encode(["success" => false, "message" => "Sesión no iniciada o inválida"]);
+    exit;
+}
+
+
+function updateTable($pdo){
+    try{
+        // Validar campos enviados
+        if (
+            !isset($_POST['id']) ||
+            !isset($_POST['capacidad']) ||
+            !isset($_POST['descripcion'])
+        ) {
+            echo json_encode([
+                "success" => false,
+                "message" => "Datos incompletos para actualizar la mesa."
+            ]);
+            return;
+        }
+
+        $id = intval($_POST['id']);
+        $capacidad = intval($_POST['capacidad']);
+        $descripcion = trim($_POST['descripcion']);
+
+        // Query segura
+        $sql = "UPDATE mesa 
+                SET capacidad = ?, descripcion = ?
+                WHERE id = ?";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$capacidad, $descripcion, $id]);
+
+        echo json_encode([
+            "success" => true,
+            "message" => "Mesa actualizada correctamente."
+        ]);
+
+    } catch(PDOException $e){
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al actualizar la mesa: " . $e->getMessage()
+        ]);
+    }
+}
+
+function addTable($pdo){
+    try{
+        $capacidad = intval($_POST['capacidad'] ?? 4);
+        $descripcion = $_POST['descripcion'] ?? "Mesa nueva";
+        $estado = "libre";
+
+        $sql = "INSERT INTO mesa (capacidad, estado, descripcion)
+                VALUES (?, ?, ?)";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$capacidad, $estado, $descripcion]);
+
+        echo json_encode([
+            "success" => true,
+            "message" => "Mesa creada correctamente.",
+            "id" => $pdo->lastInsertId()
+        ]);
+
+    } catch(PDOException $e){
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al agregar la mesa: " . $e->getMessage()
+        ]);
+    }
+}
+
+function deleteTable($pdo){
+    try{
+        if (!isset($_POST['id'])) {
+            echo json_encode([
+                "success" => false,
+                "message" => "No se recibió el ID de la mesa."
+            ]);
+            return;
+        }
+
+        $id = intval($_POST['id']);
+
+        $stmt = $pdo->prepare("DELETE FROM mesa WHERE id = ?");
+        $stmt->execute([$id]);
+
+        echo json_encode([
+            "success" => true,
+            "message" => "Mesa eliminada correctamente."
+        ]);
+
+    } catch(PDOException $e){
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al eliminar la mesa: " . $e->getMessage()
+        ]);
+    }
+}
 
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['id_rol'])) {
     echo json_encode(["success" => false, "message" => "Sesión no iniciada o inválida"]);
@@ -91,6 +207,18 @@ switch ($accion) {
         break;
     case 'sentConfigurationRestaurant':
         sentConfigurationRestaurant($pdo);
+        break;
+    case 'loadTables':
+        loadTables($pdo);
+        break;
+    case 'updateTable':
+        updateTable($pdo);
+        break;
+    case 'addTable':
+        addTable($pdo);
+        break;
+    case 'deleteTable':
+        deleteTable($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);

@@ -15,6 +15,11 @@ html, body {
     flex-direction: column;
     overflow: hidden;
 }
+.swal2-container{
+    z-index: 100000 !important;
+}
+
+
 .btnForms{
     color: black;
     border: 1px solid black;
@@ -830,7 +835,7 @@ img {
     color: white;
 }
 /*------------EDITAR USUARIO VENTANA ----------------*/
-.modalEditUser{
+.modalOptions{
     display: none;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
@@ -843,7 +848,7 @@ img {
     align-items: center;
     
 }
-.modalEditUser-content{
+.modalOptions-content{
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -851,14 +856,14 @@ img {
     background-color: white;
     margin: 10px auto;
 }
-.modalEditUser-content > h2{
+.modalOptions-content > h2{
     display: flex;
     margin-bottom: 20px;
     font-size: 1.5rem;
     align-items: flex-start;
     padding: 15px 0px;
 }
-.closeEditUserBtn{
+.modalCloseBtn{
     font-size: 1.8rem;
     font-weight: bold;
     color: #aaa;
@@ -866,10 +871,10 @@ img {
     align-items: flex-end;
     float: right;
 }
-.closeEditUserBtn:hover{
+.modalCloseBtn:hover{
     color: red;
 }
-#editUserForm{
+#editUserForm, #ChangePassUserForm{
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -1949,6 +1954,7 @@ img {
 }
 /*=======================================|DASHBOARD CONFIGURACIÓN|==========================================================*/
 
+/*---- RESTAURANTE ----*/
 .filtersConfig{
     width: 100%;
     height: 40px;
@@ -1968,6 +1974,12 @@ img {
     padding: 4px;
     gap: 10px;
 }
+.filtersConfig a:hover{
+    background-color: #17821b11;
+    padding: 4px;
+    border-radius: 15px;
+
+}
 
 .filtersConfig a.activo{
     background-color: var(--primary-color);
@@ -1977,7 +1989,7 @@ img {
 
 .optConfig{
     display: none;
-    height: 100vh;
+    height: auto;
     width: auto;
     padding: 30px;
     border: 1px solid var(--borderColor);
@@ -1996,18 +2008,18 @@ img {
 }
 
 
-    .restauranteForm {
-        width: 900px;
-        margin: 40px auto;
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-        padding: 30px 40px;
-        font-family: "Poppins", Arial, sans-serif;
-    }
+.formConfig {
+    width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    padding: 30px 40px;
+    font-family: "Poppins", Arial, sans-serif;
+}
 
     /* === TITULO === */
-    .restauranteForm h2 {
+    .formConfig h2 {
         text-align: center;
         color: #222;
         margin-bottom: 25px;
@@ -2023,7 +2035,7 @@ img {
     }
 
     /* === LABELS === */
-    .restauranteForm label {
+    #restaurantForm label {
         display: block;
         font-weight: 600;
         color: #333;
@@ -2032,17 +2044,17 @@ img {
     }
 
     /* === CAMPOS DE TEXTO === */
-    .restauranteForm input[type="text"],
-    .restauranteForm input[type="number"],
-    .restauranteForm input[type="tel"],
-    .restauranteForm input[type="email"],
-    .restauranteForm select,
-    .restauranteForm textarea {
+    #restaurantForm input[type="text"],
+    #restaurantForm input[type="number"],
+    #restaurantForm input[type="tel"],
+    #restaurantForm input[type="email"],
+    #restaurantForm select,
+    #restaurantForm textarea {
         width: 100%;
         padding: 10px 12px;
-        border: 1px solid #cfd2d4;
+        border: 1px solid var(--borderColor2);
         border-radius: 8px;
-        background-color: #fafafa;
+        background-color: var(--borderBackground);
         font-size: 15px;
         color: #333;
         outline: none;
@@ -2050,16 +2062,16 @@ img {
     }
 
     /* Hover y focus */
-    .restauranteForm input:focus,
-    .restauranteForm select:focus,
-    .restauranteForm textarea:focus {
+    #restaurantForm input:focus,
+    #restaurantForm select:focus,
+    #restaurantForm textarea:focus {
         border-color: #4c8bf5;
         background-color: #fff;
         box-shadow: 0 0 0 3px rgba(76, 139, 245, 0.15);
     }
 
     /* Textarea */
-    .restauranteForm textarea {
+    #restaurantForm textarea {
         resize: vertical;
         min-height: 80px;
     }
@@ -2109,11 +2121,139 @@ img {
         }
     }
 
+/*---- MESAS ----*/
+.mesaConfigTitle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.btnAddTableConfig{
+    /* background-color: #36c96c; */
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: var(--font-mediumSmall);
+    cursor: pointer;
+}
+.btnAddTableConfig:hover{
+    background-color: var(--primary-color-hover);
+}
+#contenedorMesaConfig{
+    min-height: 100%;
+    height: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));;
+    gap: 20px;
+}
+
+.tableConfigItem{
+    margin-top: 10px;
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px;
+    gap: 10px;
+    justify-content: space-evenly;
+}
+
+/* subcontenedores */
+.contentTables.Header{
+    min-height: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Sans Serif', Arial;
+    padding: 0px 20px;
+    justify-content: space-between;
+}
+
+.contentTables.Tables{
+    min-height: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contentTables.Footer{
+    min-height: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+/*Contenedores Inputs*/
+.contentTables.inputContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    gap: 5px;
+}
+
+/*Input*/
+.contentTables.inputContainer input{
+    width: 80%;
+    height: 30px;
+    padding-left: 10px;
+    border: 1px solid var(--borderColor2);
+    background-color: var(--borderBackground);
+    border-radius: 0.2rem;
+    outline: none;
 
 
+}
+/*Label*/
+.contentTables.inputContainer label{
+    width: 80%;
+}
 
 
+/*Botón*/
+.buttonTable{
+    width: 80%;
+    height: 40px;
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.buttonTable:hover{
+    background-color: darkred;
+}
+.buttonTableSave{
+    border: 1px solid var(--primary-color);
+    border-radius: 0.2rem;
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.buttonTableSave:hover{
+    background-color: var(--primary-color-hover);
+}
 
+.nuevaCapacidad, .nuevaDescripcion{
+    display: flex;
+}
+
+.modalAddTables{
+    display: flex;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
+}
 
 @media screen and (max-width: 1010px) {
     .reservasFilters{

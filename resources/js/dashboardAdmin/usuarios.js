@@ -5,6 +5,9 @@ export function initUsuarios() {
     filterRoles();
     usersTotal();
     initSearchUsuarios();
+    deleteUser();   
+    editUser();
+    changePass();
 }
 
 ////==================| PESTAÑA DASHBOARD USUARIOS |===================
@@ -79,9 +82,6 @@ function loadUsers(inputSearchUsers = '', rolValue = '') {
             `;
             userTableBody.appendChild(row);
         });
-
-        deleteUser();
-        editUser();
     });
 }
 
@@ -92,9 +92,6 @@ function initSearchUsuarios() {
     inputSearchUsers.addEventListener("input", () => {
         loadUsers(inputSearchUsers.value);
     });
-
-    // Cargar lista inicial
-    loadUsers();
 }
 
 function filterRoles() {
@@ -169,107 +166,160 @@ export function btnActionsUser(event) {
 }
 
 function deleteUser() {
-    document.querySelectorAll(".delete-user").forEach(item => {
+    document.addEventListener("click", function(event) {
+        const btn = event.target.closest(".delete-user");
+        if (!btn) return;
 
-        item.addEventListener("click", function() {
-            const userId = item.dataset.id;
+        const userId = btn.dataset.id;
 
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: 'Esta acción no se puede deshacer.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar',
-                cancelButtonColor: "#d33",
-            }).then((result) => {
-                if (result.isConfirmed) {  
-                    fetch("/app/Functions/dashboardAdmin/usuarios.php?action=deleteUser", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ userId: userId })
-                    }).then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire({
-                                title: 'Eliminado!',
-                                text: data.message,
-                                icon: 'success',
-                                timer: 1500,
-                                showConfirmButton: false
-                            }).then(() => {
-                                location.reload();
-                            });
-                        } else {
-                            Swal.fire({
-                                title: 'Error',
-                                text: data.message,
-                                icon: 'error',
-                                confirmButtonText: 'Ok'
-                            });
-                        }
-                    });
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: '#d33'
+        }).then(result => {
+            if (!result.isConfirmed) return;
 
+            fetch("/app/Functions/dashboardAdmin/usuarios.php?action=deleteUser", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: "Eliminado!",
+                        text: data.message,
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => location.reload());
+                } else {
+                    Swal.fire("Error", data.message, "error");
                 }
             });
-
         });
     });
 }
 
+
 function editUser() {
-    // Abrir modal y llenar datos
-document.querySelectorAll(".edit-user").forEach(btn => {
-    btn.addEventListener("click", function() {
+    // Abrir modal
+    document.addEventListener("click", function(event) {
+        const btn = event.target.closest(".edit-user");
+        if (!btn) return;
+
         const row = btn.closest("tr");
         const userId = btn.dataset.id;
-        const nombre = row.querySelector(".user-name").textContent;
-        const rol = row.getAttribute("data-rol");
-        const tel = row.getAttribute("data-tel");
-
-
-        const modal = document.querySelector(".modalEditUser");
-        modal.style.display = "block";
 
         document.getElementById("editUserId").value = userId;
-        document.getElementById("editUsername").value = nombre;
-        document.getElementById("editRole").value = rol;
-        document.getElementById("editTel").value = tel;;
+        document.getElementById("editUsername").value = row.querySelector(".user-name").textContent;
+        document.getElementById("editRole").value = row.getAttribute("data-rol");
+        document.getElementById("editTel").value = row.getAttribute("data-tel");
+
+        document.getElementById("modalEditUser").style.display = "block";
     });
-});
 
-// Cerrar modal
-document.getElementById("closeEditUserBtn").addEventListener("click", () => {
-    document.querySelector(".modalEditUser").style.display = "none";
-});
-
-// Enviar formulario
-document.getElementById("editUserForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-
-    fetch("/app/Functions/dashboardAdmin/usuarios.php?action=editUser", {
-        method: "POST",
-        body: formData,
-        credentials: "same-origin"
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            console.log(data);
-            Swal.fire({
-                title: "Editado!",
-                text: data.message,
-                icon: "success",
-                timer: 1500,
-                showConfirmButton: false
-            }).then(() => location.reload());
-        } else {
-            Swal.fire("Error", data.message, "error");
-        }
+    // Cerrar modal
+    document.getElementById("closeEditUserBtn").addEventListener("click", () => {
+        document.getElementById("modalEditUser").style.display = "none";
     });
-});
+
+    // Enviar formulario
+    document.getElementById("editUserForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        document.getElementById("modalEditUser").style.display = "none";
+
+        fetch("/app/Functions/dashboardAdmin/usuarios.php?action=editUser", {
+            method: "POST",
+            body: formData,
+            credentials: "same-origin"
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: "Editado!",
+                    text: data.message,
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => location.reload());
+            } else {
+                Swal.fire("Error", data.message, "error");
+            }
+        });
+    });
 }
 
+function changePass() {
+    // Abrir modal
+    document.addEventListener("click", function(event) {
+        const btn = event.target.closest(".change-password");
+        if (!btn) return;
+
+        document.getElementById("changePassUserId").value = btn.dataset.id;
+        document.getElementById("modalChangePassUser").style.display = "block";
+    });
+
+    // Cerrar modal
+    document.getElementById("closeChangePassUserBtn").addEventListener("click", () => {
+        document.getElementById("modalChangePassUser").style.display = "none";
+    });
+
+    // Enviar formulario
+    document.getElementById("ChangePassUserForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const newPass = document.getElementById("ChangePassUsername").value;
+        const repeatPass = document.getElementById("RepeatChangePassUsername").value;
+
+        if (newPass !== repeatPass) {
+            Swal.fire({
+                title: "Error!",
+                text: "Las contraseñas no coinciden!",
+                icon: "warning"
+            });
+            return;
+        }
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Está seguro que desea cambiar la contraseña de este usuario.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, cambiar',
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: '#d33'
+        }).then(result => {
+            if (!result.isConfirmed) return;
+                const formData = new FormData(this);
+                document.getElementById("modalChangePassUser").style.display = "none";
+                
+                fetch("/app/Functions/dashboardAdmin/usuarios.php?action=changePassUser", {
+                    method: "POST",
+                    body: formData,
+                    credentials: "same-origin"
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: "Cambiado!",
+                            text: data.message,
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => location.reload());
+                    } else {
+                        Swal.fire("Error", data.message, "error");
+                    }
+                });
+        })
+    });
+}
