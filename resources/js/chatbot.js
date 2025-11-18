@@ -106,40 +106,40 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await resp.json();
       chatbotMessages.lastChild.remove(); // quitar "Pensando..."
 
-    if (data.reply) {
+      if (data.reply) {
         appendMessage("bot", data.reply);
         saveMessage("user", message);
         saveMessage("bot", data.reply);
-    } else {
+      } else {
         appendMessage("bot", data.error || "Error de red o servidor.");
-    }
+      }
     } catch (err) {
-        chatbotMessages.lastChild.remove();
-        appendMessage("bot", "Error de red o servidor.");
-        console.error(err);
+      chatbotMessages.lastChild.remove();
+      appendMessage("bot", "Error de red o servidor.");
+      console.error(err);
     }
-    }
+  }
 
   // ---------- Formateo de mensajes ----------
-    function appendMessage(sender, text) {
+  function appendMessage(sender, text) {
     let formatted = text
       // **negrita**, *cursiva*, _cursiva_, `código`
-        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-        .replace(/\*(.*?)\*/g, "<em>$1</em>")
-        .replace(/_(.*?)_/g, "<em>$1</em>")
-        .replace(/`(.*?)`/g, "<code>$1</code>")
-        .replace(/#+\s?(.*)/g, "$1")
-        .replace(/\[(.*?)\]\(.*?\)/g, "$1")
-        .replace(/\n/g, "<br>");
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.*?)\*/g, "<em>$1</em>")
+      .replace(/_(.*?)_/g, "<em>$1</em>")
+      .replace(/`(.*?)`/g, "<code>$1</code>")
+      .replace(/#+\s?(.*)/g, "$1")
+      .replace(/\[(.*?)\]\(.*?\)/g, "$1")
+      .replace(/\n/g, "<br>");
 
     // Detectar pasos numerados (1., 2., 3.) y convertirlos a lista ordenada
     if (/^\s*\d+\.\s/m.test(formatted)) {
-        const lines = formatted.split(/<br>/);
-        let listItems = lines.map(line => {
-            const match = line.match(/^\s*(\d+)\.\s*(.*)/);
-            return match ? `<li>${match[2]}</li>` : line;
-        });
-        formatted = `<ol>${listItems.join("")}</ol>`;
+      const lines = formatted.split(/<br>/);
+      let listItems = lines.map(line => {
+        const match = line.match(/^\s*(\d+)\.\s*(.*)/);
+        return match ? `<li>${match[2]}</li>` : line;
+      });
+      formatted = `<ol>${listItems.join("")}</ol>`;
     }
 
     const msg = document.createElement("div");
@@ -147,5 +147,5 @@ document.addEventListener("DOMContentLoaded", () => {
     msg.innerHTML = formatted; // interpreta HTML
     chatbotMessages.appendChild(msg);
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    }
+  }
 });

@@ -5,6 +5,7 @@ export function initConfiguracion() {
     getConfigurationRestaurant();
     sentConfigurationRestaurant();
     loadTablesConfiguration();
+    loadConfigReservations();
 }
 //========================================
 // ==             RESTAURANTE           ==
@@ -15,14 +16,20 @@ function changeOpt() {
   const opcionesList = document.querySelectorAll('.filtersConfig a');
   const secciones = document.querySelectorAll('.optConfig');
 
-  // Recuperar pestaña guardada
-  const savedTab = localStorage.getItem("pestanaConfigActiva") || "#resturanteConfig";
+  if (!opcionesList.length || !secciones.length) return;
 
-  // Quitar activo de todos
+  let savedTab = localStorage.getItem("pestanaConfigActiva");
+
+  // Si no existe o dejó de existir, usar fallback
+  if (!savedTab || !document.querySelector(savedTab)) {
+    savedTab = "#restauranteConfig";
+  }
+
+  // Reset
   opcionesList.forEach(link => link.classList.remove('activo'));
   secciones.forEach(sec => sec.style.display = 'none');
 
-  // Activar solo la pestaña guardada
+  // Activar la pestaña guardada
   const savedLink = document.querySelector(`.filtersConfig a[href="${savedTab}"]`);
   const savedSection = document.querySelector(savedTab);
 
@@ -31,20 +38,17 @@ function changeOpt() {
     savedSection.style.display = 'flex';
   }
 
-  // Configurar clicks
+  // Listener de clicks
   opcionesList.forEach(optList => {
     optList.addEventListener('click', e => {
       e.preventDefault();
 
-      // Guardar pestaña seleccionada
       const targetId = optList.getAttribute('href');
       localStorage.setItem("pestanaConfigActiva", targetId);
 
-      // Reset
       opcionesList.forEach(link => link.classList.remove('activo'));
       secciones.forEach(sec => sec.style.display = 'none');
 
-      // Activar nueva pestaña
       optList.classList.add('activo');
       const targetDiv = document.querySelector(targetId);
       if (targetDiv) targetDiv.style.display = 'flex';
@@ -327,4 +331,123 @@ export function deleteTable() {
 
     });
   });
+}
+//========================================
+// ==               RESERVAS            ==
+//========================================
+
+export async function loadConfigReservations() {
+  try{
+    const res = await fetch('/app/Functions/dashboardAdmin/configuracion.php?action=loadReservations');
+    const data  = await res.json();
+    console.log('DATA RECIBIDA:', data);
+
+    if(data.success){
+      const containerRes = document.getElementById('contenedorReservaConfig');
+      containerRes.innerHTML = '';
+
+      const politicas = [
+        "Libre cancelación",
+        "24 horas antes",
+        "48 horas antes",
+        "No cancelable"
+      ];
+
+      const options = politicas.map(p => `
+        <option value="${p}" ${p === data.configurationRes.politica_cancelacion ? "selected" : ""}>
+          ${p}
+        </option>
+      `).join("");
+
+      containerRes.innerHTML = `
+        <form class="formConfig" id="reservationForm">
+          <h2>Configuración de Reservas</h2>
+          <div class="restaurante-grid">
+            <div>
+              <label for="duracionPromedio">Duración Promedio (minutos)</label>
+              <input type="number" id="duracionPromedio" name="duracionPromedio" value="${data.configurationRes.duracion_promedio}">
+              <small>Tiempo estimado por reserva</small>
+            </div>
+
+            <div>
+              <label for="tiempoBloqueo">Tiempo de Bloqueo (minutos)</label>
+              <input type="number" id="tiempoBloqueo" name="tiempoBloqueo" value="${data.configurationRes.tiempo_bloqueo}">
+            </div>
+
+            <div>
+              <label for="anticipacionMinima">Anticipación Mínima (días)</label>
+              <input type="number" id="anticipacionMinima" name="anticipacionMinima" value="${data.configurationRes.anticipacion_minima}">
+            </div>
+
+            <div>
+              <label for="anticipacionMaxima">Anticipación Máxima (días)</label>
+              <input type="number" id="anticipacionMaxima" name="anticipacionMaxima" value="${data.configurationRes.anticipacion_maxima}">
+            </div>
+
+            <div class="restaurante-full">
+              <label for="">Política de Cancelación</label>
+              <select id="politicaCancelacion" name="politicaCancelacion">
+                <option value="">Seleccionar...</option>
+                ${options}
+              </select>
+            </div>
+
+          </div>
+          <button type="submit" class="guardarCambiosRes">Guardar Cambios</button>
+        </form>
+      `;
+    }
+    updateReservation();
+
+  }catch(error){
+    console.log('Error la cargar la configuración de las reservas', error);
+  }
+}
+
+export async function updateReservation() {
+
+  try{
+    const form = document.getElementById('reservationForm');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      Swal.fire({
+        title: 'Estas seguro',
+        text: 'Deseas actualizar la configuración',
+        icon: 'question',
+        confirmButtonColor: 'var(--primary-color)',
+        cancelButtonColor: 'red',
+        confirmButtonText: 'Actualizar'
+      }).then(async result => {
+        if (!result.isConfirmed) return;
+        const formData = new FormData(form);
+        const res = await fetch('/app/Functions/dashboardAdmin/configuracion.php?action=updateReservations', {
+          method: 'POST',
+          credentials: "same-origin",
+          body: formData,
+        })
+        const data = await res.json();
+
+        if (data.success){
+          Swal.fire({
+          title: 'Guardado exitosamenet',
+          text: data.message,
+          icon: 'success',
+          timer:1200,
+          showConfirmButton: true,
+          confirmButtonText: 'Cerrar',
+        })
+        }else{
+          Swal.fire({
+            title: 'Error',
+            text: data.message,
+            icon: 'error'
+          });
+        }
+      })
+    })
+  }catch(error){
+    console.log(error);
+  }
 }

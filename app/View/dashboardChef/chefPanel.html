@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Fory Factory | Panel Chef</title>
+    <link rel="icon" href="/uploads/logo/logo.jpg" type="image/x-icon">
+
+    <link rel="stylesheet" href="/resources/css/components.css">
+    <link rel="stylesheet" href="/resources/css/pages/dashboardChef/dashboardChef.css">
+
+    <script src="https://kit.fontawesome.com/29724e3467.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <section class="optContent" id="dashboardPedidos">
+        <div class="filters">
+            <!-- Reservas estadísticas-->
+            <div class="pedidosStats cardsContainer">
+                <div class="pedidosStats-card cards">
+                    <h3><i class="fa-regular fa-calendar" style="color: var(--primary-color) ;"></i> Total de Pedidos </h3>
+                    <p id="totalOrders">0</p>
+                </div>
+                <div class="pedidosStats-card cards">
+                    <h3><i class="fa-regular fa-clock" style="color: rgb(231, 208, 0) ;"></i> Pedidos Pendientes</h3>
+                    <p id="totalPending">0</p>
+                </div>
+                <div class="pedidosStats-card cards">
+                    <h3><i class="fa-regular fa-circle-check" style="color: #ff8800 ;"></i> Pedidos en Preparación</h3>
+                    <p id="totalPreparing">0</p>
+                </div>
+                <div class="pedidosStats-card cards">
+                    <h3><i class="fa-regular fa-circle-xmark" style="color: #2563eb ;"></i> Pedidos Listas</h3>
+                    <p id="totalList">0</p>
+                </div>
+                <div class="pedidosStats-card cards">
+                    <h3><i class="fa-regular fa-thumbs-up" style="color: var(--primary-color) ;"></i> Pedidos Entregadas</h3>
+                    <p id="totalSent">0</p>
+                </div>
+            </div>
+            <!-- FILTROS DE BUSQUEDA -->
+            <div class="reservasFilters">
+                <input type="text" id="searchOrdersInput" placeholder="Buscar código de pedido">
+                <div class="containerFilterDate">
+                    <label for="filterDate">Filtrar por fecha:</label>
+                    <input type="date" id="filterDate">
+                </div>
+                <button id="clearFiltersOrders" class="clearFilters">Limpiar filtros</button>
+            </div>
+            <!-- FILTRO DE ESTADO -->
+            <div class="filterStatusOrders">
+                <label class="radio">
+                    <input type="radio" name="radioOrders" value="todas" checked>
+                    <span class="name">Todas</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radioOrders" value="Pendiente">
+                    <span class="name">Pendientes</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radioOrders" value="Preparando">
+                    <span class="name">En Preparación</span>
+                    </label>
+                <label class="radio">
+                    <input type="radio" name="radioOrders" value="Lista">
+                    <span class="name">Listas</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radioOrders" value="Entregado">
+                    <span class="name">Entregadas</span>
+                </label>
+            </div>
+        </div>
+        <div class="ordersContainer" id="ordersContainer">
+            <!-- Aquí se cargarán los pedidos dinámicamente -->
+        </div>
+    </section>
+
+    <script type="module" src="/resources/js/dashboardChef/initializer.js"></script>
+</body>
+</html>

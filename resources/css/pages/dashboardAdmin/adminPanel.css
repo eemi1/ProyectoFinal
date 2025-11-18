@@ -399,7 +399,7 @@ img {
 }
 /*-----------| ESTILOS DE BUSCADOR |-----------*/
 .search-container{
-    height: 70px;
+    height: 100px;
     margin: 20px;
     display: flex;
     border: 1px solid #e2e8f0;
@@ -1677,6 +1677,16 @@ img {
 
 /*=======================================|DASHBOARD PEDIDOS|==========================================================*/
 
+.pedidoAtrasado {
+    border-left: 5px solid red;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { background-color: rgba(255, 0, 0, 0.15); }
+    50% { background-color: rgba(255, 0, 0, 0.30); }
+    100% { background-color: rgba(255, 0, 0, 0.15); }
+}
 /* == Estados botones y span == */
 
 /*Pendiente*/
@@ -1801,7 +1811,7 @@ img {
 .orderStatus{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     gap: 5px;
 }
 .orderHeader span{
@@ -2009,7 +2019,8 @@ img {
 
 
 .formConfig {
-    width: 900px;
+    max-width: 900px;
+    width: auto;
     margin: 40px auto;
     background: #ffffff;
     border-radius: 12px;
@@ -2017,7 +2028,6 @@ img {
     padding: 30px 40px;
     font-family: "Poppins", Arial, sans-serif;
 }
-
     /* === TITULO === */
     .formConfig h2 {
         text-align: center;
@@ -2035,7 +2045,7 @@ img {
     }
 
     /* === LABELS === */
-    #restaurantForm label {
+    .formConfig label {
         display: block;
         font-weight: 600;
         color: #333;
@@ -2044,12 +2054,12 @@ img {
     }
 
     /* === CAMPOS DE TEXTO === */
-    #restaurantForm input[type="text"],
-    #restaurantForm input[type="number"],
-    #restaurantForm input[type="tel"],
-    #restaurantForm input[type="email"],
-    #restaurantForm select,
-    #restaurantForm textarea {
+    .formConfig input[type="text"],
+    .formConfig input[type="number"],
+    .formConfig input[type="tel"],
+    .formConfig input[type="email"],
+    .formConfig select,
+    .formConfig textarea {
         width: 100%;
         padding: 10px 12px;
         border: 1px solid var(--borderColor2);
@@ -2062,16 +2072,16 @@ img {
     }
 
     /* Hover y focus */
-    #restaurantForm input:focus,
-    #restaurantForm select:focus,
-    #restaurantForm textarea:focus {
+    .formConfig input:focus,
+    .formConfig select:focus,
+    .formConfig textarea:focus {
         border-color: #4c8bf5;
         background-color: #fff;
         box-shadow: 0 0 0 3px rgba(76, 139, 245, 0.15);
     }
 
     /* Textarea */
-    #restaurantForm textarea {
+    .formConfig textarea {
         resize: vertical;
         min-height: 80px;
     }
@@ -2121,7 +2131,7 @@ img {
         }
     }
 
-/*---- MESAS ----*/
+/*----======= |MESAS| ======----*/
 .mesaConfigTitle{
     display: flex;
     flex-direction: row;
@@ -2255,6 +2265,27 @@ img {
     align-items: center;
 }
 
+/*---- RESERVAS ----*/
+.guardarCambiosRes{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #28a745;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#reservationForm{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
 @media screen and (max-width: 1010px) {
     .reservasFilters{
         flex-direction: column;

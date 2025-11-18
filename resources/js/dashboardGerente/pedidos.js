@@ -1,10 +1,12 @@
 // pedidos.js
-export function initPedidos() {
-    console.log("✅ initPedidos ejecutado");
-    getOrders();
-    changeFilterOrders();
-}
+export function initPedidos(desdeDashboard = false) {
+    console.log("initPedidos ejecutado");
+    getOrders(); 
 
+    if (!desdeDashboard) {
+        changeFilterOrders();
+    }
+}
 
 /*=========================================*/
 /*====== FILTROS RESERVAS Y MESAS =========*/
@@ -45,7 +47,7 @@ function changeFilterOrders() {
 /*===================================*/
 
 function getOrders(estado = 'todas') {
-    fetch(`/app/Functions/dashboardAdmin/pedidos.php?action=getOrders&estado=${estado}`, {
+    fetch(`/app/Functions/dashboardGerente/pedidos.php?action=getOrders&estado=${estado}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -56,20 +58,25 @@ function getOrders(estado = 'todas') {
         if (!containerPedidos) return;
         containerPedidos.innerHTML = '';
 
+        try {
+            document.getElementById('totalOrders').textContent = data.totalOrders || 0;
+            document.getElementById('pedidosTotal').textContent = data.totalOrders || 'Sin ordenes activas';
+            document.getElementById('totalPending').textContent = data.totalPending || 0;
+            document.getElementById('pedidosActivos').textContent = data.totalPending || 0;
+            document.getElementById('totalPreparing').textContent = data.totalPreparing || 0;
+            document.getElementById('totalList').textContent = data.totalList || 0;
+            document.getElementById('totalSent').textContent = data.totalSent || 0;
+            document.getElementById('pedidosEntregados').textContent = data.totalSent || 0;
+            document.getElementById('pedidosAtrasados').textContent = data.totalLate || 0;
+
+        }catch(e){
+            console.error('Error al actualizar los contadores de reservas:', e);
+        }
+        
         if (!data || !data.data || data.data.length === 0) {
             containerPedidos.innerHTML = `<p class="noOrdersMessage">No hay pedidos que mostrar.</p>`;
             console.log("Sin pedidos activos");
             return;
-        }
-
-        try {
-            document.getElementById('totalOrders').textContent = data.totalOrders || 0;
-            document.getElementById('totalPending').textContent = data.totalPending || 0;
-            document.getElementById('totalPreparing').textContent = data.totalPreparing || 0;
-            document.getElementById('totalList').textContent = data.totalList || 0;
-            document.getElementById('totalSent').textContent = data.totalSent || 0;
-        }catch(e){
-            console.error('Error al actualizar los contadores de reservas:', e);
         }
         
 
@@ -127,6 +134,7 @@ function getOrders(estado = 'todas') {
             const orderDiv = document.createElement('div');
             orderDiv.classList.add('orderItem');
             orderDiv.dataset.id = pedido.id;
+
             orderDiv.innerHTML = `
                 <div class="orderContent">
                     <div class="orderHeader">
@@ -148,8 +156,6 @@ function getOrders(estado = 'todas') {
 
                     <div class="orderBtns">${buttons}</div>
                 </div>
-
-                
             `;
             const orderHeader = orderDiv.querySelector('.orderHeader');
             if (pedido.atrasado) {
@@ -184,7 +190,7 @@ function getOrders(estado = 'todas') {
 
 
 export function preparingOrder(id){
-    fetch(`/app/Functions/dashboardAdmin/pedidos.php?action=preparingOrder`, {
+    fetch(`/app/Functions/dashboardGerente/pedidos.php?action=preparingOrder`, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
@@ -211,7 +217,7 @@ if (orderDiv) {
 }
 
 export function listOrder(id){
-    fetch(`/app/Functions/dashboardAdmin/pedidos.php?action=listOrder`, {
+    fetch(`/app/Functions/dashboardGerente/pedidos.php?action=listOrder`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
@@ -229,7 +235,7 @@ export function listOrder(id){
 }
 
 export function sentOrder(id){
-    fetch('/app/Functions/dashboardAdmin/pedidos.php?action=sentOrder', {
+    fetch('/app/Functions/dashboardGerente/pedidos.php?action=sentOrder', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -249,7 +255,7 @@ export function sentOrder(id){
 
 }
 export function cancelOrder(id){
-    fetch(`/app/Functions/dashboardAdmin/pedidos.php?action=cancelOrder`, {
+    fetch(`/app/Functions/dashboardGerente/pedidos.php?action=cancelOrder`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
@@ -267,7 +273,7 @@ export function cancelOrder(id){
 }
 
 export function markAsPaid(id) {
-    fetch(`/app/Functions/dashboardAdmin/pedidos.php?action=markAsPaid`, {
+    fetch(`/app/Functions/dashboardGerente/pedidos.php?action=markAsPaid`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fory Factory | Panel Mozo</title>
+        <link rel="icon" href="/uploads/logo/logo.jpg" type="image/x-icon">
+        <link rel="stylesheet" href="/resources/css/components.css" type="text/css">
+        <link rel="stylesheet" href="/resources/css/pages/dashboardMozo/dashboardMozo.css" type="text/css">
+        <script src="https://kit.fontawesome.com/29724e3467.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Rasa:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+<body>
+
+    <main class="main">
+        <h1 style="display: flex; gap: 10px;"><i class="fa-solid fa-kitchen-set" style="color:var(--primary-color);"></i>Dashboard Mozo</h1>
+        <!--======================================-->
+        <!--              FILTRO                  -->
+        <!--======================================-->
+        <div class="filters">
+            <div class="filterWaiter">
+                <label class="radio">
+                    <input type="radio" name="radioWaiter" value="tomarPedidos" onclick="options(event, 'tomarPedidos')" id="defaultTab">
+                    <span class="name">Tomar Pedidos</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radioWaiter" value="estadoPedidos" onclick="options(event, 'estadoPedidos')" >
+                    <span class="name">Estado de Pedidos</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radioWaiter" value="mesasReservas" onclick="options(event, 'mesasReservas')" >
+                    <span class="name">Mesas</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radioWaiter" value="cuenta" onclick="options(event, 'cuenta')" >
+                    <span class="name">Cuenta</span>
+                </label>
+            </div>
+        </div>
+        <!--==============================================-->
+        <!--             SECCION TOMAR PEDIDOS            -->
+        <!--==============================================-->
+        <section class="optContent" id="tomarPedidos">
+            <div class="menu">
+            
+                <div class="menuPedidos">
+                    <h2>🍽️ Menú</h2>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="margin-top:10px;">
+                            <button class="btnSecundario" onclick="seleccionarMesa()">Asignar Mesa</button>
+                            Mesa: <b id="mesaSeleccionadaLabel">Ninguna</b>
+                        </div>
+                    
+                        <input class="inputBuscar" placeholder="Buscar plato...">
+                    </div>
+                
+                    <div id="listaProductosMozo"></div>
+                </div>
+            </div>
+        
+            <div class="pedidoActual">
+                <h2>Pedido Actual</h2>
+            
+                <p id="pedidoVacio">No hay items en el pedido</p>
+            
+                <div id="itemsPedido"></div>
+            
+                <!-- ================= DESCUENTO / PROPINA ================= -->
+                <div class="extrasPedido">
+                
+                    <div class="extraFila">
+                        <label>
+                            <i class="fa-solid fa-tags"></i> Descuento (%)
+                        </label>
+                        <input id="descuentoInput" type="number" value="0" class="inputExtra">
+                    </div>
+                
+                    <div class="extraFila">
+                        <label>
+                            <i class="fa-solid fa-dollar-sign"></i> Propina ($)
+                        </label>
+                        <input id="propinaInput" type="number" value="0" class="inputExtra">
+                    </div>
+                
+                </div>
+                <!-- ======================================================== -->
+            
+                <div class="totales">
+                    <p>Subtotal: <span id="subtotalPedido">$0</span></p>
+                    <p class="totalFinal">Total: <span id="totalPedido">$0</span></p>
+                </div>
+            
+                <button class="btnEnviarPedido" onclick="enviarPedido()">Enviar Pedido</button>
+            
+                <div style="display:flex; gap:10px; margin-top: 10px;">
+                    <button class="btnSecundario" onclick="dividirCuenta()">Dividir Cuenta</button>
+                    <button class="btnSecundario" onclick="limpiarPedido()">Limpiar</button>
+                </div>
+            </div>
+        </section>
+        <!--===============================================-->
+        <!--             SECCIÓN ESTADO PEDIDOS            -->
+        <!--===============================================-->
+        <section class="optContent" id="estadoPedidos">
+        
+            <h2>Estado de Pedidos</h2>
+        
+            <!-- Filtros -->
+            <div class="orderFilters">
+                <button class="orderFilter active" data-state="todas">Todos ( <span id="countTodos">0</span> )</button>
+                <button class="orderFilter" data-state="Pendiente">Pendiente ( <span id="countPendiente">0</span> )</button>
+                <button class="orderFilter" data-state="Preparando">Preparando ( <span id="countPreparando">0</span> )</button>
+                <button class="orderFilter" data-state="Lista">Listo ( <span id="countLista">0</span> )</button>
+                <button class="orderFilter" data-state="Entregado">Entregado ( <span id="countEntregado">0</span> )</button>
+            </div>
+        
+            <!-- Tabla -->
+            <table class="ordersTable">
+                <thead>
+                    <tr>
+                        <th>Pedido</th>
+                        <th>Mesa</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+            
+                <tbody id="ordersList"></tbody>
+            </table>
+        
+        </section>
+        <!--===============================================-->
+        <!--             SECCIÓN ESTADO MESAS              -->
+        <!--===============================================-->
+        <section class="optContent" id="mesasReservas">
+            <div id="mesasStatusContainer" class="mesas-status-container" style="display:none;"></div>
+            <div class="reservas-container"></div>
+        </section>
+        <!--===============================================-->
+        <!--             SECCIÓN CUENTA                    -->
+        <!--===============================================-->
+        <section class="optContent" id="cuenta">
+            <h2>Cuenta</h2>
+                    
+            <div class="cuentaContainer">
+            
+                <label>Mesa con pedido:</label>
+                <select id="cuentaMesaSelect"></select>
+            
+                <div id="cuentaDetalles" style="display:none; margin-top:20px;">
+                
+                    <h3>Detalle del pedido</h3>
+                    <div id="cuentaItems"></div>
+                
+                    <div class="cuentaTotales">
+                        <p>Subtotal: <span id="cuentaSubtotal">$0.00</span></p>
+                        <p>Descuento: <span id="cuentaDescuento">$0.00</span></p>
+                        <p>Propina: <span id="cuentaPropina">$0.00</span></p>
+                        <p class="totalFinalCuenta">Total: <span id="cuentaTotalFinal">$0.00</span></p>
+                    </div>
+                
+                    <h3>Método de pago</h3>
+                    <label><input type="radio" name="metodoPago" value="efectivo" checked> Efectivo</label>
+                    <label><input type="radio" name="metodoPago" value="tarjeta"> Tarjeta</label>
+                
+                    <button class="btnSecundario" onclick="confirmarPagoCuenta()" style="margin-top:20px;">
+                        Confirmar Pago
+                    </button>
+                </div>
+            
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="/resources/js/dashboardMozo/util.js"></script>
+    <script type="module" src="/resources/js/dashboardMozo/initializer.js"></script>
+</body>
+</html>

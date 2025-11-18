@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/resources/css/components.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/parts/nav.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/parts/footer.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/ia.css" type="text/css">
     <script src="https://kit.fontawesome.com/29724e3467.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Rasa:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -103,17 +104,35 @@
                     class="page3-map"
                     allowfullscreen="" loading="lazy">
                 </iframe>
-
                 </div>
 
 
             </div>
         </div>
 
+
+
     </section>
+    <!-- ========== ForyBot Chat ========== -->
+    <div id="chatbot-button">
+        <img src="images/forybot-icon.png" alt="ForyBot" />
+    </div>
+    <div id="chatbot-popup" class="hidden">
+        <div id="chatbot-header">ForyBot</div>
+        <div id="chatbot-messages"></div>
+
+        <div id="chatbot-input">
+            <input id="chatbot-text" type="text" placeholder="Escribe tu mensaje..." />
+            <button id="chatbot-send">Enviar</button>
+        </div>
+        <button id="clear-chat">Limpiar</button>
+    </div>
+
     <footer class="footer"></footer>
+
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/cart.js"></script>
+    <script src="/resources/js/chatbot.js"></script>
 
 </body>
 </html>

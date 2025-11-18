@@ -194,6 +194,53 @@ function deleteTable($pdo){
     }
 }
 
+function loadReservations($pdo) {
+    try{
+        $stmt = $pdo->query("SELECT id, duracion_promedio, tiempo_bloqueo, anticipacion_minima, anticipacion_maxima, politica_cancelacion, ultima_actualizacion
+        FROM configuracion_reservas 
+        WHERE id = 1
+        ");
+        $getConfiguration = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        echo json_encode([
+            "success" => true,
+            "configurationRes" => $getConfiguration
+        ]);
+    }catch(PDOException $e){
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al cargar la configuración de las reservas: " . $e->getMessage()
+        ]);
+    }
+}
+
+function updateReservations($pdo) {
+    try{
+        $duracionPromedio = $_POST['duracionPromedio'];
+        $tiempoBloqueo = $_POST['tiempoBloqueo'];
+        $anticipacionMinima = $_POST['anticipacionMinima'];
+        $anticipacionMaxima = $_POST['anticipacionMaxima'];
+        $politicaCancelacion = $_POST['politicaCancelacion'];
+
+        $stmt = $pdo->prepare('
+        UPDATE configuracion_reservas SET duracion_promedio = ?, tiempo_bloqueo = ?, anticipacion_minima = ?, anticipacion_maxima = ?, politica_cancelacion = ?  
+        WHERE id = 1');
+
+        $stmt->execute([$duracionPromedio, $tiempoBloqueo, $anticipacionMinima, $anticipacionMaxima, $politicaCancelacion]);
+
+        echo json_encode([
+            "success" => true,
+            "message" => "El cambio se ha guardado correctamente."
+        ]);
+
+    }catch(PDOException $e){
+        echo json_encode([
+            "success" => false,
+            "message" => "Error, no se ha podido guardar el cambio."
+        ]);
+    }
+}
+
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['id_rol'])) {
     echo json_encode(["success" => false, "message" => "Sesión no iniciada o inválida"]);
     exit;
@@ -219,6 +266,12 @@ switch ($accion) {
         break;
     case 'deleteTable':
         deleteTable($pdo);
+        break;
+    case 'loadReservations':
+        loadReservations($pdo);
+        break;
+    case 'updateReservations':
+        updateReservations($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);

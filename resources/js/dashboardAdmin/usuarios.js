@@ -11,7 +11,7 @@ export function initUsuarios() {
 }
 
 ////==================| PESTAÑA DASHBOARD USUARIOS |===================
-function loadUsers(inputSearchUsers = '', rolValue = '') {
+export function loadUsers(inputSearchUsers = '', rolValue = '') {
 
     fetch("/app/Functions/dashboardAdmin/usuarios.php?action=mostrarUsuarios", {
         method: 'POST',
@@ -21,7 +21,7 @@ function loadUsers(inputSearchUsers = '', rolValue = '') {
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        
         const userTableBody = document.querySelector("#table-users tbody");
         if (!data.success) {
             userTableBody.innerHTML = `<tr><td>${data.message}</td></tr>`;
@@ -34,6 +34,7 @@ function loadUsers(inputSearchUsers = '', rolValue = '') {
         const defaultImg = `data:image/svg+xml;utf8,${encodeURIComponent(defaultSvg)}`;
 
         data.data.usuarios.forEach(user => {
+            console.log(`USUARIOS:`, user);
             let rolClass = "";
             let icon = "";
             switch(user.id_rol){

@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Fory Factory | Panel Admin</title>
+        <title>Fory Factory | Panel Gerente</title>
         <link rel="icon" href="/uploads/logo/logo.jpg" type="image/x-icon">
         <link rel="stylesheet" href="/resources/css/components.css" type="text/css">
-        <link rel="stylesheet" href="/resources/css/pages/dashboardAdmin/adminPanel.css" type="text/css">
+        <link rel="stylesheet" href="/resources/css/pages/DashboardAdmin/gerentePanel.css" type="text/css">
         <script src="https://kit.fontawesome.com/29724e3467.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Rasa:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -14,21 +14,13 @@
     <body>
         <div class="layout">
             <aside class="container-sidebar">
-                <h1>Panel Admin</h1>
+                <h1>Panel Gerente</h1>
                 <nav class="sidebar">
                     <ul class="sidebar-list">
                         <div class="li-list-main">
                             <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardMain')" id="defaultTab"><i class="fa-solid fa-chart-column"></i> Dashboard</a></li>
-                            <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardUsuarios')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
-                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
-                            </svg> Usuarios</a></li> <!-- <i class="fa-solid fa-user">-->
-                            <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardIngredientes')"><i class="fa-solid fa-carrot"></i> Ingredientes</a></li>
-                            <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardProductos')"><i class="fa-solid fa-box"></i> Productos</a></li>
                             <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardReservas')"><i class="fa-regular fa-calendar"></i> Reservas</a></li>
                             <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardPedidos')"><i class="fa-solid fa-cart-shopping"></i> Pedidos</a></li>
-                            <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardReportes')"><i class="fa-solid fa-chart-line"></i> Reportes</a></li>
-                            <li><a href="#" class="sidebar-options" onclick="options(event, 'dashboardConfiguracion')"><i class="fa-solid fa-cog"></i> Configuración</a></li>
                         </div>
                         <div class="li-list-logout">
                             <li class="li-list-logout"><a href="#" id="logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a></li>
@@ -38,7 +30,9 @@
             </aside>
 
             <main class="container-main">
+                <!--=========================================================-->
                 <!--==================  | DASHBOARD MAIN | ==================-->
+                <!--=========================================================-->
                 <section class="optContent" id="dashboardMain">
                     <header class="headerDashboard">
                         <div>
@@ -47,593 +41,236 @@
                         </div>
                     </header>
 
-                    <div class="dashboard-summary">
-                    <!-- Tarjeta individual -->
-                        <div class="summary-card">
-                            <div class="summary-card-header">
-                                <h3 class="summary-title">Ventas Hoy</h3>
-                                <i class="summary-icon fa-solid fa-dollar-sign" id="ventas-hoy-icon"></i>
+                    <div class="dashboardCards">               
+                        <div class="cards">
+                            <div class="cardsHeader">
+                                <h2>Pedidos Activos</h2>
                             </div>
-                            <p class="summary-value">$2,450</p>
-                            <div class="summary-card-footer">
-                                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> 
-                                    <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20" stroke="none" stroke-linecap="round" stroke-linejoin="round"/> 
-                                    <path d="M6.59869 14.5841C6.43397 14.8057 6.48012 15.1189 6.70176 15.2837C6.9234 15.4484 7.2366 15.4022 7.40131 15.1806L6.59869 14.5841ZM19.4779 
-                                    4.85296C19.3967 4.58903 19.1169 4.4409 18.853 4.52211L14.552 5.8455C14.288 5.92671 14.1399 6.2065 14.2211 6.47043C14.3023 6.73436 14.5821 6.88249 
-                                    14.846 6.80128L18.6692 5.62493L19.8455 9.44805C19.9267 9.71198 20.2065 9.8601 20.4704 9.7789C20.7344 9.69769 20.8825 9.41789 20.8013 9.15396L19.4779 4.85296ZM13.5434 12.4067L13.1671 
-                                    12.7359L13.5434 12.4067ZM15.1797 12.2161L15.6216 12.45L15.1797 12.2161ZM7.40131 15.1806L10.6621 10.7929L9.85952 10.1964L6.59869 14.5841L7.40131 15.1806ZM11.4397 10.7619L13.1671 
-                                    12.7359L13.9196 12.0774L12.1923 10.1034L11.4397 10.7619ZM15.6216 12.45L19.4419 5.23394L18.5581 4.76606L14.7378 11.9821L15.6216 12.45ZM13.1671 12.7359C13.8594 13.5272 15.1297 
-                                    13.3792 15.6216 12.45L14.7378 11.9821C14.5739 12.2919 14.1504 12.3412 13.9196 12.0774L13.1671 12.7359ZM10.6621 10.7929C10.8522 10.5371 11.2299 10.522 11.4397 10.7619L12.1923 
-                                    10.1034C11.5628 9.38385 10.4298 9.42903 9.85952 10.1964L10.6621 10.7929Z" fill="#16a34a"/> 
-                                </svg>
-                                <p class="summary-footer-text">+12.5%</p>
+                            <div class="cardsContent">
+                                <span class="valueCards" id="pedidosActivos"></span>
+                                <small class="footerTextCards">En preparación</small>
                             </div>
                         </div>
 
-                        <div class="summary-card">
-                            <div class="summary-card-header">
-                                <h3 class="summary-title">Pedidos Activos</h3>
-                                <i class="summary-icon fa-solid fa-cart-shopping" id="pedidos-activos-icon"></i>
+                        <div class="cards">
+                            <div class="cardsHeader">
+                                <h2>Pedidos Atrasados</h2>
                             </div>
-                            <p class="summary-value">23</p>
+                            <div class="cardsContent">
+                                <span class="valueCards" id="pedidosAtrasados"></span>
+                                <small class="footerTextCards">Requieren atención</small>
+                            </div>
                         </div>
 
-                        <div class="summary-card">
-                            <div class="summary-card-header">
-                                <h3 class="summary-title">Reservas Hoy</h3>
-                                <i class="summary-icon fa-regular fa-calendar" id="reservas-hoy-icon"></i>
+                        <div class="cards">
+                            <div class="cardsHeader">
+                                <h2>Cantidad de pedidos</h2>
                             </div>
-                            <p class="summary-value">18</p>
+                            <div class="cardsContent">
+                                <span class="valueCards" id="pedidosTotal"></span>
+                                <small class="footerTextCards">En este turno</small>
+                            </div>
                         </div>
 
-                        <div class="summary-card">
-                            <div class="summary-card-header">
-                                <h3 class="summary-title">Stock: Bajo</h3>
-                                <i class="summary-icon fa-solid fa-triangle-exclamation" id="stock-bajo-icon"></i>
+                        <div class="cards">
+                            <div class="cardsHeader">
+                                <h2>Pedidos Entregados</h2>
                             </div>
-                            <p class="summary-value">5</p>
+                            <div class="cardsContent">
+                                <span class="valueCards" id="pedidosEntregados"></span>
+                                <small class="footerTextCards">En este turno</small>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Sección de gráficas -->
-                    <div class="dashboard-charts">
-                        <div class="chart-card">
-                            <h3 class="chart-title">
-                                <i class="fa-solid fa-chart-simple" style="color:#16a34a;"></i>
-                                Ventas Últimos 7 Días
-                            </h3>
-                            <div id="ventasChart">
+                    <div class="dashboardCards">
 
+                        <div class="cards">
+                            <div class="cardsHeader">
+                                <h2>Tiempo Promedio</h2>
+                            </div>
+                            <div class="cardsContent">
+                                <span class="valueCards" id="tiempoPromedio"></span>
+                                <small class="footerTextCards">Por mesa ocupada</small>
                             </div>
                         </div>
 
-                        <div class="chart-card">
-                            <h3 class="chart-title">
-                                <i class="fa-solid fa-chart-line" style="color:#16a34a;"></i>
-                                Platos Más Populares
-                            </h3>
-                            <canvas id="platosChart"></canvas>
+                        <div class="cards">
+                            <div class="cardsHeader">
+                                <h2>Reservas del Turno</h2>
+                            </div>
+                            <div class="cardsContent">
+                                <span class="valueCards" id="reservasTurno"></span>
+                                <small class="footerTextCards">Reservas confirmadas</small>
+                            </div>
+                        </div>
+
+                        <div class="cards">
+                            <div class="cardsHeader">
+                                <h2>Ocupación Actual</h2>
+                            </div>
+                            <div class="cardsContent">
+                                <span class="valueCards" id="ocupacionActual"></span>
+                                <small class="footerTextCards" id="ocupacionTotalFooter"></small>
+                            </div>
                         </div>
                     </div>
                 </section>
-
-                <!--==================  | DASHBOARD USUARIOS | ==================-->
-                <section class="optContent" id="dashboardUsuarios">
-                    <header class="headerDashboard">
-                        <div>
-                            <h2 class="headerDashboard-title">Gestión de Usuarios</h2>
-                            <h3 class="headerDashboard-subtitle">Administra usuarios, roles y permisos del sistema.</h3>
-                        </div>
-                        <button id="openAddUserWindow">
-                            <i class="fa-solid fa-user-plus"></i> Añadir Usuario
-                        </button>
-                    </header>
-
-
-                    <!-- Ventana para agregar usuario -->
-                    <div class="windowAdd" id="windowAddUser">
-                        <div class="windowAdd-content">
-                            <span class="closeBtn" id="closeBtnUser">&times;</span>
-                            <h2>Agregar Nuevo Usuario</h2>
-                            <form id="addUserForm" action="../../Functions/dashboardAdmin/usuarios.php" method="POST">
-                                <label for="username">Nombre de Usuario:</label>
-                                <input type="text" id="username" name="username" required>
-
-                                <label for="email">Correo Electrónico:</label>
-                                <input type="email" id="email" name="email" required>
-
-                                <label for="role">Rol:</label>
-                                <select id="role" name="role" required>
-                                    <option value="">Selecciona un rol</option>
-                                    <option value="1">Cliente</option>
-                                    <option value="2">Administrador</option>
-                                    <option value="3">Mozo</option>
-                                    <option value="4">Cocinero</option>
-                                    <option value="5">Gerente</option>
-                                    <option value="6">Delivery</option>
-                                </select>
-
-                                <label for="password">Contraseña:</label>
-                                <input type="password" id="password" name="password" required>
-
-                                <label for="tel">Teléfono:</label>
-                                <input type="tel" id="tel" name="tel" required>
-
-                                <button type="submit" class="btnSubmit" id="btnSubmitUser">Crear Usuario</button>
-                            </form>
-                        </div>
-
-                    </div>
-
-                    <div class="dashboard-layout">
-                        <div class="search-container">
-                            <div class="search-card">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" placeholder="Buscar usuario por nombre o email" class="searchInput" id="searchInputUsers">
-                            </div>
-                            <div class="searchBTN-card">
-                                <button id="searchButton-roles" onclick="filterRoles()">Todos los roles 
-                                    <svg id="searchBTN-card-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
-                                    </svg>
-                                </button>
-                                <div class="container-list-span" >
-                                    <div class="div-list-span">
-                                        <span class="list-span" data-value="0">-</span>
-                                        <span class="list-span" data-value="1">Cliente</span>
-                                        <span class="list-span" data-value="2">Administrador</span>
-                                        <span class="list-span" data-value="3">Mozo</span>
-                                        <span class="list-span" data-value="4">Cocinero</span>
-                                        <span class="list-span" data-value="5">Gerente</span>
-                                        <span class="list-span" data-value="6">Delivery</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="container-table">
-                            <div id="table-header">
-                                <i class="fa-solid fa-user-group"></i>
-                                <h5 id="table-list">
-                                    Lista de Usuarios <span id="totalUsersNumber" style="font-family: Montserrat, sans-serif;">(0)</span>
-                                </h5>
-                            </div>
-
-                            <div class="table-container-table">
-                                <table class="table" id="table-users" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Usuario</th>
-                                            <th>Rol</th>
-                                            <th>Pedidos</th>
-                                            <th>Registro</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                                <div class="modalEditUser" id="modalEditUser">
-                                    <div class="modalEditUser-content">
-                                        <span class="closeEditUserBtn" id="closeEditUserBtn">&times;</span>
-                                        <h2>Editar Usuario</h2>
-                                        <form id="editUserForm" action="../../Functions/dashboardAdmin/editUser.php" method="POST">
-                                            <input type="hidden" id="editUserId" name="userId">
-                                            
-                                            <label for="editUsername">Nombre de Usuario:</label>
-                                            <input type="text" id="editUsername" name="username" required>
-
-                                            <label for="editRole">Rol:</label>
-                                            <select id="editRole" name="role" required>
-                                                <option value="">Selecciona un rol</option>
-                                                <option value="1">Cliente</option>
-                                                <option value="2">Administrador</option>
-                                                <option value="3">Mozo</option>
-                                                <option value="4">Cocinero</option>
-                                                <option value="5">Gerente</option>
-                                                <option value="6">Delivery</option>
-                                            </select>
-
-                                            <label for="editTel">Teléfono:</label>
-                                            <input type="tel" id="editTel" name="tel" required>
-
-                                            <button type="submit" class="btnEditSubmit">Guardar Cambios</button>
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                </section>
-                <!--==================  | DASHBOARD INGREDIENTES | ==================-->
-                <section class="optContent" id="dashboardIngredientes">
-                    <header class="headerDashboard">
-                        <div>
-                            <h2 class="headerDashboard-title">Gestión de Ingredientes</h2>
-                            <h3 class="headerDashboard-subtitle">Administra todos los ingredientes para utilizarlos en tus platos.</h3>
-                        </div>
-                        <button id="openAddIngredientWindow">
-                            <i class="fa-solid fa-plus"></i> Añadir Ingrediente
-                        </button>
-                    </header>
-                    
-                    <!--======== Ventana para agregar ingredientes ======== -->
-                    <div class="windowAdd" id="windowAddIngredient">
-                        <div class="windowAdd-content">
-                            <span class="closeBtn" id="closeBtnIngredient">&times;</span>
-                            <h2>Agregar Nuevo Ingrediente</h2>
-                            <form id="addIngredientForm" action="" method="POST">
-                                <div id="ingredientModal-containerInputs">
-                                    <div class="ingredientModal-inputs" id="ingredientModal-nameInputDiv">
-                                        <label for="">Nombre del ingrediente</label>
-                                        <input type="text" name="nameIngredient" id="ingredientModal-nameInput" placeholder="Ej: Cebolla, Carne, etc." required>
-                                    </div>                                    
-                                    <div class="ingredientModal-inputs" id="ingredientModal-descriptionDiv">
-                                        <label for="">Descripción</label>
-                                        <textarea class="textareaForms" name="descriptionIngredient" id="ingredientModal-description" placeholder="Descripción del ingrediente."></textarea>
-                                    </div>
-                                    <div class="ingredientModal-inputs">
-                                        <label for="">Tipo de ingrediente</label>
-                                        <div class="searchBTN-card">
-                                            <select name="categoriesIngredient" id="ingredientCategories" class="btnForms" required>
-                                                <option value="">-</option>
-                                                <option value="Verdura">Verdura</option>
-                                                <option value="Lácteo">Lácteo</option>
-                                                <option value="Carne">Carne</option>
-                                                <option value="Condimento">Condimento</option>
-                                                <option value="Otro">Otro</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="ingredientModal-inputs">
-                                        <label for="">Fecha de vencimiento</label>
-                                        <input type="date" name="expirationDateIngredient" id="ingredientModal-expirationDate">
-                                    </div> 
-                                    <div class="ingredientModal-inputs">
-                                        <label for="">Unidad (Kg,Litros,etc)</label>
-                                            <select name="unityIngredient" id="ingredientUnity" class="btnForms" required>
-                                                <option value="">-</option>
-                                                <option value="kg">kg</option>
-                                                <option value="g">g</option>
-                                                <option value="l">l</option>
-                                                <option value="ml">ml</option>
-                                                <option value="otro">otro</option>
-                                            </select>
-                                    </div>
-                                    <div class="ingredientModal-inputs">
-                                        <label for="">Proveedor</label>
-                                        <input type="text" name="supplierIngredient" id="ingredientModal-supplier" placeholder="Nombre del proveedor." required>
-                                    </div>
-                                    <div class="ingredientModal-inputs">
-                                        <label for="">Stock Actual</label>
-                                        <input type="text" name="stockIngredient" id="ingredientModal-stock" required>  
-                                    </div>
-
-                                    <div class="ingredientModal-inputs">
-                                        <label for="">Stock Mínimo</label>
-                                        <input type="text" name="minStockIngredient" id="ingredientModal-minStock" required>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btnSubmit" id="btnSubmitIngredient">Agregar Ingrediente</button>
-                            </form>
-                        </div>
-                    </div>
-                    <!--======== Contenido principal Ingredientes ======== -->
-                    <div class="dashboard-layout">
-                        <div class="search-container">
-                            <div class="search-card">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" placeholder="Buscar ingredientes o proovedores" class="searchInput" id="searchInputIngredients">
-                            </div>
-                        </div>
-
-                        <div class="container-cardIngredients">
-                            
-                        </div>
-
-                        <div class="container-table">
-                            <div id="table-header">
-                                <i class="fa-solid fa-user-group"></i>
-                                <h5 id="table-list">
-                                    Lista de Ingredientes <span id="totalIngredientsNumber" style="font-family: Montserrat, sans-serif;">(0)</span>
-                                </h5>
-                            </div>
-
-                            <div class="table-container-table">
-                                <table class="table" id="table-ingredients" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Ingrediente</th>
-                                            <th>Unidad</th>
-                                            <th>Stock Actual</th>
-                                            <th>Stock Mín</th>
-                                            <th>Proveedor</th>
-                                            <th>Estado</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                    </div>
-
-                </section>
-
-                <!--==================  | DASHBOARD PRODUCTOS | ==================-->
-                <section class="optContent" id="dashboardProductos">
-                    <header class="headerDashboard">
-                        <div>
-                            <h2 class="headerDashboard-title">Gestión de Productos</h2>
-                            <h3 class="headerDashboard-subtitle">Administra todos los elementos de tu menú/productos.</h3>
-                        </div>
-                        <button id="openAddProductWindow">
-                            <i class="fa-solid fa-plus"></i> Añadir Producto
-                        </button>
-                    </header>
-                    <!-- Ventana para agregar producto -->
-                    <div class="windowAdd" id="windowAddProduct">
-                        <div class="windowAdd-content">
-                            <span class="closeBtn" id="closeBtnProduct">&times;</span>
-                            <h2>Agregar Nuevo Producto</h2>
-                            <form id="addProductForm" action="" method="POST" enctype="multipart/form-data">
-                                <div class="productModal-main">
-                                    <label for="">Imagen</label>
-
-                                    <div class="productModal-imageInput">
-                                        <img src="" alt="" id="productModal-image">
-                                        <div class="productModal-inputContainer">
-                                            <input type="file" id="productModal-input" name="productImage" accept="image/*">
-                                            <label for="productModal-input" id="productModal-label"><i class="fa-solid fa-image" style="margin-right: 10px;"></i>Subir tu imagen</label>
-                                            <span id="file-status">No file chosen</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="productModal-containerInputs">
-                                    <div class="productModal-inputs">
-                                        <label for="">Nombre</label>
-                                        <input type="text" id="productModal-nameInput" name="productName" required>
-                                    </div>
-                                    <div class="productModal-inputs">
-                                        <label for="">Precio</label>
-                                        <input type="number" step="1" id="productModal-priceInput" name="productPrice" required>
-                                    </div>
-                                    <div class="productModal-inputs">
-                                        <label for="">Categoría</label>
-                                        <select name="productCategories" id="productModal-categorySelect" class="btnForms" required>
-                                            <option value="">-</option>
-                                            <option value="1">Carne</option>
-                                            <option value="2">Vegetariana</option>
-                                            <option value="3">Vegana</option>
-                                            <option value="4">Acompañamiento</option>
-                                            <option value="5">Bebida</option>
-                                            <option value="6">Postre</option>
-                                            <option value="7">Combo</option>
-                                        </select>
-                                    </div>
-                                    <div class="productModal-inputs">
-                                        <label for="">Tiempo de preparación</label>
-                                        <input type="text" id="productModal-timeInput" name="productPreparationTime">
-                                    </div>
-                                    <div class="productModal-inputs" id="productModal-description">
-                                        <label for="">Descripción</label>
-                                        <!-- <input type="text" id="productModal-descriptionInput"> -->
-                                        <textarea name="productDescription" class="textareaForms" id="productModal-descriptionInput"></textarea>
-                                    </div>
-
-                                    <div class="productModal-inputs">
-                                        <label for="">Calorías (opcional)</label>
-                                        <input type="text" id="productModal-caloriesInput" name="productCalories">
-                                    </div>                                    
-                                    <div class="productModal-inputs">
-                                        <label for="">Promoción</label>
-                                        <div class="productModal-promotion-container">
-                                            <select name="selectPromotion" id="selectPromotion" >
-                                                <option value="sinDescuento">Sin Descuento</option>
-                                                <option value="porcentaje">% Porcentaje</option>
-                                                <option value="2x1">2x1</option>
-                                            </select>
-                                            <input type="text" id="inputPromotion" name="productPromotion">
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="productModal-inputs" id="productModal-ingredients">
-                                        <label for="">Ingredientes requeridos</label>
-                                        <button type="button" class="btnForms" id="productModal-inputSearchSelectIngredients">Seleccionar Ingredientes..</button>
-                                        <div id="productModal-addIngredients-container">
-                                            <div class="productModal-addIngredient-search">
-                                                <i class="fa-solid fa-magnifying-glass"></i>
-                                                <input type="text" placeholder="Nombre del ingrediente." class="searchInput-productModal">
-                                            </div>
-                                            <div id="productModal-addIngredint-checkboxs">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="productModal-inputs" id="productModal-productFeatured">
-                                        <input type="checkbox" id="checkboxInput" name="productFeatured">
-                                            <label for="checkboxInput" class="toggleSwitch"></label>
-                                            <label for="">Destacado</label>
-                                    </div>
-                                    <button type="submit" class="btnSubmit" id="btnSubmitProduct">Crear Producto</button>    
-                                </div>             
-                            </div>                                
-                        </form>
-                    </div>
-                    <!-- BOTON CATEGORIAS DEL BUSCADOR-->
-                    <div class="dashboard-Products">
-                        <div class="search-container">
-                            <div class="search-card">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" placeholder="Buscar ID, nombre o categoría." class="searchInput" id="searchInputProducts">
-                            </div>
-                            <div class="searchBTN-card">
-                                <button type="button" id="searchButton-roles" onclick="filterRoles()">Todas las categorías 
-                                    <svg id="searchBTN-card-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
-                                    </svg>
-                                </button>
-                                <div class="container-list-span" >
-                                    <div class="div-list-span">
-                                        <span class="list-span" data-value="0">-</span>
-                                        <span class="list-span" data-value="1">Cliente</span>
-                                        <span class="list-span" data-value="2">Administrador</span>
-                                        <span class="list-span" data-value="3">Mozo</span>
-                                        <span class="list-span" data-value="4">Cocinero</span>
-                                        <span class="list-span" data-value="5">Gerente</span>
-                                        <span class="list-span" data-value="6">Delivery</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    <!-- CONTENEDOR DE RESUMEN DE PRODUCTOS -->
-                    <div class="container-summeryProducts">
-                        <div class="card-summaryProducts">
-                            <div class="card-summaryProducts-info">
-                                <div class="card-summaryProducts-title">Total De Productos</div>
-                                <div class="card-summaryProducts-content" id="cardSummary-totalProducts"></div>
-                            </div>
-
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-
-                        <div class="card-summaryProducts">
-                            <div class="card-summaryProducts-info">
-                                <div class="card-summaryProducts-title">Productos Destacados</div>
-                                <div class="card-summaryProducts-content" id="cardSummary-totalFeatured"></div>
-                            </div>
-                            <i class="fa-solid fa-bookmark"></i>
-                        </div>
-                        
-                        <div class="card-summaryProducts">
-                            <div class="card-summaryProducts-info">
-                                <div class="card-summaryProducts-title">Productos Sin Stock</div>
-                                <div class="card-summaryProducts-content"></div>
-                            </div>
-                            <i class="fa-solid fa-box-open"></i>
-                        </div>
-                        <div class="card-summaryProducts">
-                            <div class="card-summaryProducts-info">
-                                <div class="card-summaryProducts-title">Productos Vendidos</div>
-                                <div class="card-summaryProducts-content"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- TABLA PRODUCTOS-->
-                    <div class="container-table">
-                        <div class="table-container-table">
-                            <table class="table" id="table-products" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th id="th-productsName">Nombre</th>
-                                        <th>Categoría</th>
-                                        <th>Precio</th>
-                                        <th>Ingredientes</th>
-                                        <th>Promoción</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- MODAL VER PRODUCTO-->
-                    <div class="modal" id="modalViewProduct">
-                        <div class="modalViewProduct-content">
-
-                            <div id="modalViewProduct-contentHeader">
-                                <div id="modalViewProduct-headerText">
-                                    <h2>Detalles del Producto</h2>
-                                    <span>Información general e ingredientes asociados</span>
-                                </div>
-                                <span class="closeBtn" id="closeModalViewProduct">&times;</span>
-                            </div>
-
-                            <div id="modalViewProduct-main">
-                                <div id="modalViewProduct-image">
-                                    <img src="" alt="" id="modalViewProduct-img">
-                                </div>
-                                <div id="modalViewProduct-imageInfo">
-                                    <h3 id="modalViewProduct-name"></h3>
-                                    <p id="modalViewProduct-description"></p>
-                                    <div id="modalViewProduct-ingredients">
-                                        <h4>Ingredientes:</h4>
-                                        <ul id="modalViewProduct-ingredientsList">
-                                        </ul>
-                                    </div>
-                                    <div id="modalViewProduct-promotion">
-                                        <h4>Promoción:</h4>
-                                        <ul id="modalViewProduct-promotionValue">
-                                        </ul>
-                                    </div>
-                                </div>
-                                <p id="modalViewProduct-price"></p>
-
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                </section>
+                <!--=============================================================-->
                 <!--==================  | DASHBOARD RESERVAS | ==================-->
+                <!--=============================================================-->
                 <section class="optContent" id="dashboardReservas">
                     <header class="headerDashboard">
                         <div>
-                            <h2 class="headerDashboard-title">Gestión de Reservas</h2>
+                            <h2 class="headerDashboard-title">Gestión de Reservas del día</h2>
                             <h3 class="headerDashboard-subtitle">Gestiona todas las reservas del restaurante.</h3>
                         </div>
-                        <button id="openAddProductWindow">
-                            <i class="fa-solid fa-plus"></i> Añadir Producto
-                        </button>
+                        <!-- Estado de mesas -->
+                        <button id="showTablesStatus">Ver Estado de Mesas</button>
+                        <div id="mesasStatusContainer" class="mesas-status-container" style="display:none;"></div>
                     </header>
-                    <!-- FILTRO DE ESTADO -->
-                    <div class="filterStatus">
-                        <label class="radio">
-                            <input type="radio" name="radio" checked="">
-                            <span class="name">Todas</span>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" name="radio">
-                            <span class="name">Pendientes</span>
-                        </label>
+                    
+                    <div class="filters">
 
-                        <label class="radio">
-                            <input type="radio" name="radio">
-                            <span class="name">Confirmados</span>
-                        </label>
+                        <!-- Reservas estadísticas-->
+                        <div class="reservasStats cardsContainer">
+                            <div class="reservasStats-card cards">
+                                <h3><i class="fa-regular fa-calendar" style="color: var(--primary-color) ;"></i> Total de Reservas </h3>
+                                <p id="totalReservations">0</p>
+                            </div>
+                            <div class="reservasStats-card cards">
+                                <h3><i class="fa-regular fa-clock" style="color: #ffe600 ;"></i> Reservas Pendientes</h3>
+                                <p id="pendingReservations">0</p>
+                            </div>
+                            <div class="reservasStats-card cards">
+                                <h3><i class="fa-regular fa-circle-check" style="color: #00ff00 ;"></i> Reservas Confirmadas</h3>
+                                <p id="confirmedReservations">0</p>
+                            </div>
+                            <div class="reservasStats-card cards">
+                                <h3><i class="fa-regular fa-circle-xmark" style="color: #ff0000 ;"></i> Reservas Canceladas</h3>
+                                <p id="canceledReservations">0</p>
+                            </div>
+                            <div class="reservasStats-card cards">
+                                <h3><i class="fa-regular fa-thumbs-up" style="color: #00ffff ;"></i> Reservas Finalizadas</h3>
+                                <p id="finalizedReservations">0</p>
+                            </div>
+                        </div>
 
-                        
-                        <label class="radio">
-                            <input type="radio" name="radio">
-                            <span class="name">Canceladas</span>
-                        </label>
+                        <!-- FILTROS DE BUSQUEDA -->
+                        <div class="reservasFilters">
+                            <input type="text" id="searchReservationsInput" placeholder="Buscar por nombre, email o código de reserva">
+
+                            <button id="clearFiltersReservations" class="clearFilters">Limpiar filtros</button>
+                        </div>
+
+                        <!-- FILTRO DE ESTADO -->
+                        <div class="filterStatusReservations">
+                            <label class="radio">
+                                <input type="radio" name="radioReservations" value="todas" checked>
+                                <span class="name">Todas</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="radioReservations" value="Pendiente">
+                                <span class="name">Pendientes</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="radioReservations" value="Confirmado">
+                                <span class="name">Confirmadas</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="radioReservations" value="Cancelado">
+                                <span class="name">Canceladas</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="radioReservations" value="Finalizado">
+                                <span class="name">Finalizadas</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="radioReservations" value="En curso">
+                                <span class="name">En curso</span>
+                            </label>
+                        </div>
                     </div>
 
+                    <div class="reservas-container"></div>
                 </section>
 
 
 
+                <!--=============================================================-->
+                <!--==================  | DASHBOARD PEDIDOS | ==================-->
+                <!--=============================================================-->
+                <section class="optContent" id="dashboardPedidos">
+                    <header class="headerDashboard">
+                        <div>
+                            <h2 class="headerDashboard-title">Gestión de Pedidos del día</h2>
+                            <h3 class="headerDashboard-subtitle">Gestiona todos los pedidos del restaurante.</h3>
+                        </div>
+                    </header>
+                    <div class="filters">
 
+                        <!-- Reservas estadísticas-->
+                        <div class="pedidosStats cardsContainer">
+                            <div class="pedidosStats-card cards">
+                                <h3><i class="fa-regular fa-calendar" style="color: var(--primary-color) ;"></i> Total de Pedidos </h3>
+                                <p id="totalOrders">0</p>
+                            </div>
+                            <div class="pedidosStats-card cards">
+                                <h3><i class="fa-regular fa-clock" style="color: rgb(231, 208, 0) ;"></i> Pedidos Pendientes</h3>
+                                <p id="totalPending">0</p>
+                            </div>
+                            <div class="pedidosStats-card cards">
+                                <h3><i class="fa-regular fa-circle-check" style="color: #ff8800 ;"></i> Pedidos en Preparación</h3>
+                                <p id="totalPreparing">0</p>
+                            </div>
+                            <div class="pedidosStats-card cards">
+                                <h3><i class="fa-regular fa-circle-xmark" style="color: #2563eb ;"></i> Pedidos Listas</h3>
+                                <p id="totalList">0</p>
+                            </div>
+                            <div class="pedidosStats-card cards">
+                                <h3><i class="fa-regular fa-thumbs-up" style="color: var(--primary-color) ;"></i> Pedidos Entregadas</h3>
+                                <p id="totalSent">0</p>
+                            </div>
+                        </div>
+
+
+                        <!-- FILTRO DE ESTADO -->
+                        <div class="filterStatusOrders">
+                            <label class="radio">
+                                <input type="radio" name="radioOrders" value="todas" checked>
+                                <span class="name">Todas</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="radioOrders" value="Pendiente">
+                                <span class="name">Pendientes</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="radioOrders" value="Preparando">
+                                <span class="name">En Preparación</span>
+                                </label>
+                            <label class="radio">
+                                <input type="radio" name="radioOrders" value="Lista">
+                                <span class="name">Listas</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="radioOrders" value="Entregado">
+                                <span class="name">Entregadas</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="ordersContainer" id="ordersContainer">
+                        <!-- Aquí se cargarán los pedidos dinámicamente -->
+                    </div>
+                </section>
+
+                
                 
             </main>
         </div>
         <script src="https://cdn.canvasjs.com/canvasjs.min.js"> </script>
-        <script src="/resources/js/dashboardAdmin/dashboard.js"></script>
-        <script src="/js/dashboardAdmin/ingredientes.js"></script>
-        <script src="/resources/js/dashboardAdmin/producto.js"></script>
-        <script src="/resources/js/dashboardAdmin/usuarios.js"></script>
-        <script src="/resources/js/dashboardAdmin/util.js"></script>
-        <script src="/resources/js/dashboardAdmin/initializer.js"></script>
+        <script type="module" src="/resources/js/dashboardGerente/util.js"></script>
+        <script type="module" src="/resources/js/dashboardGerente/initializer.js"></script>
 
     </body>
     </html>

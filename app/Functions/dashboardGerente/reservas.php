@@ -26,8 +26,10 @@ function getReservations($pdo) {
 
         $sql = "SELECT * FROM reservas";
 
-        if ($estado !== 'todas') {
-            $sql .= " WHERE estado = :estado";
+        if ($estado === 'todas') {
+            $sql .= " WHERE DATE(fechaReserva) = CURDATE()";
+        } else {
+            $sql .= " WHERE estado = :estado AND DATE(fechaReserva) = CURDATE()";
         }
 
         $sql .= " ORDER BY 
@@ -58,23 +60,25 @@ function getReservations($pdo) {
             }
         }
 
-        $stmt2 = $pdo->prepare("SELECT COUNT(id) as total FROM reservas");
+        // ========== CONTADORES SOLO DEL DÍA ==========
+
+        $stmt2 = $pdo->prepare("SELECT COUNT(id) FROM reservas WHERE DATE(fechaReserva) = CURDATE()");
         $stmt2->execute();
         $totalReservas = $stmt2->fetchColumn();
 
-        $stmt3 = $pdo->prepare("SELECT COUNT(id) as total FROM reservas WHERE estado = 'Pendiente'");
+        $stmt3 = $pdo->prepare("SELECT COUNT(id) FROM reservas WHERE estado = 'Pendiente' AND DATE(fechaReserva) = CURDATE()");
         $stmt3->execute();
         $totalPendientes = $stmt3->fetchColumn();
 
-        $stmt4 = $pdo->prepare("SELECT COUNT(id) as total FROM reservas WHERE estado = 'Confirmado'");
+        $stmt4 = $pdo->prepare("SELECT COUNT(id) FROM reservas WHERE estado = 'Confirmado' AND DATE(fechaReserva) = CURDATE()");
         $stmt4->execute();
         $totalConfirmados = $stmt4->fetchColumn();
 
-        $stmt5 = $pdo->prepare("SELECT COUNT(id) as total FROM reservas WHERE estado = 'Cancelado'");
+        $stmt5 = $pdo->prepare("SELECT COUNT(id) FROM reservas WHERE estado = 'Cancelado' AND DATE(fechaReserva) = CURDATE()");
         $stmt5->execute();
         $totalCancelados = $stmt5->fetchColumn();
 
-        $stmt6 = $pdo->prepare("SELECT COUNT(id) as total FROM reservas WHERE estado = 'Finalizado'");
+        $stmt6 = $pdo->prepare("SELECT COUNT(id) FROM reservas WHERE estado = 'Finalizado' AND DATE(fechaReserva) = CURDATE()");
         $stmt6->execute();
         $totalFinalizados = $stmt6->fetchColumn();
 
@@ -288,6 +292,9 @@ function showTablesAvailables($pdo) {
         $stmt = $pdo->prepare("SELECT * FROM mesa");
         $stmt->execute();
         $mesas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        
+
         echo json_encode([
             "success" => true,
             "mesas" => $mesas

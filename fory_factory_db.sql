@@ -21,6 +21,17 @@ CREATE TABLE `configuracion` (
   direccion VARCHAR(200),
   ultima_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE configuracion_reservas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    duracion_promedio INT NOT NULL,         -- Duración estándar de una reserva (min)
+    tiempo_bloqueo INT NOT NULL,            -- Tiempo antes/después de la reserva para limpiar o preparar (min)
+    anticipacion_minima INT NOT NULL,       -- Horas mínimas para reservar
+    anticipacion_maxima INT NOT NULL,       -- Días máximos para reservar
+    politica_cancelacion INT NOT NULL, -- Texto libre sobre políticas
+    ultima_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+    ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- ==========================================
 -- Tablas de usuarios y roles
 -- ==========================================
@@ -121,11 +132,22 @@ CREATE TABLE ingrediente (
     descripcion TEXT,
     tipo ENUM('Verdura','Lácteo','Carne','Condimento','Otro') NOT NULL,
     fecha_vencimiento DATE NULL,
+    fechaCompra DATE NULL,
     unidad ENUM('kg','g','l','ml','otro') NOT NULL,
     proveedor VARCHAR(255),
     stock_actual FLOAT NOT NULL DEFAULT 0,
     stock_minimo FLOAT NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE mermas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ingrediente_id INT NOT NULL,
+    cantidad DECIMAL(10,2) NOT NULL,
+    motivo VARCHAR(255),
+    fecha DATE NOT NULL,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ingrediente_id) REFERENCES ingredientes(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ==========================================
 -- Categorías y Productos
@@ -245,7 +267,7 @@ CREATE TABLE pedido (
   id_factura INT NOT NULL,
   id_mozo INT NULL,
   id_chef INT NULL,
-  tiempo_estimado TIME DEFAULT NULL,
+  tiempo_estimado INT DEFAULT NULL,
   hora_inicio DATETIME DEFAULT CURRENT_TIMESTAMP,
   hora_fin DATETIME DEFAULT NULL,
   FOREIGN KEY (id_factura) REFERENCES factura(id) ON DELETE CASCADE,
@@ -313,6 +335,7 @@ VALUES -- Passwords Admin: admin123, Cliente: cliente123, Mozo: mozo123
 ('pepinho', 'tmp88@gmail.com', '$2y$10$g9Dh6JUfa6nfcqZoe7Lr8.wycUomzaXmkN.wHHpNfVTr9BbiQbcyi', 123, 6, NULL, '2025-09-08 20:55:27'), 
 ('123', 'asoldklas@gmail.com', '$2y$10$BHyK83RDQGqMAYsXJULGGumgWS4XLqEjCrp9M5QHOAHK7vjKqtcEW', 123, 2, NULL, '2025-09-08 21:25:23'), 
 ('tmp99', 'tmp99@gmail.com', '$2y$10$u6gSRVQr580w2OC1tDkjDexN6Pz6t8CPik6zyQs76H7e98rNKepIC', 123, 1, NULL, '2025-09-10 02:33:43');
+('Cliente Salón', 'salon@foryfactory.com', 'x', 123412313, 1);
 
 
 -- Ingredientes de prueba adicionales 

@@ -1,0 +1,385 @@
+/*=======================================|DASHBOARD PEDIDOS|==========================================================*/
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    background-color: hsl(var(--background));
+    display:flex;
+    flex-direction: column;
+}
+
+#dashboardPedidos{
+    overflow: auto;
+}
+/*===== Contenedor Filtros =====*/
+.filters{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 30px;
+}
+
+.reservasFilters{
+    display: flex;
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    padding: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#contentFilterInput{
+    display: flex;
+    flex-direction: column;
+}
+
+/*Input buscador*/
+#searchReservationsInput, #searchOrdersInput{
+    height: 40px;
+    width: 70%;
+    padding: 0px 10px;
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    font-size: var(--font-medium);
+}
+
+#searchReservationsInput:focus, #searchOrdersInput:focus{
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+
+.containerFilterDate{
+    display: flex;
+    gap: 10px;
+    margin: 0px 10px;
+    align-items: center;
+    justify-content: center;
+}
+#filterDate {
+    border: 1px solid var(--borderColor);
+    height: 40px;
+    border-radius: 0.5rem;
+    padding: 0px 5px
+}
+#filterDate:focus{
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+.clearFilters{
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    height: 40px;
+    padding: 0px 15px;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+}
+.clearFilters:hover{
+    background-color: var(--primary-color-hover);
+}
+
+
+/*==== Filtros de Estado ====*/
+.filterStatusReservations, .filterStatusOrders  {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: auto;
+    font-size: 14px;
+    gap: 10px;
+    max-width: 40rem;
+    justify-content: center;
+}
+
+.filterStatusReservations .radio, .filterStatusOrders .radio {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.filterStatusReservations .radio input, .filterStatusOrders .radio input {
+  display: none;
+}
+
+.filterStatusReservations .radio .name, .filterStatusOrders .radio .name {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none;
+  padding: .5rem 0;
+  color: rgba(51, 65, 85, 1);
+  transition: all .15s ease-in-out;
+}
+
+.filterStatusReservations .radio input:checked + .name, .filterStatusOrders .radio input:checked + .name     {
+  background-color: #fff;
+  font-weight: 600;
+}
+
+/*ESTADOS*/
+.estadoPendiente{
+    background-color: rgb(231, 208, 0);
+    color: white;
+}
+.estadoConfirmado, .estadoLista{
+    background-color: var(--primary-color);
+    color: white;
+}
+.estadoEnCurso, .estadoPreparacion{
+    background-color: #2563eb;
+    color: white;
+}
+.estadoCancelado{
+    background-color: red;
+    color: white;
+}
+.estadoNoShow{
+    background-color: black;
+    color: white;
+}
+
+/* ====| DISEÑO CARDS ESTADÍSTICAS |==== */
+.cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.cards{
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid var(--borderColor);
+}
+
+.cards h2{
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 10px;
+    display: flex;
+    white-space: nowrap;
+    gap: 10px;
+    justify-content: center;
+}
+.cards p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.cards:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+.pedidoAtrasado {
+    border-left: 5px solid red;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { background-color: rgba(255, 0, 0, 0.15); }
+    50% { background-color: rgba(255, 0, 0, 0.30); }
+    100% { background-color: rgba(255, 0, 0, 0.15); }
+}
+/* == Estados botones y span == */
+
+/*Pendiente*/
+.estadoPendiente{
+    background-color: rgb(231, 208, 0);
+    color: white;
+
+}
+
+/*Preparando*/
+.estadoPreparacion{
+    background-color: #ff8800;
+    color: white;
+}
+.btnPreparandoOrder{
+    background-color: #ff8800;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+.btnPreparandoOrder:hover{
+    background-color: #ad5d02;
+}
+
+/*Lista*/
+.estadoLista{
+    background-color: #2563eb;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+.btnListaOrder{
+    background-color: #1944a0;
+    transition: background-color 0.2s ease;
+
+}
+.btnListaOrder:hover {
+    background-color: #102b66;
+
+}
+
+/*Entregado*/
+.btnEntregadoOrder{
+    background-color: var(--primary-color);
+    transition: background-color 0.2s ease;
+    color:white;
+}
+.btnEntregadoOrder:hover {
+    background-color: var(--primary-color-hover);
+}
+
+/*Cancelado*/
+.estadoCancelado{
+    background-color: red;
+    color: white;
+}
+.btnCancelarOrder{
+    background-color: red;
+    transition: background-color 0.2s ease;
+}
+.btnCancelarOrder:hover{
+    background-color: darkred;
+}
+
+
+
+/*CONTENEDOR PEDIDOS*/
+.ordersContainer{
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 30px;
+    padding-top: 0px;
+    display: flex;
+}
+.orderItem{
+    border: 1px solid var(--borderColor);
+    border-radius: 10px;
+    width: auto;
+    min-width: 50rem;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+
+}
+
+.orderContent{
+    display: flex;
+    flex-direction: column;
+}
+
+.orderHeader {
+    font-size: var(--font-medium);
+    font-family: 'Sans seriff', Arial;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    border-bottom: 1px solid var(--borderColor);
+    background-color: #f9f9f9;
+    padding: 10px 15px;
+    justify-content: space-between;
+}
+
+.orderTitle{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.orderHeader h3{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.orderHeader p{
+    font-size: var(--font-small);
+    color: var(--textMuted);
+}
+
+.orderStatus{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+.orderHeader span{
+    border: 1px solid var(--borderColor);
+    border-radius: 20rem;
+    padding: 5px 10px;
+    font-size: var(--font-mediumSmall);
+    height: max-content;
+    font-weight: bold;
+}
+
+.orderDetails{
+    padding: 10px 15px;
+}
+
+.orderDetails span{
+    color: var(--textMuted);
+    font-weight: bold;
+    display: flex;
+
+}
+.articuloItem p{
+    font-family: 'Sans Seriff', 'Raleway';
+    margin-left: 10px;
+    color: black;
+    font-size: var(--font-mediumSmall);
+}
+
+.articulosContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 5px 0px;
+}
+
+.orderTotal {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.totalOrder{
+    font-family: 'Sans Seriff', 'Arial';
+    color: var(--primary-color);
+    font-size: var(--font-large);
+}
+
+.orderBtns{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 10px 15px;
+}
+
+.orderBtns button{
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: var(--font-mediumSmall);
+    cursor: pointer;
+    color: white;
+}

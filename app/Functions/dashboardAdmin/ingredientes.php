@@ -8,6 +8,7 @@ function addIngredient($pdo) {
     $description = $_POST['descriptionIngredient'] ?? '';
     $categories = $_POST['categoriesIngredient'] ?? '';
     $expirationDate = $_POST['expirationDateIngredient'] ?? null;
+    $dateBuy = $_POST['fechaCompra'] ?? '';
     $unity= $_POST['unityIngredient'] ?? '';
     $supplier = $_POST['supplierIngredient'] ?? ''; 
     $stock = $_POST['stockIngredient'] ?? ''; 
@@ -19,17 +20,19 @@ function addIngredient($pdo) {
     if ($expirationDate === '') {
         $expirationDate = null;}
 
-    if (empty($name) || 
+    if (
+        empty($name) || 
         empty($categories) || 
         empty($unity) || 
         empty($supplier) || 
-        $intStock === null || 
-        $intMinStock === null
-        ) {
+        $stock === '' ||
+        $minStock === '' ||
+        empty($expirationDate) ||
+        empty($dateBuy)
+    ) {
         echo json_encode(["success" => false, "message" => "Todos los campos son obligatorios."]);
         exit;
-        }
-    
+    }
     try{
         $stmt = $pdo->prepare("SELECT * from ingrediente where nombre = ? ");
         $stmt->execute([$name]);
@@ -46,9 +49,9 @@ function addIngredient($pdo) {
         
     // Guardar en la base de datos
     try {
-        $stmt = $pdo->prepare("INSERT INTO ingrediente (nombre, descripcion, tipo, fecha_vencimiento, unidad, proveedor, stock_actual, stock_minimo) 
-                                VALUES (?, ?, ?, ?, ?,?, ?, ?)");
-        $stmt->execute([$name, $description, $categories, $expirationDate, $unity,$supplier,$intStock,$intMinStock  ]);
+        $stmt = $pdo->prepare("INSERT INTO ingrediente (nombre, descripcion, tipo, fecha_vencimiento, fechaCompra, unidad, proveedor, stock_actual, stock_minimo) 
+                                VALUES (?, ?, ?, ?, ?,?, ?, ?, ?)");
+        $stmt->execute([$name, $description, $categories, $expirationDate, $dateBuy, $unity,$supplier,$intStock,$intMinStock  ]);
     
         echo json_encode(["success" => true, "message" => "Nuevo ingrediente agregado correctamente: "]);
         exit;
@@ -127,6 +130,37 @@ function ingredientsAmount($pdo) {
     }
 }
 
+function registrarMerma($pdo) {
+        try {
+        $ingrediente_id = $_POST['ingrediente_id'];
+        $cantidad = $_POST['cantidad'];
+        $motivo = $_POST['motivo'];
+        $fecha = $_POST['fecha'];
+
+        // 1. Registrar merma en tabla mermas
+        $stmt = $pdo->prepare("INSERT INTO mermas 
+            (ingrediente_id, cantidad, motivo, fecha) 
+            VALUES (?, ?, ?, ?)");
+        $stmt->execute([$ingrediente_id, $cantidad, $motivo, $fecha]);
+
+        // 2. Restar del stock actual
+        $update = $pdo->prepare("UPDATE ingrediente 
+            SET stock_actual = stock_actual - ? 
+            WHERE id = ?");
+        $update->execute([$cantidad, $ingrediente_id]);
+
+        echo json_encode([
+            "success" => true,
+            "message" => "Merma registrada y stock actualizado"
+        ]);
+
+    } catch (Exception $e) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Error: " . $e->getMessage()
+        ]);
+    }
+}
 
 
 // RUTEO
@@ -141,6 +175,9 @@ switch ($accion) {
         break;
     case 'ingredientsAmount':
         IngredientsAmount($pdo);
+        break;
+    case 'registrarMerma':
+        registrarMerma($pdo);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Acción no válida"]);

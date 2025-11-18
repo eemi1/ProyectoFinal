@@ -219,9 +219,12 @@ transition: background-color 0.3s ease;
     --primary-color: #17821B;
     --primary-color-hover:#146e17;
     --borderColor: #e2e8f0;
+    --borderColor2: #cfd2d4;
     --subtitleColor: #969696;
     --textMuted: #64748b;
 
     --background-primary:#166945;
     --background-primary-hover:#125437;
+    --borderBackground:#fafafa;
+
 }

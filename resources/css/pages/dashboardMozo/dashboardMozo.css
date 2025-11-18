@@ -1,0 +1,846 @@
+/*======================================*/
+/*             ESTILOS BASE             */
+/*======================================*/
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    background-color: hsl(var(--background));
+    display:flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.main{
+    padding: 20px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    overflow: auto;
+}
+
+/*======================================*/
+/*             ESTILO FILTRO            */
+/*======================================*/
+.filterWaiter   {
+
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 100%;
+    font-size: 14px;
+    gap: 10px;
+    justify-content: center;
+}
+
+.filterWaiter .radio,  .radio {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.filterWaiter .radio input,  .radio input {
+    display: none;
+}
+
+.filterWaiter .radio .name,  .radio .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: .5rem 0;
+    color: rgba(51, 65, 85, 1);
+    transition: all .15s ease-in-out;
+}
+
+.filterWaiter .radio input:checked + .name,  .radio input:checked + .name     {
+    background-color: #fff;
+    font-weight: 600;
+}
+
+/*======================================*/
+/*             SECCION TOMAR PEDIDOS           */
+/*======================================*/
+#tomarPedidos{
+    gap: 30px;
+    width: 100%;
+    height: 100%;
+}
+
+.menu, .pedidoActual{
+    flex: 1;
+    border: 1px solid var(--borderColor);
+    height: auto;
+    min-height: 100%;
+    border-radius: 0.5rem;
+}
+
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+/* --- MENÚ --- */
+.menuPedidos {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    overflow: auto;
+}
+
+.inputBuscar {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.productoCard {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.productoNombre {
+    font-weight: bold;
+}
+.productoCategoria {
+    font-size: 13px;
+    color: gray;
+}
+.productoPrecio {
+    font-weight: bold;
+}
+
+.btnAdd {
+    background: var(--primary-color);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+}
+
+/* --- PEDIDO --- */
+.pedidoActual {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+}
+
+#pedidoVacio {
+    text-align: center;
+    color: gray;
+    margin-top: 20px;
+    max-height: 45%;
+    height: auto;
+}
+
+.itemPedido {
+    background: #f3f3f3;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnRemove {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.totalFinal {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.btnEnviarPedido {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.btnEnviarPedido:hover{
+    background: var(--primary-color-hover);
+}
+
+.btnSecundario {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #bbb;
+    background: #fff;
+    cursor: pointer;
+}
+/*PROPINA Y DESCUENTO*/
+.extrasPedido {
+    margin: 20px 0;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.extraFila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inputExtra {
+    width: 80px;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-align: right;
+    font-size: 14px;
+}
+
+
+/*======================================*/
+/*             SECCION VER PEDIDOS          */
+/*======================================*/
+/* Contenedor general de estado de pedidos */
+#estadoPedidos {
+    margin-top: 20px;
+    flex-direction: column;
+}
+
+/* Título */
+#estadoPedidos h2 {
+    margin-bottom: 15px;
+}
+
+/* Filtros (chips) */
+.orderFilters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.orderFilter {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.orderFilter span {
+    font-weight: 600;
+}
+
+.orderFilter.active {
+    background: #06b26b;
+    color: #ffffff;
+    border-color: #06b26b;
+}
+
+/* Tabla */
+.ordersTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+.ordersTable thead {
+    background: #f7f7f7;
+}
+
+.ordersTable th,
+.ordersTable td {
+    padding: 10px 12px;
+    text-align: center;
+}
+
+.ordersTable th {
+    font-weight: 600;
+    color: #444;
+}
+
+.ordersTable tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+/* Fila resaltada (por ejemplo pedidos "Listo") */
+.order-new {
+    background: #e8ffe8 !important;
+}
+
+/* Badges de estado */
+.estadoBadge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.estado-Pendiente {
+    background: #fff2c2;
+    color: #876100;
+}
+
+.estado-Preparando {
+    background: #cfe5ff;
+    color: #134c8a;
+}
+
+.estado-Lista {
+    background: #c8f8d2;
+    color: #0b6a39;
+}
+
+.estado-Entregado {
+    background: #e3e3e3;
+    color: #555;
+}
+
+/* Icono de ver */
+.iconVer {
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+}
+
+.iconVer:hover {
+    color: #06b26b;
+}
+
+
+/*======================================*/
+/*             SECCION VER MESAS           */
+/*======================================*/
+
+/*==== CSS DE MESAS ESTADO DE LAS MESAS ====*/
+
+#mesasReservas{
+    flex-direction: column;
+}
+/*Contenedor reservas*/
+.reservas-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 30px;
+    padding-top: 0px;
+}
+
+/*Mensaje default cuando no hay reservas*/
+.reservas-default{
+    margin: 30px;
+}
+
+/*Cards reservas*/
+
+.reservaItem{
+    border: 1px solid var(--borderColor);
+    border-radius: 10px;
+    width: auto;
+    max-width: 100rem;
+    min-width: 50rem;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/*Animación de transición de reservas*/
+.reservaItem.removing {
+    opacity: 0;
+    /* transform:scale(0.1) */
+    transform: translateY(-60px);
+}
+
+
+/*Header card reservas*/
+.reservaHeader {
+    font-size: var(--font-medium);
+    font-family: 'Sans seriff', Arial;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-bottom: 1px solid var(--borderColor);
+    background-color: #f9f9f9;
+    padding: 10px 15px;
+}
+
+.reservaHeader h3{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.reservaHeader h3 span{
+    border: 1px solid var(--borderColor);
+    border-radius: 20rem;
+    padding: 5px 10px;
+    font-size: var(--font-mediumSmall);
+    height: max-content;
+}
+
+.reservaHeader p{
+    font-size: var(--font-small);
+    color: var(--textMuted);
+}
+/*===== Contenedor Filtros =====*/
+.filters{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 30px;
+}
+
+.reservasFilters{
+    display: flex;
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    padding: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#contentFilterInput{
+    display: flex;
+    flex-direction: column;
+}
+
+/*Input buscador*/
+#searchReservationsInput, #searchOrdersInput{
+    height: 40px;
+    width: 70%;
+    padding: 0px 10px;
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    font-size: var(--font-medium);
+}
+
+#searchReservationsInput:focus, #searchOrdersInput:focus{
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+
+.containerFilterDate{
+    display: flex;
+    gap: 10px;
+    margin: 0px 10px;
+    align-items: center;
+    justify-content: center;
+}
+#filterDate {
+    border: 1px solid var(--borderColor);
+    height: 40px;
+    border-radius: 0.5rem;
+    padding: 0px 5px
+}
+#filterDate:focus{
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+.clearFilters{
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    height: 40px;
+    padding: 0px 15px;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+}
+.clearFilters:hover{
+    background-color: var(--primary-color-hover);
+}
+
+
+/*==== Filtros de Estado ====*/
+.filterStatusReservations, .filterStatusOrders  {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: auto;
+    font-size: 14px;
+    gap: 10px;
+    max-width: 40rem;
+    justify-content: center;
+}
+
+.filterStatusReservations .radio, .filterStatusOrders .radio {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.filterStatusReservations .radio input, .filterStatusOrders .radio input {
+  display: none;
+}
+
+.filterStatusReservations .radio .name, .filterStatusOrders .radio .name {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none;
+  padding: .5rem 0;
+  color: rgba(51, 65, 85, 1);
+  transition: all .15s ease-in-out;
+}
+
+.filterStatusReservations .radio input:checked + .name, .filterStatusOrders .radio input:checked + .name     {
+  background-color: #fff;
+  font-weight: 600;
+}
+
+/*ESTADOS*/
+.estadoPendiente{
+    background-color: rgb(231, 208, 0);
+    color: white;
+}
+.estadoConfirmado, .estadoLista{
+    background-color: var(--primary-color);
+    color: white;
+}
+.estadoEnCurso, .estadoPreparacion{
+    background-color: #2563eb;
+    color: white;
+}
+.estadoCancelado{
+    background-color: red;
+    color: white;
+}
+.estadoNoShow{
+    background-color: black;
+    color: white;
+}
+
+
+/*CONTENEDOR DETALLES CARDS*/
+
+.reservaContent {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 10px;
+}
+/*Titulos cards*/
+.reservaContent span {
+    grid-column: span 2;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0px;
+    display: flex;
+    gap: 10px;
+}
+
+.reservaContent span i{
+    color: var(--primary-color);
+}
+
+.reservaContent p {
+    font-size: var(--font-mediumSmall);
+    color: var(--textMuted);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-weight: bold;
+}
+
+
+
+/*Contendor detalles y cliente*/
+
+.detailsReservation, .detailsClient{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 10px 15px;
+    gap: 10px;
+    background-color: #fafafa;
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+.detailsReservation p strong, .detailsClient p strong{
+    color: black;
+}
+
+/*Contendor botones acciones*/
+
+.reservaActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 10px 15px;
+}
+
+.reservaActions button {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: var(--font-mediumSmall);
+    cursor: pointer;
+    color: white;
+}
+
+.btnCancelarReserva, .btnCancelarOrder{
+    background-color: red;
+    transition: background-color 0.3s ease;
+}
+
+.btnCancelarReserva:hover, .btnCancelarOrder {
+    background-color: darkred;
+}
+.btnConfirmarReserva{
+    background-color: var(--primary-color);
+    transition: background-color 0.3s ease;
+}
+.btnConfirmarReserva:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.btnAsistioReserva{
+    background-color: #2563eb;
+    transition: background-color 0.3s ease;
+}
+.btnAsistioReserva:hover {
+    background-color: #1e3a8a;
+}
+
+.btnFinalizarReserva{
+    background-color: #16a34a;
+    transition: background-color 0.3s ease;
+}
+.btnFinalizarReserva:hover {
+    background-color: #138c3b;
+}
+
+/*==== CSS DE MESAS ESTADO DE LAS MESAS ====*/
+
+/*Filtros para mesas*/
+.filterShowTables{
+    display: flex;
+    padding: 20px;
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    gap: 10px;
+    padding: 0.5rem;
+}
+
+.filterTables{
+    border: 1px solid var(--borderColor);
+    background-color: white;
+    padding: 10px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+
+
+
+
+.tables-container{
+    display: grid;
+    grid-template-columns:repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    font-style: 'Sans-seriff', Arial;
+}
+
+.tableItem{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid var(--borderColor);
+    border-radius: 0.5rem;
+    padding: 15px;
+    height: auto;
+  
+}
+
+/*Estilos de estados*/
+.mesa-disponible{
+    border: 1px solid green;
+    background-color: rgba(240, 253, 244, 0.5);
+}
+
+.mesa-ocupada{
+    border: 1px solid red;
+    background-color: rgba(254, 242, 242, 0.5);;
+}
+
+.mesa-reservada{
+    border: 1px solid blue;
+    background-color: rgba(221, 233, 255, 0.5);;
+}
+
+/*Card mesas*/
+
+#numberTable{
+    font-size: var(--font-large);
+    font-weight: bold;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    width: max-content;
+    padding: 2px 7px;
+
+}
+
+
+
+/*======================================*/
+/*             SECCION CUENTAS           */
+/*======================================*/
+#cuenta{
+    flex-direction: column;
+}
+.cuentaContainer {
+    background: var(--white-bg, #fff);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 650px;
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#cuentaMesaSelect {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    background: #fafafa;
+    transition: 0.2s;
+}
+
+#cuentaMesaSelect:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* Detalles de la cuenta */
+#cuentaDetalles {
+    display: none;
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+#cuentaItems {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Ítems del pedido */
+.itemPedido {
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Totales */
+.cuentaTotales {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 16px;
+}
+
+.cuentaTotales p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.totalFinalCuenta {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 8px;
+    color: var(--primary-color);
+}
+
+/* Métodos de pago */
+#cuentaDetalles h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#cuentaDetalles label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#cuentaDetalles input[type="radio"] {
+    transform: scale(1.2);
+}
+
+/* Botón confirmar pago */
+#cuentaDetalles .btnSecundario {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 15px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Títulos */
+#cuenta h2 {
+    margin-bottom: 10px;
+}

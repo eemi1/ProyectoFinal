@@ -111,7 +111,7 @@ function getIngredients(){
                     <input type="checkbox" name="productIngrediente[]" value="${ingrediente.id}">
                     <div class="ingredient-info">
                         <strong>${ingrediente.nombre}</strong>
-                        <span>${ingrediente.descricpcion}</span>
+                        <span>${ingrediente.descripcion}</span>
                         <p>Stock ${ingrediente.stock_actual}${ingrediente.unidad} | </p>
                     </div>
                     <input type="number" name="cantidadIngrediente[${ingrediente.id}]" placeholder="Cantidad (g)" min="0" step="0.01" style="width: 100px;">
@@ -142,4 +142,79 @@ function showModalProductsAddIngredients(){
         getIngredients();
 
     })
+}
+
+export async function abrirMerma() {
+
+    const res = await fetch('/app/Functions/dashboardAdmin/ingredientes.php?action=showIngredients');
+    const data = await res.json();
+
+    if (!data.success || !data.data || !data.data.ingredientes) {
+        return Swal.fire("Sin ingredientes", "No hay ingredientes disponibles para registrar merma.", "warning");
+    }
+
+    let opciones = "";
+    data.data.ingredientes.forEach(ing => {
+        opciones += `
+            <option value="${ing.id}">
+                ${ing.nombre} (Stock: ${ing.stock_actual})
+            </option>
+        `;
+    });
+
+    const { value: formValues } = await Swal.fire({
+        title: "Registrar Merma",
+        html: `
+            <div style="text-align:left;">
+                <label><b>Ingrediente</b></label>
+                <select id="swalIngrediente" class="swal2-input">${opciones}</select>
+
+                <label><b>Cantidad perdida</b></label>
+                <input type="number" id="swalCantidad" class="swal2-input" step="0.01" min="0">
+
+                <label><b>Motivo</b></label>
+                <input type="text" id="swalMotivo" class="swal2-input">
+
+                <label><b>Fecha</b></label>
+                <input type="date" id="swalFecha" class="swal2-input">
+            </div>
+        `,
+        focusConfirm: false,
+        confirmButtonText: "Registrar",
+        showCancelButton: true,
+        preConfirm: () => {
+            const ingrediente = document.getElementById("swalIngrediente").value;
+            const cantidad = document.getElementById("swalCantidad").value;
+            const motivo = document.getElementById("swalMotivo").value;
+            const fecha = document.getElementById("swalFecha").value;
+
+            if (!ingrediente || !cantidad || !motivo || !fecha) {
+                Swal.showValidationMessage("Todos los campos son obligatorios");
+                return false;
+            }
+
+            return { ingrediente, cantidad, motivo, fecha };
+        }
+    });
+
+    if (!formValues) return;
+
+    const formData = new FormData();
+    formData.append("ingrediente_id", formValues.ingrediente);
+    formData.append("cantidad", formValues.cantidad);
+    formData.append("motivo", formValues.motivo);
+    formData.append("fecha", formValues.fecha);
+
+    const res2 = await fetch('/app/Functions/dashboardAdmin/ingredientes.php?action=registrarMerma', {
+        method: "POST",
+        body: formData
+    });
+    const result = await res2.json();
+
+    if (result.success) {
+        Swal.fire("¡Merma registrada!", "El stock fue actualizado correctamente.", "success");
+        loadIngredients();
+    } else {
+        Swal.fire("Error", result.message, "error");
+    }
 }

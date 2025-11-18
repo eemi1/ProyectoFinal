@@ -20,7 +20,8 @@ function getOrders($pdo) {
                 f.estadoPago,
                 f.metodoEntrega
             FROM factura f
-            JOIN usuario u ON f.id_cliente = u.id";
+            JOIN usuario u ON f.id_cliente = u.id
+            WHERE DATE(f.fecha) = CURDATE()";
 
         if ($estado !== 'todas') {
             $sql .= " WHERE estado = :estado";
@@ -105,23 +106,23 @@ function getOrders($pdo) {
 
         
 
-        $stmt2 = $pdo->prepare("SELECT COUNT(id) as total FROM factura");
+        $stmt2 = $pdo->prepare("SELECT COUNT(id) as total FROM factura WHERE DATE(fecha) = CURDATE()");
         $stmt2->execute();
         $totalOrders = $stmt2->fetchColumn();
 
-        $stmt3 = $pdo->prepare("SELECT COUNT(id) as total FROM factura WHERE estado = 'Pendiente'");
+        $stmt3 = $pdo->prepare("SELECT COUNT(id) as total FROM factura WHERE estado = 'Pendiente' AND DATE(fecha) = CURDATE()");
         $stmt3->execute();
         $totalPending = $stmt3->fetchColumn();
 
-        $stmt4 = $pdo->prepare("SELECT COUNT(id) as total FROM factura WHERE estado = 'Preparando'");
+        $stmt4 = $pdo->prepare("SELECT COUNT(id) as total FROM factura WHERE estado = 'Preparando' AND DATE(fecha) = CURDATE()");
         $stmt4->execute();
         $totalPreparing = $stmt4->fetchColumn();
 
-        $stmt5 = $pdo->prepare("SELECT COUNT(id) as total FROM factura WHERE estado = 'Lista'");
+        $stmt5 = $pdo->prepare("SELECT COUNT(id) as total FROM factura WHERE estado = 'Lista' AND DATE(fecha) = CURDATE()");
         $stmt5->execute();
         $totalList = $stmt5->fetchColumn();
 
-        $stmt6 = $pdo->prepare("SELECT COUNT(id) as total FROM factura WHERE estado = 'Entregado'");
+        $stmt6 = $pdo->prepare("SELECT COUNT(id) as total FROM factura WHERE estado = 'Entregado' AND DATE(fecha) = CURDATE()");
         $stmt6->execute();
         $totalSent = $stmt6->fetchColumn();
 
@@ -249,39 +250,35 @@ function preparingOrder($pdo) {
         $stmt = $pdo->prepare("UPDATE factura SET estado = 'Preparando' WHERE id = :id");
         $stmt->execute(['id' => $id]);
 
-
-        // Verificar si ya existe un pedido para esta factura
-        $stmtCheckPedido = $pdo->prepare("
-            SELECT id FROM pedido WHERE id_factura = :id_factura LIMIT 1
-        ");
-        $stmtCheckPedido->execute(['id_factura' => $id]);
-        $pedidoExistente = $stmtCheckPedido->fetchColumn();
         // Crear el pedido 
-        if (!$pedidoExistente) {
-            $stmtPedido = $pdo->prepare("
-                INSERT INTO pedido (id_factura, id_mozo, id_chef, hora_inicio, tiempo_estimado)
-                VALUES (:id_factura, :id_mozo, :id_chef, NOW(), :tiempo_estimado)
-            ");
-        
-            $idUsuario = $_SESSION['id_usuario'] ?? null;
-            $rolUsuario = $_SESSION['rol'] ?? null;
-        
-            $idMozo = null;
-            $idChef = null;
-        
-            if ($rolUsuario === 'mozo') {
-                $idMozo = $idUsuario;
-            } elseif ($rolUsuario === 'chef') {
-                $idChef = $idUsuario;
-            }
-        
-            $stmtPedido->execute([
-                'id_factura' => $id,
-                'id_mozo' => $idMozo,
-                'id_chef' => $idChef,
-                'tiempo_estimado' => $tiempoMaximo
-            ]);
+
+        $stmtPedido = $pdo->prepare("
+            INSERT INTO pedido (id_factura, id_mozo, id_chef, hora_inicio, tiempo_estimado)
+            VALUES (:id_factura, :id_mozo, :id_chef, NOW(), :tiempo_estimado)
+        ");
+        $idUsuario = $_SESSION['id_usuario'] ?? null;
+        $rolUsuario = $_SESSION['rol'] ?? null;
+
+        $idMozo = null;
+        $idChef = null;
+
+        if ($rolUsuario === 'mozo') {
+            $idMozo = $idUsuario;
+        } elseif ($rolUsuario === 'chef') {
+            $idChef = $idUsuario;
         }
+
+        // También podés permitir asignarlos manualmente desde frontend:
+        // $idMozo = $data['id_mozo'] ?? $idMozo;
+        // $idChef = $data['id_chef'] ?? $idChef;
+
+        $stmtPedido->execute([
+            'id_factura' => $id,
+            'id_mozo' => $idMozo,
+            'id_chef' => $idChef,
+            'tiempo_estimado' => $tiempoMaximo
+
+        ]);
 
         // Confirmar transacción
         $pdo->commit();

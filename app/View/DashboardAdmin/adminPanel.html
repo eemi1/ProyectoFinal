@@ -221,6 +221,7 @@
                                         <h2>Editar Usuario</h2>
                                         <form id="editUserForm" action="/app/Functions/dashboardAdmin/usuarios.php?action=editUser.php" method="POST">
                                             <input type="hidden" id="changePassId" name="userId">
+                                            <input type="hidden" id="editUserId" name="userId">
                                             
                                             <label for="editUsername">Nombre de Usuario:</label>
                                             <input type="text" id="editUsername" name="username">
@@ -273,12 +274,16 @@
                             <h2 class="headerDashboard-title">Gestión de Ingredientes</h2>
                             <h3 class="headerDashboard-subtitle">Administra todos los ingredientes para utilizarlos en tus platos.</h3>
                         </div>
-                        <button id="openAddIngredientWindow">
-                            <i class="fa-solid fa-plus"></i> Añadir Ingrediente
-                        </button>
+                        
+                        <div>
+                            <button type="button" style="background-color: blue;" onclick="abrirMerma()"><i class="fa-solid fa-plus"></i>Añadir Merma</button>
+                            <button type="button" id="openAddIngredientWindow"><i class="fa-solid fa-plus"></i> Añadir Ingrediente</button>
+                        </div>
                     </header>
                     
-                    <!--======== Ventana para agregar ingredientes ======== -->
+                    <!--====================================================-->
+                    <!--===========VENTANA AGREGAR INGREDIENTE==============-->
+                    <!--====================================================-->
                     <div class="windowAdd" id="windowAddIngredient">
                         <div class="windowAdd-content">
                             <span class="closeBtn" id="closeBtnIngredient">&times;</span>
@@ -310,6 +315,10 @@
                                         <label for="">Fecha de vencimiento</label>
                                         <input type="date" name="expirationDateIngredient" id="ingredientModal-expirationDate">
                                     </div> 
+                                    <div class="ingredientModal-inputs">
+                                        <label>Fecha de compra</label>
+                                        <input type="date" name="fechaCompra" value="">
+                                    </div>
                                     <div class="ingredientModal-inputs">
                                         <label for="">Unidad (Kg,Litros,etc)</label>
                                             <select name="unityIngredient" id="ingredientUnity" class="btnForms" required>
@@ -686,8 +695,6 @@
                 </section>
 
                 <!--==================  | DASHBOARD PEDIDOS | ==================-->
-
-
                 <section class="optContent" id="dashboardPedidos">
                     <header class="headerDashboard">
                         <div>
@@ -920,7 +927,7 @@
                                 </svg>
                                 Mesas
                             </a>
-                            <a href="#reservaConfig"><i class="fa-solid fa-calendar"></i> Reservas</a>
+                            <a href="#reservasConfig"><i class="fa-solid fa-calendar"></i> Reservas</a>
                             <a href="#notificacionesConfig"><i class="fa-solid fa-bell"></i> Notificaciones</a>
                         </div>
                     </div>
@@ -945,40 +952,40 @@
                                 <!-- Nombre -->
                                 <div>
                                     <label for="nombre">Nombre del Restaurante</label>
-                                    <input type="text" id="nombreRestaurante" name="nombreRestaurante" value="Fory Factory">
+                                    <input type="text" class="inptRestauranteConfig" id="nombreRestaurante" name="nombreRestaurante" value="Fory Factory">
                                 </div>
                             
                                 <!-- Capacidad -->
                                 <div>
                                     <label for="capacidad">Capacidad Total</label>
-                                    <input type="number" id="capacidadRestaurante" name="capacidadRestaurante" value="">
+                                    <input type="number" class="inptRestauranteConfig" id="capacidadRestaurante" name="capacidadRestaurante" value="">
                                 </div>
                             
                                 <!-- Descripción -->
                                 <div class="restaurante-full">
                                     <label for="descripcion">Descripción</label>
-                                    <textarea id="descripcionRestaurante" name="descripcionRestaurante"></textarea>
+                                    <textarea id="descripcionRestaurante" class="inptRestauranteConfig" name="descripcionRestaurante"></textarea>
                                 </div>
                             
                                 <!-- Teléfono -->
                                 <div>
                                     <label for="telefono">Teléfono</label>
                                     <i class="bi bi-telephone"></i>
-                                    <input type="tel" id="telefonoRestaurante" name="telefonoRestaurante" value="">
+                                    <input type="tel" id="telefonoRestaurante" class="inptRestauranteConfig" name="telefonoRestaurante" value="">
                                 </div>
                             
                                 <!-- Email -->
                                 <div>
                                     <label for="email">Email</label>
                                     <i class="bi bi-envelope"></i>
-                                    <input type="email" id="emailRestaurante" name="emailRestaurante" value="">
+                                    <input type="email" id="emailRestaurante" class="inptRestauranteConfig" name="emailRestaurante" value="">
                                 </div>
                             
                                 <!-- Dirección -->
                                 <div>
                                     <label for="direccion">Dirección</label>
                                     <i class="bi bi-geo-alt"></i>
-                                    <input type="text" id="direccionRestaurante" name="direccionRestaurante" value="">
+                                    <input type="text" id="direccionRestaurante" class="inptRestauranteConfig" name="direccionRestaurante" value="">
                                 </div>
                             
                             
@@ -997,15 +1004,14 @@
                             <h2>Mesas</h2>
                             <button type="button" class="btnAddTableConfig">Agregar mesa</button>
                         </div>
-                        
                         <div class="contenedorConfig" id="contenedorMesaConfig">
-
                         </div>
                     </div>
 
                     <!--Reserva-->
                     <div class="optConfig" id="reservasConfig">
                         <h3>Reservas</h3>
+                        <div class="contenedorConfig" id="contenedorReservaConfig"></div>
                     </div>
 
                     <!--Notificaciones-->
@@ -1013,13 +1019,6 @@
                         <h3>Notificaciones</h3>
                     </div>
                 </section>
-            
-
-
-
-
-
-                
             </main>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
